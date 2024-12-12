@@ -8,12 +8,27 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["Helvetica", "sans-serif"],
+      },
       colors: {
+        primary: "#777777",
         background: "var(--background)",
         foreground: "var(--foreground)",
         menuColor: "#F5F5F5",
+        teamColor: "#F6F6F6",
+        borderColor: "#EAEAEA",
+        newRed: "#B50542",
+      },
+      fontWeight: {
+        light: "300",
+        normal: "400",
+        medium: "500",
+        semibold: "600",
+        bold: "700",
+        semimedium: "325",
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/line-clamp")],
 } satisfies Config;

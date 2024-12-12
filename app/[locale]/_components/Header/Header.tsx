@@ -27,7 +27,7 @@ export default function Header({}: HeaderProps) {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-b from-black/100 to-transparent">
       {/* Main Header */}
-      <div className="max-w-[1400px] mx-auto px-4 py-4 h-[100px] flex items-center justify-between">
+      <div className="max-w-[1400px] mx-auto px-4 lg:px-0 py-4 h-[100px] flex items-center justify-between">
         <div className="flex items-center">
           <Link href="/" className="mr-auto">
             <Image
@@ -45,13 +45,13 @@ export default function Header({}: HeaderProps) {
         <div className="hidden md:flex items-center gap-[24px]">
           <Link
             href="/"
-            className="text-base font-medium p-2 hover:border hover:border-white rounded-[100px]"
+            className="text-base font-medium p-2 border border-transparent hover:border-white rounded-[100px]"
           >
             <p>Our Communities</p>
           </Link>
           <Link
             href="/"
-            className="text-base font-medium p-2 hover:border hover:border-white rounded-[100px]"
+            className="text-base font-medium p-2 border border-transparent hover:border-white rounded-[100px]"
           >
             <p>Latest Updates</p>
           </Link>
