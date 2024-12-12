@@ -78,7 +78,7 @@ export default function BlogSlider() {
       {
         breakpoint: 640,
         settings: {
-          slidesToShow: 1.08,
+          slidesToShow: 1.0,
         },
       },
     ],
@@ -97,8 +97,12 @@ export default function BlogSlider() {
   const calculateProgress = () => {
     const totalSlides = blogPosts.length;
     const maxProgress = totalSlides - slidesToShow;
-    const progress = (currentSlide / maxProgress) * 75 + 25;
-    return `${Math.min(progress, 100)}%`;
+    if (currentSlide < 1) {
+      return "25%";
+    } else {
+      const progress = (currentSlide / maxProgress) * 75 + 25;
+      return `${Math.min(progress, 100)}%`;
+    }
   };
 
   return (

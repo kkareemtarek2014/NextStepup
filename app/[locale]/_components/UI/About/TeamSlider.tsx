@@ -106,10 +106,13 @@ export default function TeamSlider() {
   const calculateProgress = () => {
     const totalSlides = teamMembers.length;
     const maxProgress = totalSlides - slidesToShow;
-    const progress = (currentSlide / maxProgress) * 75 + 25;
-    return `${Math.min(progress, 100)}%`;
+    if (currentSlide < 1) {
+      return "25%";
+    } else {
+      const progress = (currentSlide / maxProgress) * 75 + 25;
+      return `${Math.min(progress, 100)}%`;
+    }
   };
-
   const progressWidth = calculateProgress();
 
   return (

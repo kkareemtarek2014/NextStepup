@@ -101,20 +101,21 @@ export default function BlogSlider() {
   const goToPrev = () => {
     sliderRef.current?.slickPrev();
   };
-
   const calculateProgress = () => {
-    if (currentSlide === 0) return "33.33%";
-
     const totalSlides = blogPosts.length;
     const maxProgress = totalSlides - slidesToShow;
-    const progress = 33.33 + (currentSlide / maxProgress) * (100 - 33.33);
-    return `${Math.min(progress, 100)}%`;
+    if (currentSlide < 1) {
+      return "25%";
+    } else {
+      const progress = (currentSlide / maxProgress) * 75 + 25;
+      return `${Math.min(progress, 100)}%`;
+    }
   };
 
   return (
     <section className="relative h-fit bg-teamColor">
       <div className="max-w-[1512px] mx-auto">
-        <div className="flex flex-col gap-[48px] px-4 lg:px-[56px] ">
+        <div className="flex flex-col gap-[48px] px-4 lg:px-[56px] lg:pb-[40px] ">
           {/* Slider Section */}
           <div className="relative">
             <button
