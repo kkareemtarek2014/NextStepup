@@ -19,6 +19,7 @@ export default {
         teamColor: "#F6F6F6",
         borderColor: "#EAEAEA",
         newRed: "#B50542",
+        carrerColor: "#969696",
       },
       fontWeight: {
         light: "300",

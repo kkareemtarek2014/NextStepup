@@ -2,13 +2,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import LangConvertor from "../UI/General/LangConvertor";
+import { usePathname } from "next/navigation";
 
 interface HeaderProps {}
 
 export default function Header({}: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const pathname = usePathname();
 
-  // Add useEffect to handle body scroll
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -16,54 +18,75 @@ export default function Header({}: HeaderProps) {
       document.body.style.overflow = "unset";
     }
 
-    // Cleanup function to restore scrolling when component unmounts
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isMenuOpen]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
+  const isCareerPage =
+    pathname.includes("/career") || pathname.includes("/faqs");
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-b from-black/100 to-transparent">
-      {/* Main Header */}
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 w-full  ${
+        isCareerPage ? "" : " bg-gradient-to-b from-black/100 to-transparent"
+      }`}
+    >
       <div className="max-w-[1400px] mx-auto px-4 lg:px-0 py-4 h-[100px] flex items-center justify-between">
         <div className="flex items-center">
-          <Link href="/" className="mr-auto">
-            <Image
-              src="/logo_primary.svg"
-              alt="Logo"
-              width={323.6}
-              height={40}
-              className={`h-auto w-auto ${isMenuOpen ? "hidden" : ""}`}
-              priority
-            />
-          </Link>
+          {isCareerPage ? (
+            <Link href="/" className="mr-auto">
+              <Image
+                src="/logo_black.svg"
+                alt="Logo"
+                width={226.52}
+                height={28}
+                className={`h-auto w-auto ${isMenuOpen ? "hidden" : ""}`}
+                priority
+              />
+            </Link>
+          ) : (
+            <Link href="/" className="mr-auto">
+              <Image
+                src="/logo_primary.svg"
+                alt="Logo"
+                width={323.6}
+                height={40}
+                className={`h-auto w-auto ${isMenuOpen ? "hidden" : ""}`}
+                priority
+              />
+            </Link>
+          )}
         </div>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-[24px]">
           <Link
             href="/"
-            className="text-base font-medium p-2 border border-transparent hover:border-white rounded-[100px]"
+            className={`text-base font-medium p-2 border border-transparent ${
+              isCareerPage ? "text-black" : "text-white"
+            } hover:border-white rounded-[100px]`}
           >
             <p>Our Communities</p>
           </Link>
           <Link
             href="/"
-            className="text-base font-medium p-2 border border-transparent hover:border-white rounded-[100px]"
+            className={`text-base font-medium p-2 border border-transparent hover:border-white  ${
+              isCareerPage ? "text-black" : "text-white"
+            } rounded-[100px]`}
           >
             <p>Latest Updates</p>
           </Link>
+          <LangConvertor isBlack={isCareerPage} />
           <Link
             href="/"
-            className="text-base font-medium bg-white text-black leading-[24px] px-5 py-3 rounded-[100px]"
+            className={`text-base font-medium  ${
+              isCareerPage ? "text-white bg-black " : "text-black bg-white "
+            }  leading-[24px] px-5 py-3 rounded-[100px]`}
           >
             <p>Get In Touch</p>
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
         <button className="md:hidden" onClick={toggleMenu}>
           <Image
             src="/menu.svg"
@@ -77,9 +100,8 @@ export default function Header({}: HeaderProps) {
         </button>
       </div>
 
-      {/* Mobile Slide-out Menu */}
       <div
-        className={`fixed top-0 left-0 w-full h-full bg-black/50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 w-full  h-full bg-black/50 transform transition-transform duration-300 ease-in-out ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         } md:hidden`}
       >
