@@ -21,10 +21,10 @@ export default function Footer({}: FooterProps) {
             <Link href="/" className="text-base font-medium">
               <p>Latest Upates</p>
             </Link>
-            <Link href="/" className="text-base font-medium">
+            <Link href="/career" className="text-base font-medium">
               <p>Careers</p>
             </Link>
-            <Link href="/" className="text-base font-medium">
+            <Link href="/faqs" className="text-base font-medium">
               <p>FAQs</p>
             </Link>
             <Link href="/" className="text-base font-medium">

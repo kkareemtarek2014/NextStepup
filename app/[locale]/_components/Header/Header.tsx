@@ -88,15 +88,27 @@ export default function Header({}: HeaderProps) {
         </div>
 
         <button className="md:hidden" onClick={toggleMenu}>
-          <Image
-            src="/menu.svg"
-            alt="Menu"
-            width={24}
-            height={24}
-            className={`relative z-[20] h-6 w-[40px] ${
-              isMenuOpen ? "hidden" : ""
-            }`}
-          />
+          {isCareerPage ? (
+            <Image
+              src="/img/menuBlack.svg"
+              alt="Menu"
+              width={24}
+              height={24}
+              className={`relative z-[20] h-6 w-[40px] ${
+                isMenuOpen ? "hidden" : ""
+              }`}
+            />
+          ) : (
+            <Image
+              src="/menu.svg"
+              alt="Menu"
+              width={24}
+              height={24}
+              className={`relative z-[20] h-6 w-[40px] ${
+                isMenuOpen ? "hidden" : ""
+              }`}
+            />
+          )}
         </button>
       </div>
 
