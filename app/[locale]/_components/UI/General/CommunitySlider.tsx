@@ -113,7 +113,7 @@ export default function BlogSlider() {
   };
 
   return (
-    <section className="relative h-fit bg-teamColor">
+    <section className="relative h-fit bg-teamColor pb-[40px] lg:pb-0">
       <div className="max-w-[1512px] mx-auto">
         <div className="flex flex-col gap-[48px] px-4 lg:px-[56px] lg:pb-[40px] ">
           {/* Slider Section */}
@@ -137,14 +137,18 @@ export default function BlogSlider() {
               </svg>
             </button>
 
-            <Slider ref={sliderRef} {...settings} className="blog-slider ">
+            <Slider
+              ref={sliderRef}
+              {...settings}
+              className="blog-slider pt-[40px] lg:pt-0"
+            >
               {blogPosts.map((post, index) => (
                 <div
                   key={index}
                   className=" bg-gray-100 relative flex flex-col  pe-[20px] lg:pe-0 "
                 >
                   <div className="relative h-full">
-                    <div className="relative h-[320px]">
+                    <div className="relative h-[160px] lg:h-[320px]">
                       <Image
                         src={post.image}
                         alt={post.title}
@@ -165,10 +169,10 @@ export default function BlogSlider() {
                           </div>
                           <Button
                             href="/"
-                            className="px-5 py-3 bg-black rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit"
+                            className="px-4 lg:px-5 py-[10px] lg:py-3 bg-black rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit"
                             iconComponent={<ArrowIcon className="rotate-180" />}
                           >
-                            <span className="text-white text-base font-medium leading-[25px] text-start">
+                            <span className="text-white text-sm lg:text-base font-medium leading-[25px] text-start">
                               View Project
                             </span>
                           </Button>

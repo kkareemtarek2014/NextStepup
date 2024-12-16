@@ -26,7 +26,11 @@ export default function Homepage() {
       <TextSection {...textSectionData} />
       <OverSection />
       <StatSection />
-      <TextSection {...textSectionData2} bgcolor="bg-teamColor" />
+      <TextSection
+        {...textSectionData2}
+        bgcolor="bg-teamColor"
+        button={{ text: "View All Communities", href: "/communities" }}
+      />
       <CommunitySlider />
       <ApproachSection />
       <DiscoverSection />

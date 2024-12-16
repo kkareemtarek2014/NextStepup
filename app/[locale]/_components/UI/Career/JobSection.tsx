@@ -15,7 +15,7 @@ interface JobCardProps {
 
 const JobCard = ({ job, onClick }: JobCardProps) => (
   <div
-    className="flex md:flex-row flex-wrap w-full items-center justify-between px-4 md:px-6 py-6 md:py-10 border-b border-borderColor cursor-pointer hover:bg-gray-50 transition-colors gap-y-2 md:gap-x-8"
+    className="flex md:flex-row flex-wrap w-full items-center justify-between  md:px-6 py-6 md:py-10 border-b border-borderColor cursor-pointer hover:bg-gray-50 transition-colors gap-y-2 md:gap-x-8"
     onClick={onClick}
   >
     <div className="flex flex-col-reverse md:hidden w-full gap-y-2">
@@ -85,7 +85,7 @@ const JobSection = () => {
     <section className="relative bg-white pb-[60px]">
       <div className=" mx-auto max-w-[1400px] px-4 md:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:gap-[7.14%] py-[60px] md:pt-[60px] md:pb-[60px] space-y-6 lg:space-y-0">
-          <h2 className="text-base md:text-[60px] leading-tight md:leading-[50px] font-medium text-black lg:w-[41.14%]">
+          <h2 className="text-base md:text-[40px] xl:text-[60px] leading-tight md:leading-[50px] font-medium text-black lg:w-[41.14%]">
             Current Openings
           </h2>
           <h4 className="text-[28px] leading-[35px]   font-medium text-black text-balance lg:w-[51.71%]">

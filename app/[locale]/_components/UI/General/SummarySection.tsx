@@ -5,7 +5,7 @@ export default function SummarySection() {
   return (
     <section className="relative h-fit  bg-white ">
       <div className="flex flex-col py-[40px] max-w-[1512px] mx-auto">
-        <div className="flex  lg:gap-[18.71%] py-[60px] border-t border-b border-black/20 gap-[24px] mx-4 lg:mx-0  flex-col lg:flex-row lg:px-[56px]">
+        <div className="flex  lg:gap-[18.71%] py-[60px] border-b border-black/20 gap-[24px] mx-4 lg:mx-0  flex-col lg:flex-row lg:px-[56px]">
           <div className="lg:w-[28.57%] w-full h-[200px] max-w-[240px] lg:max-w-full">
             <Image
               src="/img/summary.svg"
@@ -57,7 +57,7 @@ export default function SummarySection() {
             </div>
           </div>
         </div>{" "}
-        <div className="flex  lg:gap-[18.71%] py-[60px] border-t border-b border-black/20 gap-[24px] mx-4 lg:mx-0 flex-col lg:flex-row lg:px-[56px]">
+        <div className="flex  lg:gap-[18.71%] py-[60px] border-t  border-black/20 gap-[24px] mx-4 lg:mx-0 flex-col lg:flex-row lg:px-[56px]">
           <div className="lg:w-[28.57%] w-full h-[200px] max-w-[240px] lg:max-w-full">
             <Image
               src="/img/summary.svg"

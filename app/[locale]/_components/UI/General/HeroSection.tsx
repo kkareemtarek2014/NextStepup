@@ -14,9 +14,9 @@ export default function HomeHero() {
         />
       </div>
       <div className="absolute w-full z-[2] flex flex-col bottom-0 left-0 text-white gap-[24px] pb-[100px] ">
-        <div className="max-w-[1400px] mx-auto w-full gap-[24px] flex flex-col justify-start items-start px-4 lg:px-0">
+        <div className="max-w-[1400px] mx-auto w-full gap-[24px] flex flex-col justify-start items-start px-4 2xl:px-0">
           <div className="flex flex-col justify-start items-start  ">
-            <h1 className="md:text-[64px] lg:text-[120px] lg:leading-[150px] text-[42px] leading-[52.8px] md:leading-[80px] font-normal text-white">
+            <h1 className="md:text-[64px] lg:text-[120px] lg:leading-[150px] text-[42px] leading-[52.8px] md:leading-[80px] font-normal text-white ">
               About us{" "}
             </h1>{" "}
             <h2 className="md:text-[21px] text-2xl lg:text-[28px] leading-[30px]  lg:leading-[36px] font-normal lg:text-balance text-white">

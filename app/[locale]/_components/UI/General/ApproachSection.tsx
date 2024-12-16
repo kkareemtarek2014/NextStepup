@@ -48,7 +48,7 @@ export default function ApproachSection() {
       <div className="max-w-[1512px] mx-auto flex flex-col py-[40px] px-4 lg:px-[56px]">
         <div className="flex flex-col lg:flex-row lg:mb-12 gap-[40px] lg:gap-0">
           <div className="w-full lg:w-[47.29%]">
-            <h3 className="text-[28px] leading-[35px] font-medium text-start text-primary">
+            <h3 className="text-[24px]lg:text-[28px] leading-[35px] font-medium text-start text-primary">
               Our Approach
             </h3>
           </div>
@@ -62,10 +62,10 @@ export default function ApproachSection() {
                   >
                     {" "}
                     <div className="flex gap-6 items-center">
-                      <h2 className="text-black text-[20px] font-medium leading-[25px]">
+                      <h2 className="text-black text-base lg:text-[20px] font-medium leading-[25px]">
                         {String(index + 1).padStart(2, "0")}
                       </h2>
-                      <span className="text-black text-[20px] font-medium leading-[25px]">
+                      <span className="text-black text-base lg:text-[20px] font-medium leading-[25px]">
                         {faq.question}
                       </span>
                     </div>

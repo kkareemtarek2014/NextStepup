@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang={params.locale}>
-      <body className="antialiased">
+      <body className="antialiased overflow-hidden">
         <main>
           <Header />
           {children}

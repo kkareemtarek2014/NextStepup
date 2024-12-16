@@ -72,13 +72,13 @@ export default function BlogSlider() {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 1.8,
         },
       },
       {
         breakpoint: 640,
         settings: {
-          slidesToShow: 1.0,
+          slidesToShow: 1.12,
         },
       },
     ],
@@ -106,10 +106,10 @@ export default function BlogSlider() {
   };
 
   return (
-    <section className="relative h-fit bg-teamColor">
-      <div className="max-w-[1512px] mx-auto">
-        <div className="flex flex-col gap-[48px] px-4 lg:px-[56px] py-[40px]">
-          <div className="flex flex-col lg:flex-row justify-start lg:justify-between items-start gap-[24px] lg:gap-0 lg:items-center">
+    <section className="relative h-fit bg-teamColor overflow-hidden">
+      <div className="max-w-[1512px] mx-auto overflow-hidden">
+        <div className="flex flex-col gap-[48px]  lg:px-[56px] py-[40px]">
+          <div className="flex flex-col ps-4 lg:ps-0  md:flex-row justify-start md:justify-between items-start gap-[24px] lg:gap-0 lg:items-center">
             <h3 className="text-[28px] lg:text-[64px] font-medium text-start text-black leading-[35px] lg:leading-[80px]">
               Discover our latest
             </h3>
@@ -134,10 +134,10 @@ export default function BlogSlider() {
           </div>
 
           {/* Slider Section */}
-          <div className="relative">
+          <div className="relative ">
             <button
               onClick={goToPrev}
-              className="absolute hidden lg:block top-1/2 -left-12 -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white rounded-full"
+              className="absolute hidden lg:block top-1/2 -left-4 -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white rounded-full"
               aria-label="Previous slide"
             >
               <svg
@@ -153,46 +153,49 @@ export default function BlogSlider() {
                 />
               </svg>
             </button>
-
-            <Slider ref={sliderRef} {...settings} className="blog-slider">
-              {blogPosts.map((post, index) => (
-                <div
-                  key={index}
-                  className=" bg-gray-100 relative flex flex-col pe-[20px] lg:pe-0 "
-                >
-                  <div className="relative h-full">
-                    <div className="relative h-[320px]">
-                      <Image
-                        src={post.image}
-                        alt={post.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="relative w-full">
-                      <div className="bg-white p-5 lg:p-[28px] pb-[48px] ">
-                        <div className="flex flex-col gap-3">
-                          <span className="text-base font-medium text-primary leading-[22.4px]">
-                            {post.category} - {post.date}
-                          </span>
-                          <h3 className="text-[40px] font-medium leading-[50px] text-black text-balance">
-                            {post.title}
-                          </h3>
-                          <p className="text-xl font-medium text-black line-clamp-2">
-                            The first fully-integrated coastal resort at the
-                            heart of the North Coast's Ras El Hekma.
-                          </p>
+            <div className=" -mx-4 lg:-mx-0">
+              <div className=" px-4 lg:px-0">
+                <Slider ref={sliderRef} {...settings} className="blog-slider">
+                  {blogPosts.map((post, index) => (
+                    <div
+                      key={index}
+                      className=" bg-gray-100 relative flex flex-col pe-[12px] lg:pe-0 "
+                    >
+                      <div className="relative h-full">
+                        <div className="relative h-[148px] lg:h-[320px]">
+                          <Image
+                            src={post.image}
+                            alt={post.title}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="relative w-full">
+                          <div className="bg-white p-5 lg:p-[28px] pb-[48px] ">
+                            <div className="flex flex-col gap-3">
+                              <span className="text-base font-medium text-primary leading-[22.4px]">
+                                {post.category} - {post.date}
+                              </span>
+                              <h3 className="text-[28px] lg:text-[40px] font-medium leading-[35px] lg:leading-[50px] text-black text-balance">
+                                {post.title}
+                              </h3>
+                              <p className="text-base lg:text-xl font-medium text-black line-clamp-2">
+                                The first fully-integrated coastal resort at the
+                                heart of the North Coast's Ras El Hekma.
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              ))}
-            </Slider>
+                  ))}
+                </Slider>
+              </div>
+            </div>
 
             <button
               onClick={goToNext}
-              className="absolute hidden lg:block top-1/2 -right-12 -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white rounded-full"
+              className="absolute hidden lg:block top-1/2 -right-4 -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white rounded-full"
               aria-label="Next slide"
             >
               <svg
@@ -211,12 +214,13 @@ export default function BlogSlider() {
             </button>
           </div>
 
-          {/* Progress Bar */}
-          <div className="relative w-full h-[2px] bg-black/20">
-            <div
-              className="absolute h-full bg-black transition-all duration-300 ease-in-out"
-              style={{ width: calculateProgress() }}
-            />
+          <div className="mx-4 ">
+            <div className="relative w-full h-[2px] bg-black/20 max-w-[1512px] mx-auto">
+              <div
+                className="absolute h-full bg-black transition-all duration-300 ease-in-out"
+                style={{ width: calculateProgress() }}
+              />
+            </div>
           </div>
         </div>
       </div>

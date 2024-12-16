@@ -55,7 +55,9 @@ body {
   background: var(--background);
   font-family: "Helvetica", sans-serif;
 }
-
+section {
+  border: 0px !important;
+}
 .slick-slide {
   padding: 0;
 }
@@ -84,7 +86,7 @@ body {
 /* Default gap for larger screens */
 .slick-track {
   display: flex !important;
-  gap: 20px;
+  gap: 20px !important;
 }
 
 /* Adjust gap for mobile screens */

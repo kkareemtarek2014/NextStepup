@@ -5,7 +5,7 @@ export default function ValusSection() {
     <section
       className={`relative h-fit lg:min-h-[330px] bg-teamColor py-[60px]`}
     >
-      <div className="max-w-[1400px] mx-auto flex flex-col gap-[40px] lg:gap-[48px] px-4 lg:px-0">
+      <div className="max-w-[1400px] mx-auto flex flex-col gap-[40px] lg:gap-[48px] px-4 2xl:px-0">
         <h3 className="text-[40px] leading-[50px] font-medium text-black">
           Values we live by
         </h3>

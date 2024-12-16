@@ -28,11 +28,13 @@ export default function Header({}: HeaderProps) {
     pathname.includes("/career") || pathname.includes("/faqs");
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full  ${
-        isCareerPage ? "" : " bg-gradient-to-b from-black/100 to-transparent"
+      className={` top-0 left-0 right-0 z-50   ${
+        isCareerPage
+          ? "absolute"
+          : " fixed bg-gradient-to-b from-black/100 to-transparent"
       }`}
     >
-      <div className="max-w-[1400px] mx-auto px-4 lg:px-0 py-4 h-[100px] flex items-center justify-between">
+      <div className="max-w-[1400px] mx-auto px-4 2xl:px-0 py-4 h-[100px] flex items-center justify-between w-full">
         <div className="flex items-center">
           {isCareerPage ? (
             <Link href="/" className="mr-auto">
@@ -59,7 +61,7 @@ export default function Header({}: HeaderProps) {
           )}
         </div>
 
-        <div className="hidden md:flex items-center gap-[24px]">
+        <div className="hidden md:flex items-center gap-2 lg:gap-[24px]">
           <Link
             href="/"
             className={`text-base font-medium p-2 border border-transparent ${

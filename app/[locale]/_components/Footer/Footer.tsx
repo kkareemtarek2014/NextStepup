@@ -12,7 +12,7 @@ export default function Footer({}: FooterProps) {
       <div className="container mx-auto px-4 py-4 flex flex-col">
         <div className="flex flex-row justify-between py-[24px]">
           <div className="flex flex-col md:flex-row gap-[9px] md:gap-[40px] mb-4 md:mb-0">
-            <Link href="/" className="text-base font-medium">
+            <Link href="/about-us" className="text-base font-medium">
               <p>About us</p>
             </Link>
             <Link href="/" className="text-base font-medium">
@@ -36,7 +36,7 @@ export default function Footer({}: FooterProps) {
         <div className="flex flex-col-reverse border-t border-white md:border-t-0 md:flex-row items-center pt-[40px] pb-[20px] md:justify-between">
           <Link
             href="/"
-            className="md:mt-[166.8px] mb-8 md:mb-0 h-[42.4px] lg:h-[80px] md:h-[111.25px] w-[343px] md:w-[496px] xl:w-[900px] object-contain xl:pr-4"
+            className="md:mt-[166.8px] mb-8 md:mb-0 h-[42.4px] lg:h-[80px] md:h-[111.25px] w-fit sm:w-[343px] md:w-[496px] xl:w-[900px] object-contain md:pe-4 2xl:pe-[80px]"
           >
             <Image
               src="/logo_primary.svg"
@@ -64,8 +64,8 @@ export default function Footer({}: FooterProps) {
                 </div>
               </div>
             </div>
-            <div className="flex flex-row justify-start">
-              <div className="flex flex-col gap-[20px] min-w-[200px] mb-4 sm:mb-0">
+            <div className="flex flex-row justify-between lg:justify-start">
+              <div className="flex flex-col gap-[20px] w-fit lg:min-w-[200px] mb-4 sm:mb-0">
                 <h3 className="text-sm font-medium text-white opacity-50 uppercase tracking-widest">
                   Social
                 </h3>
@@ -75,7 +75,7 @@ export default function Footer({}: FooterProps) {
                   <h4 className="text-base font-medium">Facebook</h4>
                 </div>
               </div>
-              <div className="flex flex-col gap-[20px] min-w-[200px] sm:ml-[20px]">
+              <div className="flex flex-col gap-[20px] w-fit lg:min-w-[200px] sm:ml-[20px]">
                 <h3 className="text-sm font-medium text-white opacity-50 uppercase tracking-widest">
                   Contact Info
                 </h3>

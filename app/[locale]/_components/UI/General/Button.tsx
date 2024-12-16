@@ -29,7 +29,7 @@ interface Props {
 }
 
 const textSize: Record<string, string> = {
-  primary: "text-base font-semibold",
+  primary: "text-sm lg:text-base font-semibold",
   primary2: "text-sm font-semibold",
   secondary: "text-lg font-semibold",
 };
