@@ -12,23 +12,47 @@ export default function Footer({}: FooterProps) {
       <div className="container mx-auto px-4 py-4 flex flex-col">
         <div className="flex flex-row justify-between py-[24px]">
           <div className="flex flex-col md:flex-row gap-[9px] md:gap-[40px] mb-4 md:mb-0">
-            <Link href="/about-us" className="text-base font-medium">
+            <Link
+              href="/about-us"
+              className="text-base font-medium text-white transition-all duration-300 relative group"
+            >
               <p>About us</p>
+              <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
             </Link>
-            <Link href="/" className="text-base font-medium">
+            <Link
+              href="/"
+              className="text-base font-medium text-white transition-all duration-300 relative group"
+            >
               <p>Our Communities</p>
+              <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
             </Link>
-            <Link href="/" className="text-base font-medium">
-              <p>Latest Upates</p>
+            <Link
+              href="/"
+              className="text-base font-medium text-white transition-all duration-300 relative group"
+            >
+              <p>Latest Updates</p>
+              <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
             </Link>
-            <Link href="/career" className="text-base font-medium">
+            <Link
+              href="/career"
+              className="text-base font-medium text-white transition-all duration-300 relative group"
+            >
               <p>Careers</p>
+              <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
             </Link>
-            <Link href="/faqs" className="text-base font-medium">
+            <Link
+              href="/faqs"
+              className="text-base font-medium text-white transition-all duration-300 relative group"
+            >
               <p>FAQs</p>
+              <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
             </Link>
-            <Link href="/" className="text-base font-medium">
+            <Link
+              href="/"
+              className="text-base font-medium text-white transition-all duration-300 relative group"
+            >
               <p>Contact us</p>
+              <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
             </Link>
           </div>
           <ArrowDownIcon className="block w-[32px] h-[32px] rotate-180" />
@@ -70,9 +94,15 @@ export default function Footer({}: FooterProps) {
                   Social
                 </h3>
                 <div className="flex flex-col gap-2">
-                  <h4 className="text-base font-medium">Instagram</h4>
-                  <h4 className="text-base font-medium">LinkedIn</h4>
-                  <h4 className="text-base font-medium">Facebook</h4>
+                  <h4 className="text-base font-medium text-white hover:text-gray-400 transition-all duration-300 cursor-pointer">
+                    Instagram
+                  </h4>
+                  <h4 className="text-base font-medium text-white hover:text-gray-400 transition-all duration-300 cursor-pointer">
+                    LinkedIn
+                  </h4>
+                  <h4 className="text-base font-medium text-white hover:text-gray-400 transition-all duration-300 cursor-pointer">
+                    Facebook
+                  </h4>
                 </div>
               </div>
               <div className="flex flex-col gap-[20px] w-fit lg:min-w-[200px] sm:ml-[20px]">
@@ -80,10 +110,10 @@ export default function Footer({}: FooterProps) {
                   Contact Info
                 </h3>
                 <div className="flex flex-col gap-2">
-                  <h4 className="text-base font-medium">
+                  <h4 className="text-base font-medium text-white">
                     info@gdevelopments.com
                   </h4>
-                  <h4 className="text-base font-medium">16738</h4>
+                  <h4 className="text-base font-medium text-white">16738</h4>
                 </div>
               </div>
             </div>
@@ -95,14 +125,26 @@ export default function Footer({}: FooterProps) {
               © 2024 G Developments. All rights reserved.
             </h4>
             <div className=" flex-row flex gap-3 lg:gap-[40px]">
-              <h5 className="text-sm font-[325] text-white">Privacy </h5>{" "}
-              <h5 className="text-sm font-[325] text-white">
-                Terms & Conditions{" "}
-              </h5>
+              <div className="relative group">
+                <h5 className="text-sm font-[325] text-white hover:text-white transition-all duration-300 cursor-pointer">
+                  Privacy
+                </h5>
+                <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
+              </div>
+              <div className="relative group">
+                <h5 className="text-sm font-[325] text-white hover:text-white transition-all duration-300 cursor-pointer">
+                  Terms & Conditions
+                </h5>
+                <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
+              </div>
             </div>
           </div>
           <h4 className="text-sm font-[325] text-white">
-            Website by <span className="underline">Mitch Designs</span>
+            Website by{" "}
+            <span className="relative group inline-block">
+              Mitch Designs
+              <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
+            </span>
           </h4>
         </div>
       </div>
