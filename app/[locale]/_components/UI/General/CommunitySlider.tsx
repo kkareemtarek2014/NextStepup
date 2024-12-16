@@ -170,7 +170,9 @@ export default function BlogSlider() {
                           <Button
                             href="/"
                             className="px-4 lg:px-5 py-[10px] lg:py-3 bg-black rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit"
-                            iconComponent={<ArrowIcon className="rotate-180" />}
+                            iconComponent={
+                              <ArrowIcon className="rotate-180 text-white" />
+                            }
                           >
                             <span className="text-white text-sm lg:text-base font-medium leading-[25px] text-start">
                               View Project

@@ -19,9 +19,9 @@ export default function HomeHero() {
             <h1 className="md:text-[64px] lg:text-[120px] lg:leading-[150px] text-[42px] leading-[52.8px] md:leading-[80px] font-normal text-white ">
               About us{" "}
             </h1>{" "}
-            <h2 className="md:text-[21px] text-2xl lg:text-[28px] leading-[30px]  lg:leading-[36px] font-normal lg:text-balance text-white">
-              Real Estate developer blending timeless design with comfortable
-              living.{" "}
+            <h2 className="md:text-[21px] text-2xl lg:text-[28px] leading-[30px] lg:leading-[36px] font-normal w-fit text-white lg:text-balance break-words">
+              Real Estate developer blending timeless <br /> design with
+              comfortable living.
             </h2>
           </div>
         </div>

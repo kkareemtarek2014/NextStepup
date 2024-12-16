@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import ArrowDownIcon from "../Icons/ArrowDownIcon";
@@ -7,6 +8,12 @@ interface FooterProps {
 }
 
 export default function Footer({}: FooterProps) {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Smooth scroll effect
+    });
+  };
   return (
     <footer className="block top-0 left-0 right-0 z-50 w-full bg-black">
       <div className="container mx-auto px-4 py-4 flex flex-col">
@@ -55,12 +62,17 @@ export default function Footer({}: FooterProps) {
               <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
             </Link>
           </div>
-          <ArrowDownIcon className="block w-[32px] h-[32px] rotate-180" />
+          <button
+            onClick={scrollToTop}
+            className="flex items-center justify-center  transition-all"
+          >
+            <ArrowDownIcon className="block w-[32px] h-[32px] rotate-180" />
+          </button>
         </div>
         <div className="flex flex-col-reverse border-t border-white md:border-t-0 md:flex-row items-center pt-[40px] pb-[20px] md:justify-between">
           <Link
             href="/"
-            className="md:mt-[166.8px] mb-8 md:mb-0 h-[42.4px] lg:h-[80px] md:h-[111.25px] w-fit sm:w-[343px] md:w-[496px] xl:w-[900px] object-contain md:pe-4 2xl:pe-[80px]"
+            className="md:mt-[166.8px] mb-8 md:mb-0 h-[42.4px] lg:h-[80px] md:h-[111.25px] w-fit sm:w-[343px] md:w-[496px] xl:w-[900px] object-contain md:pe-4 xl:pe-[80px]"
           >
             <Image
               src="/logo_primary.svg"
@@ -77,11 +89,11 @@ export default function Footer({}: FooterProps) {
                 Interest Form
               </h3>
               <div className="flex flex-col gap-2">
-                <h5 className="text-base font-medium">
+                <h5 className="text-base font-medium text-white">
                   Looking for something specific?
                 </h5>
                 <div className="flex gap-1 items-center">
-                  <h5 className="text-base font-medium">
+                  <h5 className="text-base font-medium text-white">
                     Submit Your Interest
                   </h5>
                   <ArrowDownIcon className="w-[20px] h-[20px] -rotate-90" />

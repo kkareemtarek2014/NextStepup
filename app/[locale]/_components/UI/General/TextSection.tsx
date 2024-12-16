@@ -31,7 +31,7 @@ export default function TextSection({
               {title}
             </h3>
             {button && (
-              <button className="lg:hidden border border-black rounded-[100px] bg-white flex gap-1 py-2 px-4 items-center justify-start w-fit">
+              <button className="border border-black rounded-[100px] bg-white flex gap-1 py-2 px-4 items-center justify-start w-fit">
                 <span className="text-black text-base font-medium leading-[25px] text-start">
                   {button.text}
                 </span>

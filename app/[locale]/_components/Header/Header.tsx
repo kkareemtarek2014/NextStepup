@@ -85,11 +85,12 @@ export default function Header({}: HeaderProps) {
           <LangConvertor isBlack={isCareerPage} />
           <Link
             href="/"
-            className={`text-base font-medium   ${
-              isCareerPage
-                ? "text-white bg-black hover:bg-white hover:text-black"
-                : "text-black bg-white hover:bg-black hover:text-white"
-            }  leading-[24px] px-5 py-3 rounded-[100px]`}
+            className={`text-base font-medium 
+                ${
+                  isCareerPage
+                    ? "text-white bg-black hover:bg-white hover:text-black"
+                    : "text-black bg-white hover:bg-black hover:text-white"
+                }  leading-[24px] px-5 py-3 rounded-[100px]`}
           >
             <p>Get In Touch</p>
           </Link>
@@ -162,7 +163,7 @@ export default function Header({}: HeaderProps) {
                 />
               </Link>
               <Link
-                href="/"
+                href="/about-u"
                 className="text-base font-medium py-[13px] border-b border-[#c3c0ba] justify-between flex "
               >
                 <p className="text-[20px] text-black capitalize leading-[25px] max-w-[291px] w-full font-medium">
@@ -190,7 +191,7 @@ export default function Header({}: HeaderProps) {
                 />
               </Link>{" "}
               <Link
-                href="/"
+                href="/career"
                 className="text-base font-medium py-[13px] border-b border-[#c3c0ba] justify-between flex "
               >
                 <p className="text-[20px] text-black capitalize leading-[25px] max-w-[291px] w-full font-medium">
@@ -204,7 +205,7 @@ export default function Header({}: HeaderProps) {
                 />
               </Link>{" "}
               <Link
-                href="/"
+                href="/faqs"
                 className="text-base font-medium py-[13px] border-b border-[#c3c0ba] justify-between flex "
               >
                 <p className="text-[20px] text-black capitalize leading-[25px] max-w-[291px] w-full font-medium">

@@ -74,7 +74,7 @@ export default function GallerySlider() {
               Gallery
             </h4>
             <h2 className="text-[28px] lg:text-[40px] leading-[38px] lg:leading-[50px]  font-medium text-black">
-              Life at G Developments
+              Life at <br />G Developments
             </h2>
             <div className="flex gap-3 lg:gap-4 lg:mt-4">
               <button
