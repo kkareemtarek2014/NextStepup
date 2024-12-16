@@ -65,15 +65,19 @@ export default function Header({}: HeaderProps) {
           <Link
             href="/"
             className={`text-base font-medium p-2 border border-transparent ${
-              isCareerPage ? "text-black" : "text-white"
-            } hover:border-white rounded-[100px]`}
+              isCareerPage
+                ? "text-black hover:border-black"
+                : "text-white hover:border-white"
+            } rounded-[100px]`}
           >
             <p>Our Communities</p>
           </Link>
           <Link
             href="/"
-            className={`text-base font-medium p-2 border border-transparent hover:border-white  ${
-              isCareerPage ? "text-black" : "text-white"
+            className={`text-base font-medium p-2 border border-transparent   ${
+              isCareerPage
+                ? "text-black hover:border-black"
+                : "text-white hover:border-white"
             } rounded-[100px]`}
           >
             <p>Latest Updates</p>
@@ -81,8 +85,10 @@ export default function Header({}: HeaderProps) {
           <LangConvertor isBlack={isCareerPage} />
           <Link
             href="/"
-            className={`text-base font-medium  ${
-              isCareerPage ? "text-white bg-black " : "text-black bg-white "
+            className={`text-base font-medium   ${
+              isCareerPage
+                ? "text-white bg-black hover:bg-white hover:text-black"
+                : "text-black bg-white hover:bg-black hover:text-white"
             }  leading-[24px] px-5 py-3 rounded-[100px]`}
           >
             <p>Get In Touch</p>
