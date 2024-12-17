@@ -15,7 +15,7 @@ interface JobCardProps {
 
 const JobCard = ({ job, onClick }: JobCardProps) => (
   <div
-    className="flex md:flex-row flex-wrap lg:flex-nowrap w-full items-center justify-between  md:px-6 py-6 md:py-10 border-b border-borderColor cursor-pointer hover:bg-gray-50 transition-colors gap-y-2 md:gap-x-8"
+    className="flex md:flex-row flex-wrap lg:flex-nowrap w-full items-center justify-between  md:px-6 py-6 md:py-10 border-b border-borderColor cursor-pointer lg:w-fit hover:bg-gray-50 transition-colors gap-y-2 md:gap-x-8"
     onClick={onClick}
   >
     <div className="flex flex-col-reverse md:hidden w-full gap-y-2">

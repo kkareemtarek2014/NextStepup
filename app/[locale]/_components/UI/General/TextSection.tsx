@@ -20,6 +20,7 @@ export default function TextSection({
 }: TextSectionProps) {
   return (
     <section
+      id="next-section"
       className={`relative h-fit lg:min-h-[330px] ${
         bgcolor ? bgcolor : "bg-white"
       }`}

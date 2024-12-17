@@ -10,7 +10,12 @@ interface HeaderProps {}
 export default function Header({}: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const pathname = usePathname();
-
+  const handleLinkClick = () => {
+    if (window.innerWidth < 1024) {
+      setIsMenuOpen(false);
+    }
+    setIsMenuOpen(false);
+  };
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -150,6 +155,7 @@ export default function Header({}: HeaderProps) {
             <div className="flex flex-col ">
               <Link
                 href="/"
+                onClick={handleLinkClick}
                 className="text-base font-medium py-[13px] border-b border-[#c3c0ba] justify-between flex "
               >
                 <p className="text-[20px] text-black capitalize leading-[25px] max-w-[291px] w-full font-medium">
@@ -163,7 +169,8 @@ export default function Header({}: HeaderProps) {
                 />
               </Link>
               <Link
-                href="/about-u"
+                href="/about-us"
+                onClick={handleLinkClick}
                 className="text-base font-medium py-[13px] border-b border-[#c3c0ba] justify-between flex "
               >
                 <p className="text-[20px] text-black capitalize leading-[25px] max-w-[291px] w-full font-medium">
@@ -178,6 +185,7 @@ export default function Header({}: HeaderProps) {
               </Link>{" "}
               <Link
                 href="/"
+                onClick={handleLinkClick}
                 className="text-base font-medium py-[13px] border-b border-[#c3c0ba] justify-between flex "
               >
                 <p className="text-[20px] text-black capitalize leading-[25px] max-w-[291px] w-full font-medium">
@@ -192,6 +200,7 @@ export default function Header({}: HeaderProps) {
               </Link>{" "}
               <Link
                 href="/career"
+                onClick={handleLinkClick}
                 className="text-base font-medium py-[13px] border-b border-[#c3c0ba] justify-between flex "
               >
                 <p className="text-[20px] text-black capitalize leading-[25px] max-w-[291px] w-full font-medium">
@@ -206,6 +215,7 @@ export default function Header({}: HeaderProps) {
               </Link>{" "}
               <Link
                 href="/faqs"
+                onClick={handleLinkClick}
                 className="text-base font-medium py-[13px] border-b border-[#c3c0ba] justify-between flex "
               >
                 <p className="text-[20px] text-black capitalize leading-[25px] max-w-[291px] w-full font-medium">
@@ -222,6 +232,7 @@ export default function Header({}: HeaderProps) {
 
             <Link
               href="/"
+              onClick={handleLinkClick}
               className="text-base font-medium bg-black text-white leading-[24px] px-5 py-3 rounded-[100px] text-center"
             >
               <p>Get In Touch</p>

@@ -1,8 +1,12 @@
 interface ArrowDownIconProps {
   className?: string;
+  handleScrollClick?: () => void;
 }
 
-const ArrowDownIcon = ({ className }: ArrowDownIconProps) => {
+const ArrowDownIcon = ({
+  className,
+  handleScrollClick,
+}: ArrowDownIconProps) => {
   return (
     <svg
       className={className}
