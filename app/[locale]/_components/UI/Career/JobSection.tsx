@@ -1,11 +1,13 @@
 "use client";
 
+import { Link } from "@/navigation";
 import ArrowIcon from "../../Icons/ArrowIcon";
 
 interface JobPosition {
   title: string;
   location: string;
   department: string;
+  link: string;
 }
 
 interface JobCardProps {
@@ -15,10 +17,14 @@ interface JobCardProps {
 
 const JobCard = ({ job, onClick }: JobCardProps) => (
   <div
-    className="flex md:flex-row flex-wrap lg:flex-nowrap w-full items-center justify-between  md:px-6 py-6 md:py-10 border-b border-borderColor cursor-pointer lg:w-fit hover:bg-gray-50 transition-colors gap-y-2 md:gap-x-8"
+    className="flex md:flex-row flex-wrap md:flex-nowrap w-full items-center justify-between  md:px-6 py-6 md:py-10 border-b border-borderColor cursor-pointer md:w-full hover:bg-gray-50 transition-colors gap-y-2 md:gap-x-8"
     onClick={onClick}
   >
     <div className="flex flex-col-reverse md:hidden w-full gap-y-2">
+      {" "}
+      <Link className="text-sm font-medium" href={job.link}>
+        <span className="absolute top-0 left-0 w-full h-full  opacity-0 "></span>
+      </Link>
       <h3 className="text-xl md:text-[28px] leading-tight md:leading-[35px] font-medium text-black  w-full">
         {job.title}
       </h3>
@@ -32,13 +38,13 @@ const JobCard = ({ job, onClick }: JobCardProps) => (
       </div>
     </div>
 
-    <h3 className="hidden md:block text-xl md:text-[28px] leading-tight md:leading-[35px] font-medium text-black lg:min-w-[428px] w-[16%]">
+    <h3 className="hidden md:block text-xl md:text-[28px] leading-tight md:leading-[35px] font-medium text-black 2xl:min-w-[428px] w-full">
       {job.title}
     </h3>
-    <h5 className="hidden md:block text-sm md:text-base leading-normal md:leading-[24px] font-semimedium text-black lg:min-w-[428px] w-[16%]">
+    <h5 className="hidden md:block text-sm md:text-base leading-normal md:leading-[24px] font-semimedium text-black 2xl:min-w-[428px] w-full">
       {job.location}
     </h5>
-    <h6 className="hidden md:block text-sm md:text-base leading-normal md:leading-[24px] font-semimedium text-black lg:min-w-[428px] w-[16%]">
+    <h6 className="hidden md:block text-sm md:text-base leading-normal md:leading-[24px] font-semimedium text-black 2xl:min-w-[428px] w-full">
       {job.department}
     </h6>
 
@@ -53,26 +59,31 @@ const JOBS_DATA: JobPosition[] = [
     title: "Site Engineer",
     location: "On Site",
     department: "Sales",
+    link: "/career/single-career",
   },
   {
     title: "Sales Associate",
     location: "On Site",
     department: "Sales",
+    link: "/career/single-career",
   },
   {
     title: "Project Manager",
     location: "On Site",
     department: "Sales",
+    link: "/career/single-career",
   },
   {
     title: "Sales Director",
     location: "On Site",
     department: "Sales",
+    link: "/career/single-career",
   },
   {
     title: "Labor Supervisor",
     location: "On Site",
     department: "Sales",
+    link: "/career/single-career",
   },
 ];
 

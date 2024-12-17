@@ -111,3 +111,9 @@ section {
   position: relative;
   transition: height 0.3s ease-in-out;
 }
+.small-square-list {
+  list-style-type: square;
+}
+.small-square-list li::marker {
+  font-size: 0.55rem; /* Adjust the marker size */
+}

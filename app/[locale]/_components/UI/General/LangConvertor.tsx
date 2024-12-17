@@ -33,8 +33,8 @@ export default function LangConv({ isBlack = false }: LangConvProps) {
     return () => window.removeEventListener("resize", checkMobileView);
   }, []);
 
-  const textColorClass = isBlack ? "text-black" : "text-white";
-  const iconSrc = isBlack ? "/img/globe.svg" : "/img/globewhite.svg";
+  const textColorClass = isBlack ? "text-white" : "text-black";
+  const iconSrc = isBlack ? "/img/globewhite.svg" : "/img/globe.svg";
 
   return (
     <div className="flex gap-2 items-center relative md:mt-0 w-fit">
@@ -42,7 +42,7 @@ export default function LangConv({ isBlack = false }: LangConvProps) {
         <button
           onClick={() => onLocaleChange("ar")}
           className={`flex items-center gap-2 text-base font-medium p-2 border border-transparent ${
-            isBlack ? "hover:border-black" : "hover:border-white"
+            isBlack ? "hover:border-white " : "hover:border-black"
           } rounded-[100px] ${textColorClass}`}
         >
           العربية <Image src={iconSrc} alt="language" width={24} height={16} />

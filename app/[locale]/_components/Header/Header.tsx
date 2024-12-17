@@ -29,30 +29,22 @@ export default function Header({}: HeaderProps) {
   }, [isMenuOpen]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const isCareerPage =
-    pathname.includes("/career") || pathname.includes("/faqs");
+  const isTransparentPage =
+    pathname.includes("/community") ||
+    pathname === "/" ||
+    pathname.includes("/media") ||
+    pathname.includes("/about-us");
   return (
     <header
       className={` top-0 left-0 right-0 z-50   ${
-        isCareerPage
-          ? "absolute"
-          : " fixed bg-gradient-to-b from-black/100 to-transparent"
+        isTransparentPage
+          ? " fixed bg-gradient-to-b from-black/100 to-transparent"
+          : "absolute"
       }`}
     >
       <div className="max-w-[1400px] mx-auto px-4 2xl:px-0 py-4 h-[100px] flex items-center justify-between w-full">
         <div className="flex items-center">
-          {isCareerPage ? (
-            <Link href="/" className="mr-auto">
-              <Image
-                src="/logo_black.svg"
-                alt="Logo"
-                width={226.52}
-                height={28}
-                className={`h-auto w-auto ${isMenuOpen ? "hidden" : ""}`}
-                priority
-              />
-            </Link>
-          ) : (
+          {isTransparentPage ? (
             <Link href="/" className="mr-auto">
               <Image
                 src="/logo_primary.svg"
@@ -63,16 +55,27 @@ export default function Header({}: HeaderProps) {
                 priority
               />
             </Link>
+          ) : (
+            <Link href="/" className="mr-auto">
+              <Image
+                src="/logo_black.svg"
+                alt="Logo"
+                width={226.52}
+                height={28}
+                className={`h-auto w-auto ${isMenuOpen ? "hidden" : ""}`}
+                priority
+              />
+            </Link>
           )}
         </div>
 
         <div className="hidden md:flex items-center gap-2 lg:gap-[24px]">
           <Link
-            href="/"
+            href="/community"
             className={`text-base font-medium p-2 border border-transparent ${
-              isCareerPage
-                ? "text-black hover:border-black"
-                : "text-white hover:border-white"
+              isTransparentPage
+                ? "text-white hover:border-white"
+                : "text-black hover:border-black"
             } rounded-[100px]`}
           >
             <p>Our Communities</p>
@@ -80,21 +83,21 @@ export default function Header({}: HeaderProps) {
           <Link
             href="/"
             className={`text-base font-medium p-2 border border-transparent   ${
-              isCareerPage
-                ? "text-black hover:border-black"
-                : "text-white hover:border-white"
+              isTransparentPage
+                ? "text-white hover:border-white"
+                : "text-black hover:border-black"
             } rounded-[100px]`}
           >
             <p>Latest Updates</p>
           </Link>
-          <LangConvertor isBlack={isCareerPage} />
+          <LangConvertor isBlack={isTransparentPage} />
           <Link
             href="/"
             className={`text-base font-medium 
                 ${
-                  isCareerPage
-                    ? "text-white bg-black hover:bg-white hover:text-black"
-                    : "text-black bg-white hover:bg-black hover:text-white"
+                  isTransparentPage
+                    ? "text-black bg-white hover:bg-black hover:text-white"
+                    : "text-white bg-black hover:bg-white hover:text-black"
                 }  leading-[24px] px-5 py-3 rounded-[100px]`}
           >
             <p>Get In Touch</p>
@@ -102,9 +105,9 @@ export default function Header({}: HeaderProps) {
         </div>
 
         <button className="md:hidden" onClick={toggleMenu}>
-          {isCareerPage ? (
+          {isTransparentPage ? (
             <Image
-              src="/img/menuBlack.svg"
+              src="/menu.svg"
               alt="Menu"
               width={24}
               height={24}
@@ -114,7 +117,7 @@ export default function Header({}: HeaderProps) {
             />
           ) : (
             <Image
-              src="/menu.svg"
+              src="/img/menuBlack.svg"
               alt="Menu"
               width={24}
               height={24}
@@ -154,7 +157,7 @@ export default function Header({}: HeaderProps) {
           <div className="flex flex-col     px-4 h-[92vh] justify-between">
             <div className="flex flex-col ">
               <Link
-                href="/"
+                href="/community"
                 onClick={handleLinkClick}
                 className="text-base font-medium py-[13px] border-b border-[#c3c0ba] justify-between flex "
               >
