@@ -32,8 +32,9 @@ export default function Header({}: HeaderProps) {
   const isTransparentPage =
     pathname.includes("/community") ||
     pathname === "/" ||
-    pathname.includes("/media") ||
+    pathname === "/media" ||
     pathname.includes("/about-us");
+
   return (
     <header
       className={` top-0 left-0 right-0 z-50   ${
@@ -81,7 +82,7 @@ export default function Header({}: HeaderProps) {
             <p>Our Communities</p>
           </Link>
           <Link
-            href="/"
+            href="/media"
             className={`text-base font-medium p-2 border border-transparent   ${
               isTransparentPage
                 ? "text-white hover:border-white"

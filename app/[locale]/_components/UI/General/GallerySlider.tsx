@@ -30,7 +30,7 @@ const galleryItems: GalleryItem[] = [
   },
 ];
 
-export default function GallerySlider() {
+export default function GallerySlider({ mobile }: { mobile?: boolean }) {
   const sliderRef = useRef<Slider>(null);
   const [activeSlide, setActiveSlide] = useState<number>(0);
 
@@ -66,7 +66,11 @@ export default function GallerySlider() {
   };
 
   return (
-    <section className="relative hidden lg:block bg-white  pt-[40px] lg:pt-20 pb-[90px]">
+    <section
+      className={`relative ${
+        mobile ? "block" : "hidden"
+      } lg:block bg-white  pt-[40px] lg:pt-20 pb-[90px]`}
+    >
       <div className="max-w-[1512px] mx-auto">
         <div className="relative  lg:min-h-[664px] h-full">
           <div className="w-[362px] flex flex-col gap-3 ps-4  lg:pt-[55px] lg:pl-[56px] z-10 relative">

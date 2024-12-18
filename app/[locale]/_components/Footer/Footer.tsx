@@ -34,7 +34,7 @@ export default function Footer({}: FooterProps) {
               <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
             </Link>
             <Link
-              href="/"
+              href="/media"
               className="text-base font-medium text-white transition-all duration-300 relative group"
             >
               <p>Latest Updates</p>
