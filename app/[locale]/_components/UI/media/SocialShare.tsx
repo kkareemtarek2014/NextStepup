@@ -8,14 +8,22 @@ import Image from "next/image";
 
 import { useLocale } from "next-intl";
 
-const SocialShare = ({ slug, title }: { slug: string; title: string }) => {
+const SocialShare = ({
+  slug,
+  widthFull,
+  title,
+}: {
+  slug: string;
+  widthFull?: boolean;
+  title: string;
+}) => {
   const locale = useLocale();
 
   const shareUrl = `https://g-developments.pages.dev/${locale}/blogs/${slug}`;
 
   return (
-    <footer className="w-fit ">
-      <div className="flex items-center gap-6">
+    <div className={` ${widthFull ? " w-full lg:w-fit" : "w-fit"} `}>
+      <div className="flex items-center gap-6 w-full lg:w-fit justify-between lg:justify-start">
         <span className="text-[#AAAAAA]   text-xs">SHARE</span>
         <div className="flex items-center gap-2">
           <div className=" w-[44px] h-[44px] rounded-[12px]  ">
@@ -37,7 +45,7 @@ const SocialShare = ({ slug, title }: { slug: string; title: string }) => {
           </TwitterShareButton>
         </div>
       </div>
-    </footer>
+    </div>
   );
 };
 

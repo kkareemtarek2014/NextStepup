@@ -35,13 +35,14 @@ export default function Header({}: HeaderProps) {
     pathname === "/media" ||
     pathname.includes("/about-us");
 
+  const isContactPage = pathname.includes("/contact-us");
   return (
     <header
-      className={` top-0 left-0 right-0 z-50   ${
+      className={` top-0 left-0 right-0 z-50    ${
         isTransparentPage
           ? " fixed bg-gradient-to-b from-black/100 to-transparent"
           : "absolute"
-      }`}
+      } ${isContactPage ? "bg-teamColor" : ""}`}
     >
       <div className="max-w-[1400px] mx-auto px-4 2xl:px-0 py-4 h-[100px] flex items-center justify-between w-full">
         <div className="flex items-center">
@@ -93,7 +94,7 @@ export default function Header({}: HeaderProps) {
           </Link>
           <LangConvertor isBlack={isTransparentPage} />
           <Link
-            href="/"
+            href="/contact-us"
             className={`text-base font-medium 
                 ${
                   isTransparentPage
@@ -235,7 +236,7 @@ export default function Header({}: HeaderProps) {
             </div>
 
             <Link
-              href="/"
+              href="/contact-us"
               onClick={handleLinkClick}
               className="text-base font-medium bg-black text-white leading-[24px] px-5 py-3 rounded-[100px] text-center"
             >

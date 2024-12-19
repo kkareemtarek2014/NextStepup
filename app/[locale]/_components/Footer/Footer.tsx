@@ -55,7 +55,7 @@ export default function Footer({}: FooterProps) {
               <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
             </Link>
             <Link
-              href="/"
+              href="/contact-us"
               className="text-base font-medium text-white transition-all duration-300 relative group"
             >
               <p>Contact us</p>
@@ -64,7 +64,7 @@ export default function Footer({}: FooterProps) {
           </div>
           <button
             onClick={scrollToTop}
-            className="flex items-center justify-center  transition-all"
+            className="flex items-start justify-start lg:items-center lg:justify-center  transition-all"
           >
             <ArrowDownIcon className="block w-[32px] h-[32px] rotate-180" />
           </button>

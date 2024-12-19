@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import CustomSelect from "../General/CustomSelect";
+import Link from "next/link";
 
 // Define types
 type MediaPost = {
@@ -12,6 +13,7 @@ type MediaPost = {
   date: string;
   image: string;
   description: string;
+  link: string;
 };
 
 type FilterType = "all" | "news" | "events";
@@ -27,6 +29,7 @@ const MEDIA_DATA: MediaPost[] = [
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
+    link: "/media/static",
   },
   {
     id: 2,
@@ -36,6 +39,7 @@ const MEDIA_DATA: MediaPost[] = [
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
+    link: "/media/static",
   },
   {
     id: 3,
@@ -45,6 +49,7 @@ const MEDIA_DATA: MediaPost[] = [
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
+    link: "/media/static",
   },
   {
     id: 4,
@@ -54,6 +59,7 @@ const MEDIA_DATA: MediaPost[] = [
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
+    link: "/media/static",
   },
   {
     id: 5,
@@ -63,6 +69,7 @@ const MEDIA_DATA: MediaPost[] = [
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
+    link: "/media/static",
   },
   {
     id: 6,
@@ -72,6 +79,7 @@ const MEDIA_DATA: MediaPost[] = [
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
+    link: "/media/static",
   },
   {
     id: 7,
@@ -81,6 +89,7 @@ const MEDIA_DATA: MediaPost[] = [
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
+    link: "/media/static",
   },
   {
     id: 8,
@@ -90,6 +99,7 @@ const MEDIA_DATA: MediaPost[] = [
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
+    link: "/media/static",
   },
   // ... add more items
 ];
@@ -161,9 +171,10 @@ export default function MediaListSection() {
 
         {/* Media Grid */}
         <div className="flex flex-col  gap-[48px]">
-          <div className="grid grid-cols-1  lg:grid-cols-2 gap-[20px]">
+          <div className="grid grid-cols-1  lg:grid-cols-2 gap-x-[20px] gap-y-[32px] ">
             {displayedPosts.map((post) => (
-              <div
+              <Link
+                href={post.link}
                 key={post.id}
                 className="bg-gray-100 relative flex flex-col "
               >
@@ -192,7 +203,7 @@ export default function MediaListSection() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 

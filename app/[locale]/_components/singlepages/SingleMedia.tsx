@@ -109,6 +109,7 @@ export default function SingleMedia() {
           <SocialShare
             slug={"Sample Media Title"}
             title={mockMediaData.attributes.Title}
+            widthFull
           />
         </div>
 
