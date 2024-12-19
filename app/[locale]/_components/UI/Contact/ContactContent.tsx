@@ -16,7 +16,7 @@ export default function ContactContent() {
           />
         </div>
         <div className="lg:ms-auto    lg:me-[100px]  ">
-          <div className="flex flex-col gap-[80px]">
+          <div className="flex flex-col  gap-[40px] lg:gap-[80px]  w-full lg:min-w-[700px]">
             <div className="flex flex-col gap-6">
               <h3 className="textbase  text-start text-black  font-normal lg:font-semimedium lg:text-balance">
                 Are you interested in a property or have any other <br />
@@ -27,7 +27,7 @@ export default function ContactContent() {
                 <div className="w-full h-[3px] bg-black"></div>
               </h2>
             </div>
-            <div className="flex gap-[5.71%] w-full">
+            <div className="flex flex-col lg:flex-row  gap-[40px]  lg:gap-[5.71%] w-full">
               <div className="w-full lg:w-[47.14%] flex flex-col gap-6 ">
                 <h3 className="font-normal lg:font-semimedium text-base text-black">
                   Main Office
