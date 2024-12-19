@@ -32,7 +32,7 @@ const MEDIA_DATA: MediaPost[] = [
     id: 2,
     title: "The Heart of Ras El Hekma",
     category: "news",
-    date: "March 15, 2024",
+    date: "March 10, 2024",
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
@@ -41,7 +41,7 @@ const MEDIA_DATA: MediaPost[] = [
     id: 3,
     title: "The Heart of Ras El Hekma",
     category: "news",
-    date: "March 15, 2024",
+    date: "March 5, 2024",
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
@@ -50,7 +50,7 @@ const MEDIA_DATA: MediaPost[] = [
     id: 4,
     title: "The Heart of Ras El Hekma",
     category: "news",
-    date: "March 15, 2024",
+    date: "February 28, 2024",
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
@@ -59,7 +59,7 @@ const MEDIA_DATA: MediaPost[] = [
     id: 5,
     title: "The Heart of Ras El Hekma",
     category: "news",
-    date: "March 15, 2024",
+    date: "February 20, 2024",
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
@@ -68,7 +68,7 @@ const MEDIA_DATA: MediaPost[] = [
     id: 6,
     title: "The Heart of Ras El Hekma",
     category: "events",
-    date: "March 15, 2024",
+    date: "February 15, 2024",
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
@@ -77,7 +77,7 @@ const MEDIA_DATA: MediaPost[] = [
     id: 7,
     title: "The Heart of Ras El Hekma",
     category: "events",
-    date: "March 15, 2024",
+    date: "February 10, 2024",
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
@@ -86,7 +86,7 @@ const MEDIA_DATA: MediaPost[] = [
     id: 8,
     title: "The Heart of Ras El Hekma",
     category: "events",
-    date: "March 15, 2024",
+    date: "February 5, 2024",
     image: "/img/blog1.svg",
     description:
       "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
@@ -144,6 +144,7 @@ export default function MediaListSection() {
               setFilterType(value as FilterType);
               setVisibleItems(ITEMS_PER_PAGE);
             }}
+            size="small"
           />
           <CustomSelect
             id="sort-filter"
@@ -152,8 +153,9 @@ export default function MediaListSection() {
             value={sortBy}
             onChange={(value) => {
               setSortBy(value as SortType);
-              setVisibleItems(ITEMS_PER_PAGE); // Reset visible items when sort changes
+              setVisibleItems(ITEMS_PER_PAGE);
             }}
+            size="small"
           />
         </div>
 

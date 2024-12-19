@@ -92,7 +92,7 @@ const BlogContent = ({ content }: { content: any }) => {
               {item.type === "paragraph" &&
                 item.children.some((child: any) => child.text.trim()) && (
                   <p
-                    className={`text-sm sm:text-base font-semimedium leading-relaxed ${
+                    className={`text-sm sm:text-base font-normal lg:font-semimedium leading-relaxed ${
                       isTermsPage
                         ? "pb-6 sm:pb-8 md:pb-10"
                         : "pb-8 sm:pb-10 md:pb-12"

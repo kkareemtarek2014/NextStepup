@@ -17,7 +17,7 @@ export default function StatSection() {
                   <h2 className="text-[40px] leading-[50px] lg:text-[60px]  lg:leading-[75px] font-medium text-black">
                     6
                   </h2>
-                  <h3 className="text-base font-semimedium text-black leading-[22.4px]">
+                  <h3 className="text-base font-normal lg:font-semimedium text-black leading-[22.4px]">
                     Projects
                   </h3>
                 </div>{" "}
@@ -25,7 +25,7 @@ export default function StatSection() {
                   <h2 className="text-[40px] leading-[50px] lg:text-[60px]  lg:leading-[75px] font-medium text-black">
                     4.3k
                   </h2>
-                  <h3 className="text-base font-semimedium text-black leading-[22.4px]">
+                  <h3 className="text-base font-normal lg:font-semimedium text-black leading-[22.4px]">
                     Units
                   </h3>
                 </div>{" "}
@@ -33,7 +33,7 @@ export default function StatSection() {
                   <h2 className="text-[40px] leading-[50px] lg:text-[60px]  lg:leading-[75px] font-medium text-black">
                     62k
                   </h2>
-                  <h3 className="text-base font-semimedium text-black leading-[22.4px]">
+                  <h3 className="text-base font-normal lg:font-semimedium text-black leading-[22.4px]">
                     Total SQM
                   </h3>
                 </div>
@@ -53,7 +53,7 @@ export default function StatSection() {
                   <h2 className="text-[40px] leading-[50px] lg:text-[60px]  lg:leading-[75px] font-medium text-black">
                     3
                   </h2>
-                  <h3 className="text-base font-semimedium text-black leading-[22.4px]">
+                  <h3 className="text-base font-normal lg:font-semimedium text-black leading-[22.4px]">
                     Projects
                   </h3>
                 </div>{" "}
@@ -61,7 +61,7 @@ export default function StatSection() {
                   <h2 className="text-[40px] leading-[50px] lg:text-[60px]  lg:leading-[75px] font-medium text-black">
                     1.2k
                   </h2>
-                  <h3 className="text-base font-semimedium text-black leading-[22.4px]">
+                  <h3 className="text-base font-normal lg:font-semimedium text-black leading-[22.4px]">
                     Units
                   </h3>
                 </div>{" "}
@@ -69,7 +69,7 @@ export default function StatSection() {
                   <h2 className="text-[40px] leading-[50px] lg:text-[60px]  lg:leading-[75px] font-medium text-black">
                     35k
                   </h2>
-                  <h3 className="text-base font-semimedium text-black leading-[22.4px]">
+                  <h3 className="text-base font-normal lg:font-semimedium text-black leading-[22.4px]">
                     Total SQM
                   </h3>
                 </div>

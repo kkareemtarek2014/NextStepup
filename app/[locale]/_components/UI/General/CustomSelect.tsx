@@ -8,19 +8,29 @@ interface Option {
 }
 
 interface CustomSelectProps {
-  title: string;
+  title?: string;
+  bgColor?: string;
   options: readonly Option[];
   value: string;
+  size?: "small" | "medium" | "Header";
+  fullWidth?: boolean;
   onChange: (value: string) => void;
-  id: string;
+  id?: string;
+  width?: string;
+  textCenter?: boolean;
 }
 
 export default function CustomSelect({
   title,
+  bgColor,
   options,
   value,
+  size,
+  fullWidth,
+  width,
   onChange,
   id,
+  textCenter,
 }: CustomSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
@@ -58,15 +68,23 @@ export default function CustomSelect({
   return (
     <div
       ref={selectRef}
-      className="relative w-full sm:w-fit lg:min-w-[200px] border border-borderColor"
+      className={`relative w-full sm:w-fit lg:min-w-[200px] border border-borderColor  ${
+        fullWidth ? "!w-full lg:!w-full" : width ? width : ""
+      }`}
     >
       <div
-        className="flex gap-2 py-[4.5px] px-4 items-center cursor-pointer"
+        className={`flex   px-4  items-center cursor-pointer w-full !h-fit   justify-between ${
+          bgColor ? `${bgColor}` : ""
+        } ${size === "small" ? "py-[4.5px]  px-4" : ""} ${
+          size === "medium" ? "py-[14px] lg:py-[15px]   px-3 lg:px-4" : ""
+        }`}
         onClick={toggleDropdown}
       >
-        <div className="flex flex-col gap-1 w-fit min-w-[136px]">
-          <h3 className="text-xs font-semimedium text-black">{title}</h3>
-          <h4 className="text-base font-semimedium text-black">
+        <div className="flex flex-col gap-1 w-full  lg:min-w-[136px]   ">
+          <h3 className="text-xs font-normal lg:font-semimedium text-black">
+            {title}
+          </h3>
+          <h4 className="text-base font-normal lg:font-semimedium text-black text-start leading-[22.4px] items-center text-nowrap  w-fit">
             {selectedOption.label}
           </h4>
         </div>
@@ -84,9 +102,9 @@ export default function CustomSelect({
           {options.map((option) => (
             <div
               key={option.value}
-              className={`px-4 py-2 cursor-pointer hover:bg-gray-50 text-black text-base font-semimedium ${
+              className={`px-4 py-2 cursor-pointer hover:bg-gray-50 text-black text-base font-normal lg:font-semimedium ${
                 option.value === value ? "bg-gray-100" : ""
-              }`}
+              } ${textCenter ? "text-center" : "text-start"}`}
               onClick={() => handleSelect(option.value)}
             >
               {option.label}

@@ -107,7 +107,7 @@ export default function FaqSection() {
                     : "max-h-0 opacity-0"
                 }`}
               >
-                <p className="text-sm sm:text-base text-black px-6 py-4 font-semimedium">
+                <p className="text-sm sm:text-base text-black px-6 py-4 font-normal lg:font-semimedium">
                   {faq.answer}
                 </p>
               </div>

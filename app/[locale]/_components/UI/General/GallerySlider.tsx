@@ -69,7 +69,7 @@ export default function GallerySlider({ mobile }: { mobile?: boolean }) {
     <section
       className={`relative ${
         mobile ? "block" : "hidden"
-      } lg:block bg-white  pt-[40px] lg:pt-20 pb-[90px]`}
+      } lg:block bg-white   pb-[90px]`}
     >
       <div className="max-w-[1512px] mx-auto">
         <div className="relative  lg:min-h-[664px] h-full">

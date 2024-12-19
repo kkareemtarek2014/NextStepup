@@ -29,10 +29,10 @@ const JobCard = ({ job, onClick }: JobCardProps) => (
         {job.title}
       </h3>
       <div className="flex gap-x-4">
-        <h5 className="text-sm md:text-base leading-normal md:leading-[24px] font-semimedium text-black text-nowrap  w-fit">
+        <h5 className="text-sm md:text-base leading-normal md:leading-[24px] font-normal lg:font-semimedium text-black text-nowrap  w-fit">
           {job.location}
         </h5>
-        <h6 className="text-sm md:text-base leading-normal md:leading-[24px] font-semimedium text-black  w-full">
+        <h6 className="text-sm md:text-base leading-normal md:leading-[24px] font-normal lg:font-semimedium text-black  w-full">
           {job.department}
         </h6>
       </div>
@@ -41,10 +41,10 @@ const JobCard = ({ job, onClick }: JobCardProps) => (
     <h3 className="hidden md:block text-xl md:text-[28px] leading-tight md:leading-[35px] font-medium text-black 2xl:min-w-[428px] w-full">
       {job.title}
     </h3>
-    <h5 className="hidden md:block text-sm md:text-base leading-normal md:leading-[24px] font-semimedium text-black 2xl:min-w-[428px] w-full">
+    <h5 className="hidden md:block text-sm md:text-base leading-normal md:leading-[24px] font-normal lg:font-semimedium text-black 2xl:min-w-[428px] w-full">
       {job.location}
     </h5>
-    <h6 className="hidden md:block text-sm md:text-base leading-normal md:leading-[24px] font-semimedium text-black 2xl:min-w-[428px] w-full">
+    <h6 className="hidden md:block text-sm md:text-base leading-normal md:leading-[24px] font-normal lg:font-semimedium text-black 2xl:min-w-[428px] w-full">
       {job.department}
     </h6>
 

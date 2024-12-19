@@ -14,7 +14,7 @@ export default function ValusSection() {
             <h4 className="text-[28px] leading-[35px] font-medium text-black">
               Customer-first focus
             </h4>
-            <p className="text-base leading-[24px] font-semimedium text-black text-pretty  lg:text-balance">
+            <p className="text-base leading-[24px] font-normal lg:font-semimedium text-black text-pretty  lg:text-balance">
               We believe that putting customers at the heart of every decision
               creates trust and value. From the first inquiry to closing, we are
               dedicated to delivering tailored experiences that meet unique
@@ -25,7 +25,7 @@ export default function ValusSection() {
             <h4 className="text-[28px] leading-[35px] font-medium text-black">
               Innovation for better solutions
             </h4>{" "}
-            <p className="text-base leading-[24px] font-semimedium text-black text-pretty  lg:text-balance">
+            <p className="text-base leading-[24px] font-normal lg:font-semimedium text-black text-pretty  lg:text-balance">
               We embrace new ideas, technologies, and approaches to provide
               clients with better, more efficient services. By staying ahead of
               industry trends and exploring modern tools, we’re able to simplify
@@ -36,7 +36,7 @@ export default function ValusSection() {
             <h4 className="text-[28px] leading-[35px] font-medium text-black">
               Commitment to community
             </h4>{" "}
-            <p className="text-base leading-[24px] font-semimedium text-black text-pretty  lg:text-balance">
+            <p className="text-base leading-[24px] font-normal lg:font-semimedium text-black text-pretty  lg:text-balance">
               We work to enhance neighborhoods, support local businesses, and
               contribute to community projects, recognizing that real estate is
               more than buildings—it’s about building connections and fostering
@@ -47,7 +47,7 @@ export default function ValusSection() {
             <h4 className="text-[28px] leading-[35px] font-medium text-black">
               Commitment to community
             </h4>{" "}
-            <p className="text-base leading-[24px] font-semimedium text-black text-pretty  lg:text-balance">
+            <p className="text-base leading-[24px] font-normal lg:font-semimedium text-black text-pretty  lg:text-balance">
               We work to enhance neighborhoods, support local businesses, and
               contribute to community projects, recognizing that real estate is
               more than buildings—it’s about building connections and fostering
@@ -58,7 +58,7 @@ export default function ValusSection() {
             <h4 className="text-[28px] leading-[35px] font-medium text-black">
               Commitment to community
             </h4>{" "}
-            <p className="text-base leading-[24px] font-semimedium text-black text-pretty  lg:text-balance">
+            <p className="text-base leading-[24px] font-normal lg:font-semimedium text-black text-pretty  lg:text-balance">
               We work to enhance neighborhoods, support local businesses, and
               contribute to community projects, recognizing that real estate is
               more than buildings—it’s about building connections and fostering
@@ -69,7 +69,7 @@ export default function ValusSection() {
             <h4 className="text-[28px] leading-[35px] font-medium text-black">
               Commitment to community
             </h4>{" "}
-            <p className="text-base leading-[24px] font-semimedium text-black text-pretty  lg:text-balance">
+            <p className="text-base leading-[24px] font-normal lg:font-semimedium text-black text-pretty  lg:text-balance">
               We work to enhance neighborhoods, support local businesses, and
               contribute to community projects, recognizing that real estate is
               more than buildings—it’s about building connections and fostering

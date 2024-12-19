@@ -147,7 +147,7 @@ export default function CareerDescription() {
                   return (
                     <p
                       key={index}
-                      className={`text-black text-sm lg:text-base font-semimedium text-pretty `}
+                      className={`text-black text-sm lg:text-base font-normal lg:font-semimedium text-pretty `}
                     >
                       {desc?.children?.[0]?.text || ""}
                     </p>
@@ -156,12 +156,12 @@ export default function CareerDescription() {
                   return (
                     <ul
                       key={index}
-                      className={`list-disc ms-[19px] text-sm lg:text-base font-semimedium small-square-list`}
+                      className={`list-disc ms-[19px] text-sm lg:text-base font-normal lg:font-semimedium small-square-list`}
                     >
                       {desc?.children?.map((item: any, itemIndex: number) => (
                         <li
                           key={itemIndex}
-                          className="text-black  text-sm lg:text-base font-semimedium text-pretty"
+                          className="text-black  text-sm lg:text-base font-normal lg:font-semimedium text-pretty"
                         >
                           {item?.children?.[0]?.text || ""}
                         </li>

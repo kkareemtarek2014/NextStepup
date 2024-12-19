@@ -34,7 +34,7 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ list, center }) => {
                         href={item.link}
                         prefetch={false}
                         scroll={false}
-                        className={`text-[10px] md:text-sm relative group cursor-pointer font-semimedium text-black  ${
+                        className={`text-[10px] md:text-sm relative group cursor-pointer font-normal lg:font-semimedium text-black  ${
                           item.pointerEvents === false && "pointer-events-none"
                         }`}
                       >
@@ -43,13 +43,13 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ list, center }) => {
                       </Link>
                     </div>
                     <h2
-                      className={`ml-2 text-[10px] md:text-sm font-semimedium text-black`}
+                      className={`ml-2 text-[10px] md:text-sm font-normal lg:font-semimedium text-black`}
                     >
                       /{" "}
                     </h2>
                   </>
                 ) : (
-                  <span className="text-black md:w-full items-center font-semimedium text-[10px] md:text-sm  opacity-50">
+                  <span className="text-black md:w-full items-center font-normal lg:font-semimedium text-[10px] md:text-sm  opacity-50">
                     {item.title}
                   </span>
                 )}

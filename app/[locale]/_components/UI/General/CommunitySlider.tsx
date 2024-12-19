@@ -145,7 +145,7 @@ export default function BlogSlider() {
               {blogPosts.map((post, index) => (
                 <div
                   key={index}
-                  className=" bg-gray-100 relative flex flex-col  pe-[20px] lg:pe-0 "
+                  className=" bg-gray-100 relative flex flex-col  pe-[20px] lg:pe-0 h-full "
                 >
                   <div className="relative h-full">
                     <div className="relative h-[160px] lg:h-[320px]">
@@ -157,8 +157,8 @@ export default function BlogSlider() {
                       />
                     </div>
                     <div className="relative w-full">
-                      <div className="bg-white p-4 lg:p-[28px] !pb-[48px] ">
-                        <div className="flex flex-col gap-5">
+                      <div className="bg-white p-4 lg:p-[28px] !pb-[48px]  h-[222px] lg:h-full   ">
+                        <div className="flex flex-col gap-5 justify-between h-full ">
                           <div className="flex flex-col gap-3">
                             <span className="text-base font-medium text-primary leading-[22.4px] uppercase tracking-wider">
                               {post.category} • {post.stats}

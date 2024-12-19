@@ -24,9 +24,9 @@ export default function CareerTitle() {
     <div className="flex flex-col gap-[64px]">
       <div className="flex flex-col  gap-6">
         <Breadcrumb list={list} />
-        <h2 className="text-[40px] md:text-[64px] leading-[50px] md:leading-[80px] font-medium text-black">
+        <h1 className="text-[40px] md:text-[64px] leading-[50px] md:leading-[80px] font-medium text-black">
           Site Engineer{" "}
-        </h2>
+        </h1>
         <Button
           href={`/${locale}`}
           className="px-5 py-3 bg-black hover:bg-black/70 transition-all duration-300 rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit"

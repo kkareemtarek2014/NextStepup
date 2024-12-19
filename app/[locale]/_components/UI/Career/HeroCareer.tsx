@@ -12,7 +12,7 @@ export default function HomeHero() {
             <h1 className="md:text-[120px] text-[42px] leading-[52.8px] md:leading-[150px] font-medium text-black">
               Careers{" "}
             </h1>{" "}
-            <h2 className="md:text-base  md:leading-[22.4px] font-semimedium text-black max-w-[600px] ">
+            <h2 className="md:text-base  md:leading-[22.4px] font-normal lg:font-semimedium text-black max-w-[600px] ">
               Our team is a dynamic blend of industry experts, visionaries, and
               dedicated professionals committed to transforming real estate and
               enhancing lives.

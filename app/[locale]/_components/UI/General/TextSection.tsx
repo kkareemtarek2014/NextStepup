@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import ArrowIcon from "../../Icons/ArrowIcon";
 
 interface TextSectionProps {
