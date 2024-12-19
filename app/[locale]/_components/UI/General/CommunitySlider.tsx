@@ -157,7 +157,7 @@ export default function BlogSlider() {
                       />
                     </div>
                     <div className="relative w-full">
-                      <div className="bg-white p-4 lg:p-[28px] !pb-[48px]  h-[222px] lg:h-full   ">
+                      <div className="bg-white p-4 lg:p-[28px] !pb-[48px]  h-[222px]  md:h-[280px] 2xl:h-full   ">
                         <div className="flex flex-col gap-5 justify-between h-full ">
                           <div className="flex flex-col gap-3">
                             <span className="text-base font-medium text-primary leading-[22.4px] uppercase tracking-wider">

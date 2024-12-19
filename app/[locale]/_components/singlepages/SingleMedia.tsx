@@ -99,9 +99,9 @@ export default function SingleMedia() {
               date={new Date(mockMediaData.attributes.publishedAt)}
               content={mockMediaData.attributes.Content}
             />
-            <h2 className="text-2xl md:text-4xl lg:text-[64px] font-medium text-black leading-normal lg:leading-[80px] tracking-[0.5%]">
+            <h1 className="text-2xl md:text-4xl lg:text-[64px] font-medium text-black leading-normal lg:leading-[80px] tracking-[0.5%]">
               {mockMediaData.attributes.Title}
-            </h2>
+            </h1>
             <p className="text-xl font-medium text-black">
               {mockMediaData.attributes.Description}
             </p>
