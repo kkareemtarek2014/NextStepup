@@ -16,7 +16,7 @@ export default function Footer({}: FooterProps) {
   };
   return (
     <footer className="block top-0 left-0 right-0 z-50 w-full bg-black">
-      <div className="container mx-auto px-4 py-4 flex flex-col">
+      <div className="max-w-[1400px] mx-auto px-4 py-4 flex flex-col">
         <div className="flex flex-row justify-between py-[24px]">
           <div className="flex flex-col md:flex-row gap-[9px] md:gap-[40px] mb-4 md:mb-0">
             <Link
