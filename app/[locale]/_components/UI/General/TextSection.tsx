@@ -4,6 +4,7 @@ import ArrowIcon from "../../Icons/ArrowIcon";
 interface TextSectionProps {
   title: string;
   description: string;
+  paragraph?: string;
   bgcolor?: string;
   button?: {
     text: string;
@@ -14,6 +15,7 @@ interface TextSectionProps {
 export default function TextSection({
   title,
   description,
+  paragraph,
   bgcolor,
   button,
 }: TextSectionProps) {
@@ -40,10 +42,25 @@ export default function TextSection({
             )}
           </div>
         </div>
-        <div className="lg:w-[52.71%] w-full">
-          <h3 className="text-[28px] lg:text-[40px] font-medium text-start text-black leading-[35px] lg:leading-[50px]">
+        <div
+          className={`${
+            paragraph ? "gap-3 flex flex-col" : ""
+          }  lg:w-[52.71%] w-full `}
+        >
+          <h3
+            className={`${
+              paragraph
+                ? "text-[28px] leading-[35px] "
+                : "text-[28px] lg:text-[40px] leading-[35px] lg:leading-[50px] "
+            } font-medium text-start text-black `}
+          >
             {description}
           </h3>
+          {paragraph && (
+            <p className="text-base lg:text-[20px] font-normal text-start text-primary leading-[30px] lg:leading-[25px]">
+              {paragraph}
+            </p>
+          )}
         </div>
       </div>
     </section>

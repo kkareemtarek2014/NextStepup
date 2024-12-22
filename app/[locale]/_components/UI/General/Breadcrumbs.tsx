@@ -13,9 +13,10 @@ interface BreadcrumbItem {
 interface BreadcrumbProps {
   list?: BreadcrumbItem[];
   center?: boolean;
+  color?: string;
 }
 
-const Breadcrumb: FC<BreadcrumbProps> = ({ list, center }) => {
+const Breadcrumb: FC<BreadcrumbProps> = ({ list, center, color }) => {
   return (
     <div
       className={`${
@@ -23,7 +24,11 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ list, center }) => {
       } flex flex-row `}
     >
       {list && (
-        <nav className="flex text-center items-center  py-[6px] md:px-0  w-auto max-w-fit bg-transparent rounded-[8px] relative z-[1]">
+        <nav
+          className={`flex text-center items-center  py-[6px] md:px-0  w-auto max-w-fit bg-transparent rounded-[8px] relative z-[1] ${
+            color ? color : " text-black"
+          }`}
+        >
           <ol className="list-reset flex text-center items-center justify-center gap-x-1 md:gap-x-[6px] flex-wrap">
             {list.map((item: BreadcrumbItem, index: number) => (
               <li key={index} className="flex items-center capitalize">
@@ -34,7 +39,7 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ list, center }) => {
                         href={item.link}
                         prefetch={false}
                         scroll={false}
-                        className={`text-[10px] md:text-sm relative group cursor-pointer font-normal lg:font-semimedium text-black  ${
+                        className={`text-[10px] md:text-sm relative group cursor-pointer font-normal lg:font-semimedium text-inherit  ${
                           item.pointerEvents === false && "pointer-events-none"
                         }`}
                       >
@@ -43,13 +48,13 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ list, center }) => {
                       </Link>
                     </div>
                     <h2
-                      className={`ml-2 text-[10px] md:text-sm font-normal lg:font-semimedium text-black`}
+                      className={`ml-2 text-[10px] md:text-sm font-normal lg:font-semimedium  text-inherit`}
                     >
                       /{" "}
                     </h2>
                   </>
                 ) : (
-                  <span className="text-black md:w-full items-center font-normal lg:font-semimedium text-[10px] md:text-sm  opacity-50">
+                  <span className=" text-inherit md:w-full items-center font-normal lg:font-semimedium text-[10px] md:text-sm  opacity-50">
                     {item.title}
                   </span>
                 )}

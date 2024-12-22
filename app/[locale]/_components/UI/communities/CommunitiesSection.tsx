@@ -52,7 +52,7 @@ const YOUR_COMMUNITIES_DATA: CommunitiesPost[] = [
     status: "completed",
     image: "/img/blog1.svg",
 
-    link: "/Community/static",
+    link: "/community/static",
   },
   {
     id: 2,
@@ -62,7 +62,7 @@ const YOUR_COMMUNITIES_DATA: CommunitiesPost[] = [
     unitType: "Twin House",
     status: "completed",
     image: "/img/blog1.svg",
-    link: "/Community/static",
+    link: "/community/static",
   },
   {
     id: 3,
@@ -74,7 +74,7 @@ const YOUR_COMMUNITIES_DATA: CommunitiesPost[] = [
 
     image: "/img/blog1.svg",
 
-    link: "/Community/static",
+    link: "/community/static",
   },
   {
     id: 4,
@@ -85,7 +85,7 @@ const YOUR_COMMUNITIES_DATA: CommunitiesPost[] = [
     status: "completed",
     image: "/img/blog1.svg",
 
-    link: "/Community/static",
+    link: "/community/static",
   },
   {
     id: 5,
@@ -96,7 +96,7 @@ const YOUR_COMMUNITIES_DATA: CommunitiesPost[] = [
     status: "ongoing",
     image: "/img/blog1.svg",
 
-    link: "/Community/static",
+    link: "/community/static",
   },
   {
     id: 6,
@@ -107,7 +107,7 @@ const YOUR_COMMUNITIES_DATA: CommunitiesPost[] = [
     status: "ongoing",
     image: "/img/blog1.svg",
 
-    link: "/Community/static",
+    link: "/community/static",
   },
   {
     id: 7,
@@ -118,7 +118,7 @@ const YOUR_COMMUNITIES_DATA: CommunitiesPost[] = [
     status: "ongoing",
     image: "/img/blog1.svg",
 
-    link: "/Community/static",
+    link: "/community/static",
   },
   {
     id: 8,
@@ -129,7 +129,7 @@ const YOUR_COMMUNITIES_DATA: CommunitiesPost[] = [
     status: "ongoing",
     image: "/img/blog1.svg",
 
-    link: "/Community/static",
+    link: "/community/static",
   },
   // ... add more items
 ];
