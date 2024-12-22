@@ -117,3 +117,18 @@ section {
 .small-square-list li::marker {
   font-size: 0.55rem; /* Adjust the marker size */
 }
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+.animate-slide-down {
+  animation: slide-down 0.3s ease-out;
+}

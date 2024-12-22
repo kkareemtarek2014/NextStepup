@@ -1,5 +1,6 @@
 import GetintouchSection from "../UI/General/GetintouchSection";
 import HeroSection from "../UI/General/HeroSection";
+import CommunitiesSection from "../UI/communities/CommunitiesSection";
 export const runtime = "edge";
 
 export default function Communitypage() {
@@ -17,6 +18,7 @@ export default function Communitypage() {
         heading={heroSectionData.heading}
         subheading={heroSectionData.subheading}
       />
+      <CommunitiesSection />
       <GetintouchSection />
     </div>
   );

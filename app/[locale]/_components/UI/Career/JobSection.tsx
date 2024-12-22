@@ -89,7 +89,7 @@ const JOBS_DATA: JobPosition[] = [
 
 const JobSection = () => {
   const handleJobClick = (job: JobPosition) => {
-    console.log(`Selected job: ${job.title}`);
+    // console.log(`Selected job: ${job.title}`);
   };
 
   return (
