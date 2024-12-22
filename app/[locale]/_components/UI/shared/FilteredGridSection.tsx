@@ -313,73 +313,84 @@ export default function FilteredGridSection<T extends BasePost>({
 
         {/* Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[20px] gap-y-[32px]">
-          {displayedItems.map((item) => (
-            <div className="bg-gray-100 relative flex flex-col">
-              <div className="relative h-full">
-                <Link href={item.link} key={item.id}>
-                  <div
-                    className={`relative ${
-                      page !== "media"
-                        ? "h-[160px] lg:h-[300px]"
-                        : "h-[148px] lg:h-[320px]"
-                    }`}
-                  >
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </Link>
-                <div className="relative w-full">
-                  <div
-                    className={`${
-                      page !== "media"
-                        ? "bg-white border border-borderColor"
-                        : "bg-teamColor"
-                    } p-5 lg:p-[28px] lg:pb-[48px]`}
-                  >
-                    <div className="flex flex-col gap-3 w-fit max-w-[554px]">
-                      {item.date ? (
-                        <span className="text-base font-medium text-primary leading-[22.4px] capitalize">
-                          {item.category} - {item.date}
-                        </span>
-                      ) : item.location ? (
-                        <span className="text-base font-medium text-primary  leading-[22.4px] uppercase">
-                          {item.location} • {item.status}
-                        </span>
-                      ) : null}
-                      <Link href={item.link} key={item.id}>
-                        <h3 className="text-[28px] lg:text-[40px] font-medium leading-[35px] lg:leading-[50px] text-black text-balance">
-                          {item.title}
-                        </h3>{" "}
-                      </Link>
-
-                      {item.description ? (
-                        <p className="text-base lg:text-xl font-medium text-black line-clamp-2 text-pretty">
-                          {item.description}
-                        </p>
-                      ) : null}
-                      {item.location ? (
-                        <Button
-                          href={item.link}
-                          className="px-4 lg:px-5 py-[10px] lg:py-3 bg-black rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit hover:opacity-80"
-                          iconComponent={
-                            <ArrowIcon className="rotate-180 text-white" />
-                          }
-                        >
-                          <span className="text-white text-sm lg:text-base font-medium leading-[25px] text-start ">
-                            View Project
+          {displayedItems.length > 0 ? (
+            displayedItems.map((item) => (
+              <div key={item.id} className="bg-gray-100 relative flex flex-col">
+                <div className="relative h-full">
+                  <Link href={item.link} key={item.id}>
+                    <div
+                      className={`relative ${
+                        page !== "media"
+                          ? "h-[160px] lg:h-[300px]"
+                          : "h-[148px] lg:h-[320px]"
+                      }`}
+                    >
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  </Link>
+                  <div className="relative w-full">
+                    <div
+                      className={`${
+                        page !== "media"
+                          ? "bg-white border border-borderColor"
+                          : "bg-teamColor"
+                      } p-5 lg:p-[28px] lg:pb-[48px]`}
+                    >
+                      <div className="flex flex-col gap-3 w-fit max-w-[554px]">
+                        {item.date ? (
+                          <span className="text-base font-medium text-primary leading-[22.4px] capitalize">
+                            {item.category} - {item.date}
                           </span>
-                        </Button>
-                      ) : null}
+                        ) : item.location ? (
+                          <span className="text-base font-medium text-primary  leading-[22.4px] uppercase">
+                            {item.location} • {item.status}
+                          </span>
+                        ) : null}
+                        <Link href={item.link} key={item.id}>
+                          <h3 className="text-[28px] lg:text-[40px] font-medium leading-[35px] lg:leading-[50px] text-black text-balance">
+                            {item.title}
+                          </h3>{" "}
+                        </Link>
+
+                        {item.description ? (
+                          <p className="text-base lg:text-xl font-medium text-black line-clamp-2 text-pretty">
+                            {item.description}
+                          </p>
+                        ) : null}
+                        {item.location ? (
+                          <Button
+                            href={item.link}
+                            className="px-4 lg:px-5 py-[10px] lg:py-3 bg-black rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit hover:opacity-80"
+                            iconComponent={
+                              <ArrowIcon className="rotate-180 text-white" />
+                            }
+                          >
+                            <span className="text-white text-sm lg:text-base font-medium leading-[25px] text-start ">
+                              View Project
+                            </span>
+                          </Button>
+                        ) : null}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+            ))
+          ) : (
+            <div className="col-span-1 lg:col-span-2 flex justify-center items-center flex-col py-20 gap-3">
+              <h3 className="text-[40px] leading-[50px] lg:text-[64px] lg:leading-[80px]  font-medium text-black">
+                There’s no projects{" "}
+              </h3>
+              <p className=" text-base lg:text-[28px] lg:leading-[35px] text-black font-medium">
+                Try adjusting your filters to show projects.
+              </p>
             </div>
-          ))}
+          )}
         </div>
 
         {hasMore && (
