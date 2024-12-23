@@ -37,7 +37,7 @@ export default function SingleCummunitiesHero({
   const locale = useLocale();
 
   return (
-    <section className="relative h-[60vh] md:h-[96vh] md:min-h-[600px] ">
+    <section className="relative h-[60vh] md:h-[96vh] md:min-h-[711px] ">
       <div
         className="absolute h-full w-full z-[1]"
         style={{
@@ -56,7 +56,7 @@ export default function SingleCummunitiesHero({
         />
       </div>
       <div className="absolute inset-0  max-w-[1400px] mx-auto w-full bottom-0  mb-auto  pt-[100px] left-0 gap-[24px] flex flex-col justify-center items-start px-4 2xl:px-0 z-40">
-        <div className="flex flex-col justify-start items-start lg:gap-[40px] gap-[24px]">
+        <div className="flex flex-col justify-start items-start lg:gap-[40px] gap-[24px] py-4">
           {" "}
           <Breadcrumbs list={breadcrumbsList} color="text-white" />
           <Image

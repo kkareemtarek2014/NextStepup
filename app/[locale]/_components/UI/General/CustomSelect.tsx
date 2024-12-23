@@ -12,7 +12,7 @@ interface CustomSelectProps {
   bgColor?: string;
   options: readonly Option[];
   value: string | string[];
-  size?: "small" | "medium" | "Header";
+  size?: "small" | "medium" | "Mobile";
   fullWidth?: boolean;
   onChange: (value: string | string[]) => void;
   id?: string;
@@ -127,7 +127,7 @@ export default function CustomSelect({
           bgColor || ""
         } ${size === "small" ? "py-[4.5px] px-4" : ""} ${
           size === "medium" ? "py-[14px] lg:py-[15px] px-3 lg:px-4" : ""
-        }`}
+        } ${size === "Mobile" ? "py-[6px] lg:!py-[4.5px] px-3 lg:px-4" : ""}`}
         onClick={toggleDropdown}
       >
         <div className="flex flex-col gap-1 w-full lg:min-w-[136px]">

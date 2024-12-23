@@ -4,7 +4,10 @@ import GetintouchSection from "../UI/General/GetintouchSection";
 import DiscoverSection from "../UI/General/DiscoverSection";
 import GallerySlider from "../UI/General/GallerySlider";
 import SingleCummunitiesHero from "../UI/communities/SingleCummunitiesHero";
-
+import FeatureSection from "../UI/communities/FeatureSection";
+import AmentieSection from "../UI/communities/AmentieSection";
+import HighlightSection from "../UI/communities/HighlightSection";
+import CalculationSection from "../UI/communities/CalculationSection";
 export const runtime = "edge";
 
 export default function SingleCommunity() {
@@ -26,7 +29,10 @@ export default function SingleCommunity() {
       />
       <TextSection {...textSectionData} />
       <GallerySlider mobile={true} />
-
+      <FeatureSection />
+      <AmentieSection />
+      <HighlightSection />
+      <CalculationSection />
       <DiscoverSection />
       <GetintouchSection />
     </div>
