@@ -132,3 +132,11 @@ section {
 .animate-slide-down {
   animation: slide-down 0.3s ease-out;
 }
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

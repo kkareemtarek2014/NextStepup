@@ -8,6 +8,7 @@ import FeatureSection from "../UI/communities/FeatureSection";
 import AmentieSection from "../UI/communities/AmentieSection";
 import HighlightSection from "../UI/communities/HighlightSection";
 import CalculationSection from "../UI/communities/CalculationSection";
+import FixedHeader from "../UI/communities/FixedHeader";
 export const runtime = "edge";
 
 export default function SingleCommunity() {
@@ -27,14 +28,30 @@ export default function SingleCommunity() {
         heading="Seashell Ras El Hekma"
         subheading="Nestled along the pristine shores of Ras El Hekma, Seashell brings you closer to crystal-clear waters, golden sands and inescapable serenity that knows no bounds."
       />
-      <TextSection {...textSectionData} />
-      <GallerySlider mobile={true} />
-      <FeatureSection />
-      <AmentieSection />
-      <HighlightSection />
-      <CalculationSection />
+
+      <div id="concept">
+        <TextSection {...textSectionData} />
+      </div>
+      <div id="gallery">
+        <GallerySlider mobile={true} />
+      </div>
+      <div id="features">
+        <FeatureSection />
+      </div>
+      <div id="amenities">
+        <AmentieSection />
+      </div>
+      <div id="location">
+        <HighlightSection />
+      </div>
+      <div id="calculator">
+        <CalculationSection />
+      </div>
       <DiscoverSection />
-      <GetintouchSection />
+      <div id="inquire">
+        <GetintouchSection />
+      </div>
+      <FixedHeader />
     </div>
   );
 }
