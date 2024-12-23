@@ -59,7 +59,7 @@ function FixedHeader() {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0   z-50 ">
+    <div className="fixed hidden lg:block bottom-0 left-0 right-0   z-50 ">
       <div
         className={`max-w-[1400px] w-fit mx-auto px-[40px] transition-all duration-300 backdrop-blur-md bg-[#F5F5F599] border ${
           isInHero ? "mb-[82px]" : "mb-[50px]"
