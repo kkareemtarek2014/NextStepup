@@ -13,16 +13,14 @@ const sections = [
 ];
 
 function FixedHeader() {
-  const [activeSection, setActiveSection] = useState<string>("concept");
+  const [activeSection, setActiveSection] = useState<string>("hero");
   const [isInHero, setIsInHero] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
-      // Check if user has scrolled at all
       const scrollPosition = window.scrollY;
       setIsInHero(scrollPosition === 0);
 
-      // Find active section based on scroll position
       const sectionElements = sections.map((section) =>
         document.getElementById(section.id)
       );
@@ -49,9 +47,9 @@ function FixedHeader() {
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      const offset = 300; // Adjust offset as needed
+      const offset = 100;
       const targetPosition =
-        section.getBoundingClientRect().top + window.pageYOffset - offset;
+        section.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({
         top: targetPosition,
         behavior: "smooth",
@@ -61,11 +59,11 @@ function FixedHeader() {
   const windowHeight = useWindowHeight();
   const TABLET_MIN_HEIGHT = 500;
   return (
-    <div className="fixed hidden lg:block bottom-0 left-0 right-0   z-50 ">
+    <div className="fixed hidden lg:block bottom-0 left-0 right-0  z-50 ">
       <div
         className={`max-w-[1400px] w-fit mx-auto px-[40px] transition-all duration-300 backdrop-blur-md bg-[#F5F5F599] border ${
           windowHeight >= TABLET_MIN_HEIGHT && windowHeight < 990
-            ? "mb-[50px]"
+            ? "mb-[35px]"
             : isInHero
             ? "mb-[82px]"
             : "mb-[50px]"
