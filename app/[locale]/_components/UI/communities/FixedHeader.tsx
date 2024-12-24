@@ -64,7 +64,7 @@ function FixedHeader() {
     <div className="fixed hidden lg:block bottom-0 left-0 right-0   z-50 ">
       <div
         className={`max-w-[1400px] w-fit mx-auto px-[40px] transition-all duration-300 backdrop-blur-md bg-[#F5F5F599] border ${
-          windowHeight >= TABLET_MIN_HEIGHT && windowHeight < 900
+          windowHeight >= TABLET_MIN_HEIGHT && windowHeight < 990
             ? "mb-[50px]"
             : isInHero
             ? "mb-[82px]"

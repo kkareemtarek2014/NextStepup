@@ -60,14 +60,14 @@ export default function SingleCummunitiesHero({
       </div>
       <div
         className={`absolute inset-0  max-w-[1400px] mx-auto w-full bottom-0  mb-auto  transition-all duration-300 pt-[100px] left-0 gap-[24px] flex flex-col ${
-          windowHeight >= TABLET_MIN_HEIGHT && windowHeight < 900
+          windowHeight >= TABLET_MIN_HEIGHT && windowHeight < 990
             ? "justify-start"
             : " justify-center"
         } items-start px-4 2xl:px-0 z-40`}
       >
         <div
           className={`flex flex-col justify-start items-start ${
-            windowHeight >= TABLET_MIN_HEIGHT && windowHeight < 900
+            windowHeight >= TABLET_MIN_HEIGHT && windowHeight < 990
               ? "lg:gap-[20px]"
               : "lg:gap-[40px]"
           } lg:gap-[40px] gap-[24px] py-4`}
