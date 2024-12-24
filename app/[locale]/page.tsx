@@ -16,7 +16,7 @@ export const runtime = "edge";
 //     keywords: pageKeywords ?? "",
 //   };
 // }
-export default async function Home() {
+export default async function Home({ params }: { params: { locale: string } }) {
   // const data = await FetchHomePage(locale);
-  return <Homepage />;
+  return <Homepage locale={params.locale} />;
 }

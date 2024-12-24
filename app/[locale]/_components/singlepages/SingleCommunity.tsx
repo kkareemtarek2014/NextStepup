@@ -9,6 +9,7 @@ import AmentieSection from "../UI/communities/AmentieSection";
 import HighlightSection from "../UI/communities/HighlightSection";
 import CalculationSection from "../UI/communities/CalculationSection";
 import FixedHeader from "../UI/communities/FixedHeader";
+import CommunitySlider from "../UI/General/CommunitySlider";
 export const runtime = "edge";
 
 export default function SingleCommunity() {
@@ -47,7 +48,10 @@ export default function SingleCommunity() {
       <div id="calculator">
         <CalculationSection />
       </div>
-      <DiscoverSection />
+      <CommunitySlider
+        title="Discover more projects"
+        button={{ text: "All Communities", href: "/communities" }}
+      />
       <div id="inquire">
         <GetintouchSection />
       </div>

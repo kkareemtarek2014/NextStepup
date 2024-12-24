@@ -52,7 +52,7 @@ const teamMembers: TeamMember[] = [
 
 export default function TeamSlider() {
   const sliderRef = useRef<Slider>(null);
-  const [currentSlide, setCurrentSlide] = useState<number>(1);
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [slidesToShow, setSlidesToShow] = useState<number>(2.83);
 
   useEffect(() => {
@@ -106,7 +106,7 @@ export default function TeamSlider() {
   const calculateProgress = () => {
     const totalSlides = teamMembers.length;
     const maxProgress = totalSlides - slidesToShow;
-    if (currentSlide < 1) {
+    if (currentSlide === 0) {
       return "25%";
     } else {
       const progress = (currentSlide / maxProgress) * 75 + 25;

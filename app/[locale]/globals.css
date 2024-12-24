@@ -87,6 +87,7 @@ section {
 .slick-track {
   display: flex !important;
   gap: 20px !important;
+  /* align-items: start !important; */
 }
 
 /* Adjust gap for mobile screens */
@@ -98,7 +99,7 @@ section {
 }
 @media (max-width: 640px) {
   .slick-track {
-    gap: 6px;
+    gap: 6px !important;
   }
   .slide-container {
     height: 191.38px !important;

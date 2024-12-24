@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import ArrowIcon from "../../Icons/ArrowIcon";
 
 interface TextSectionProps {
@@ -33,12 +34,15 @@ export default function TextSection({
               {title}
             </h3>
             {button && (
-              <button className="border border-black rounded-[100px] bg-white flex gap-1 py-2 px-4 items-center justify-start w-fit">
-                <span className="text-black text-base font-medium leading-[25px] text-start">
+              <Link
+                href={button.href}
+                className="border border-black rounded-[100px] transition-all duration-300 bg-white text-black hover:bg-black hover:text-white flex gap-1 py-2 px-4 items-center justify-start w-fit"
+              >
+                <span className="text-inherit text-base font-medium leading-[25px] text-start">
                   {button.text}
                 </span>
-                <ArrowIcon className="rotate-180 text-black h-5 w-5" />
-              </button>
+                <ArrowIcon className="rotate-180 text-inherit h-5 w-5" />
+              </Link>
             )}
           </div>
         </div>

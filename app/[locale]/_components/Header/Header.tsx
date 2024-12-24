@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import LangConvertor from "../UI/General/LangConvertor";
 import { usePathname } from "next/navigation";
+import { useLocale } from "next-intl";
 
 interface HeaderProps {}
 
@@ -27,15 +28,18 @@ export default function Header({}: HeaderProps) {
       document.body.style.overflow = "unset";
     };
   }, [isMenuOpen]);
+  const locale = useLocale();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const isTransparentPage =
-    pathname.includes("/community") ||
-    pathname === "/" ||
-    pathname === "/media" ||
-    pathname.includes("/about-us");
+    pathname.includes(`/community`) ||
+    pathname === `/${locale}` ||
+    pathname === `/` ||
+    pathname === `/${locale}/media` ||
+    pathname === `/media` ||
+    pathname.includes(`/about-us`);
 
-  const isContactPage = pathname.includes("/contact-us");
+  const isContactPage = pathname.includes(`/contact-us`);
   return (
     <header
       className={` top-0 left-0 right-0 z-50    ${
@@ -92,7 +96,7 @@ export default function Header({}: HeaderProps) {
           >
             <p>Latest Updates</p>
           </Link>
-          <LangConvertor isBlack={isTransparentPage} />
+          <LangConvertor isBlack={!isTransparentPage} />
           <Link
             href="/contact-us"
             className={`text-base font-medium 

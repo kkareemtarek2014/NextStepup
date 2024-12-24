@@ -6,15 +6,16 @@ import "slick-carousel/slick/slick-theme.css";
 import { useState, useRef, useEffect } from "react";
 import Button from "./Button";
 import ArrowIcon from "../../Icons/ArrowIcon";
+import Link from "next/link";
 
-interface BlogPost {
+interface CommunityPost {
   title: string;
   stats: string;
   image: string;
   category: string;
 }
 
-const blogPosts: BlogPost[] = [
+const communitySlider: CommunityPost[] = [
   {
     title: "SEASHELL RAS EL HEKMA",
     stats: "Completed",
@@ -47,10 +48,19 @@ const blogPosts: BlogPost[] = [
   },
   // ... add more blog posts
 ];
-
-export default function BlogSlider() {
+interface CommunitySectionProps {
+  title?: string;
+  button?: {
+    text: string;
+    href: string;
+  };
+}
+export default function CommunitySection({
+  title,
+  button,
+}: CommunitySectionProps) {
   const sliderRef = useRef<Slider>(null);
-  const [currentSlide, setCurrentSlide] = useState<number>(1);
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [slidesToShow, setSlidesToShow] = useState<number>(2.3);
 
   useEffect(() => {
@@ -102,9 +112,9 @@ export default function BlogSlider() {
     sliderRef.current?.slickPrev();
   };
   const calculateProgress = () => {
-    const totalSlides = blogPosts.length;
+    const totalSlides = communitySlider.length;
     const maxProgress = totalSlides - slidesToShow;
-    if (currentSlide < 1) {
+    if (currentSlide === 0) {
       return "25%";
     } else {
       const progress = (currentSlide / maxProgress) * 75 + 25;
@@ -115,12 +125,30 @@ export default function BlogSlider() {
   return (
     <section className="relative h-fit bg-teamColor pb-[40px] lg:pb-0">
       <div className="max-w-[1512px] mx-auto">
-        <div className="flex flex-col gap-[48px] px-4 lg:px-[56px] lg:pb-[40px] ">
+        <div className="flex flex-col lg:gap-0 px-4 lg:px-[56px] lg:pb-[40px] h-fit ">
+          {title && (
+            <div className="flex flex-col lg:flex-row justify-start pt-[40px] lg:py-[40px] lg:justify-between items-start lg:items-center  lg:ps-4 gap-[24px]">
+              <h3 className="text-[28px] lg:text-[64px] lg:leading-[80px] font-medium text-start text-black">
+                {title}
+              </h3>
+              {button && (
+                <Link
+                  href={button.href}
+                  className="border border-black rounded-[100px] transition-all duration-300 bg-white text-black hover:bg-black hover:text-white flex gap-1 py-2 px-4 items-center justify-start w-fit"
+                >
+                  <span className="text-inherit text-base font-medium leading-[25px] text-start">
+                    {button.text}
+                  </span>
+                  <ArrowIcon className="rotate-180 text-inherit h-5 w-5" />
+                </Link>
+              )}
+            </div>
+          )}
           {/* Slider Section */}
-          <div className="relative">
+          <div className={`relative  ${title ? "pb-[90px]" : "pb-[62px]"}`}>
             <button
               onClick={goToPrev}
-              className="absolute hidden lg:block top-1/2 -left-12 -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white rounded-full"
+              className="absolute hidden lg:block top-1/2 -left-12 -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white hover:bg-primary rounded-full"
               aria-label="Previous slide"
             >
               <svg
@@ -142,7 +170,7 @@ export default function BlogSlider() {
               {...settings}
               className="blog-slider pt-[40px] lg:pt-0"
             >
-              {blogPosts.map((post, index) => (
+              {communitySlider.map((post, index) => (
                 <div
                   key={index}
                   className=" bg-gray-100 relative flex flex-col  pe-[20px] lg:pe-0 h-full "
@@ -208,7 +236,7 @@ export default function BlogSlider() {
           </div>
 
           {/* Progress Bar */}
-          <div className="relative w-full h-[2px] bg-black/20">
+          <div className="relative w-auto lg:ms-4 h-[2px]  bg-black/20">
             <div
               className="absolute h-full bg-black transition-all duration-300 ease-in-out"
               style={{ width: calculateProgress() }}

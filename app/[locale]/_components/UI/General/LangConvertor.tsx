@@ -33,8 +33,8 @@ export default function LangConv({ isBlack = false }: LangConvProps) {
     return () => window.removeEventListener("resize", checkMobileView);
   }, []);
 
-  const textColorClass = isBlack ? "text-white" : "text-black";
-  const iconSrc = isBlack ? "/img/globewhite.svg" : "/img/globe.svg";
+  const textColorClass = isBlack ? "text-black" : "text-white";
+  const iconSrc = isBlack ? "/img/globe.svg" : "/img/globewhite.svg";
 
   return (
     <div className="flex gap-2 items-center relative md:mt-0 w-fit">

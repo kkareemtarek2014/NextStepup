@@ -42,7 +42,7 @@ const blogPosts: BlogPost[] = [
 
 export default function BlogSlider() {
   const sliderRef = useRef<Slider>(null);
-  const [currentSlide, setCurrentSlide] = useState<number>(1);
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [slidesToShow, setSlidesToShow] = useState<number>(2.1);
 
   useEffect(() => {
@@ -97,7 +97,7 @@ export default function BlogSlider() {
   const calculateProgress = () => {
     const totalSlides = blogPosts.length;
     const maxProgress = totalSlides - slidesToShow;
-    if (currentSlide < 1) {
+    if (currentSlide === 0) {
       return "25%";
     } else {
       const progress = (currentSlide / maxProgress) * 75 + 25;

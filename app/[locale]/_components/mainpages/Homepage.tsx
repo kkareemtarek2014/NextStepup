@@ -8,7 +8,7 @@ import OverSection from "../UI/Home/OverSection";
 import StatSection from "../UI/Home/StatSection";
 export const runtime = "edge";
 
-export default function Homepage() {
+export default function Homepage({ locale }: { locale: string }) {
   const textSectionData = {
     title: "About Us",
     description:
@@ -29,7 +29,10 @@ export default function Homepage() {
       <TextSection
         {...textSectionData2}
         bgcolor="bg-teamColor"
-        button={{ text: "View All Communities", href: "/communities" }}
+        button={{
+          text: "View All Communities",
+          href: `/${locale}/community`,
+        }}
       />
       <CommunitySlider />
       <ApproachSection />
