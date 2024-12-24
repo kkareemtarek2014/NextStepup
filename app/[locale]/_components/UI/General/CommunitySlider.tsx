@@ -46,7 +46,6 @@ const communitySlider: CommunityPost[] = [
     image: "/img/ProjectExample.svg",
     category: "North Coast",
   },
-  // ... add more blog posts
 ];
 interface CommunitySectionProps {
   title?: string;
