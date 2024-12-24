@@ -13,7 +13,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <div className="flex">
         <div
           id="banner-1"

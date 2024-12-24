@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import ArrowIcon from "../../Icons/ArrowIcon";
+import { useTextAnimation } from "@/app/[locale]/utils/textanimation";
 
 interface TextSectionProps {
   title: string;
@@ -20,6 +21,17 @@ export default function TextSection({
   bgcolor,
   button,
 }: TextSectionProps) {
+  const containerRef = useTextAnimation({
+    textIds: [
+      "textSection_animate1",
+      "textSection_animate2",
+      "textSection_animate3",
+    ],
+    delay: 0.5,
+    stagger: 0.05,
+    fromHero: false,
+  });
+
   return (
     <section
       id="next-section"
@@ -27,10 +39,16 @@ export default function TextSection({
         bgcolor ? bgcolor : "bg-white"
       }`}
     >
-      <div className="max-w-[1512px] mx-auto flex flex-col gap-[40px] lg:gap-0 lg:flex-row py-[40px] lg:px-[56px] px-4">
+      <div
+        ref={containerRef}
+        className="max-w-[1512px] mx-auto flex flex-col gap-[40px] lg:gap-0 lg:flex-row py-[40px] lg:px-[56px] px-4"
+      >
         <div className="lg:w-[47.29%] w-full">
           <div className="flex flex-col gap-6">
-            <h3 className="text-base lg:text-[28px] lg:leading-[35px] font-medium text-start text-primary">
+            <h3
+              id="textSection_animate1"
+              className="text-base lg:text-[28px] lg:leading-[35px] font-medium text-start text-primary "
+            >
               {title}
             </h3>
             {button && (
@@ -52,6 +70,7 @@ export default function TextSection({
           }  lg:w-[52.71%] w-full `}
         >
           <h3
+            id="textSection_animate2"
             className={`${
               paragraph
                 ? "text-[28px] leading-[35px] "
@@ -61,7 +80,10 @@ export default function TextSection({
             {description}
           </h3>
           {paragraph && (
-            <p className="text-base lg:text-[20px] font-normal text-start text-primary leading-[30px] lg:leading-[25px]">
+            <p
+              id="textSection_animate3"
+              className="text-base lg:text-[20px] font-normal text-start text-primary leading-[30px] lg:leading-[25px]"
+            >
               {paragraph}
             </p>
           )}

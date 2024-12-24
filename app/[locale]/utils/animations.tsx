@@ -12,22 +12,18 @@ export const animatePageIn = (pageName: string) => {
   if (bannerOne && bannerTwo && bannerThree && bannerFour && bannerText) {
     const tl = gsap.timeline();
 
-    // Update text content
     bannerText.textContent = pageName;
 
-    // Set initial states
     tl.set([bannerOne, bannerTwo, bannerThree, bannerFour], {
       yPercent: 0,
     });
 
-    // Fade in the text
     tl.to(bannerText, {
       opacity: 1,
       duration: 0.8,
       ease: "power2.inOut",
     });
 
-    // Wait a bit then animate the banners
     tl.to(bannerText, {
       opacity: 0,
       duration: 0.3,
@@ -35,12 +31,14 @@ export const animatePageIn = (pageName: string) => {
       ease: "power2.inOut",
     });
 
-    // Animate banners out
     tl.to([bannerOne, bannerTwo, bannerThree, bannerFour], {
       yPercent: 100,
       duration: 0.4,
       stagger: 0.2,
       ease: "power3.inOut",
+      onComplete: () => {
+        window.dispatchEvent(new Event("pageTransitionComplete"));
+      },
     });
   }
 };

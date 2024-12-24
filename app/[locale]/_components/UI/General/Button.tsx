@@ -148,6 +148,7 @@ const Button = ({
         onClick={onClick}
         className={linkClasses.join(" ")}
         aria-label={ariaLabel ?? `Open ${children}`}
+        prefetch={false}
       >
         {renderContent()}
       </Link>

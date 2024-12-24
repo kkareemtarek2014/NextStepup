@@ -351,7 +351,7 @@ export default function FilteredGridSection<T extends BasePost>({
                             {item.location} • {item.status}
                           </span>
                         ) : null}
-                        <Link href={item.link} key={item.id}>
+                        <Link href={item.link} key={item.id} prefetch={false}>
                           <h3 className="text-[28px] lg:text-[40px] font-medium leading-[35px] lg:leading-[50px] text-black text-balance">
                             {item.title}
                           </h3>{" "}
