@@ -97,15 +97,15 @@ export default function GallerySlider({ mobile }: { mobile?: boolean }) {
               </button>
             </div>
           </div>
-          <div className="lg:absolute lg:top-[88px] left-0 w-full h-fit lg:h-[600px] overflow-hidden">
+          <div className="lg:absolute lg:top-[88px] left-0 w-full h-fit  lg:h-[600px] overflow-hidden">
             <Slider ref={sliderRef} {...settings} className="gallery-slider">
               {galleryItems.map((item, index) => (
                 <div key={item.id} className="slide-container">
                   <div
                     className={`image-wrapper transition-all  ease-linear ${
                       activeSlide === index
-                        ? "h-[162.38px] lg:h-[600px]"
-                        : "h-[108.25px] lg:h-[400px]"
+                        ? "h-[162.38px] md:h-[400px] lg:h-[600px]"
+                        : "h-[108.25px] md:h-[300px] lg:h-[400px]"
                     }`}
                   >
                     <Image

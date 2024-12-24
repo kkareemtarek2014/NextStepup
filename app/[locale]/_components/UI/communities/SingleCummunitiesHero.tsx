@@ -2,8 +2,10 @@
 import Image from "next/image";
 import Breadcrumbs from "../General/Breadcrumbs";
 import Button from "../General/Button";
-import ArrowIcon from "../../Icons/ArrowIcon";
 import { useLocale } from "next-intl";
+import { useEffect } from "react";
+import { useState } from "react";
+import { useWindowHeight } from "@/app/hooks/useWindowHeight";
 
 interface SingleCummunitiesHeroProps {
   imageSrc: string;
@@ -35,7 +37,8 @@ export default function SingleCummunitiesHero({
     },
   ];
   const locale = useLocale();
-
+  const windowHeight = useWindowHeight();
+  const TABLET_MIN_HEIGHT = 768;
   return (
     <section className="relative h-[60vh] md:h-[96vh] md:min-h-[711px] ">
       <div
@@ -55,9 +58,20 @@ export default function SingleCummunitiesHero({
           className="object-cover relative z-0"
         />
       </div>
-      <div className="absolute inset-0  max-w-[1400px] mx-auto w-full bottom-0  mb-auto  pt-[100px] left-0 gap-[24px] flex flex-col justify-center items-start px-4 2xl:px-0 z-40">
-        <div className="flex flex-col justify-start items-start lg:gap-[40px] gap-[24px] py-4">
-          {" "}
+      <div
+        className={`absolute inset-0  max-w-[1400px] mx-auto w-full bottom-0  mb-auto  transition-all duration-300 pt-[100px] left-0 gap-[24px] flex flex-col ${
+          windowHeight >= TABLET_MIN_HEIGHT && windowHeight < 900
+            ? "justify-start"
+            : " justify-center"
+        } items-start px-4 2xl:px-0 z-40`}
+      >
+        <div
+          className={`flex flex-col justify-start items-start ${
+            windowHeight >= TABLET_MIN_HEIGHT && windowHeight < 900
+              ? "lg:gap-[20px]"
+              : "lg:gap-[40px]"
+          } lg:gap-[40px] gap-[24px] py-4`}
+        >
           <Breadcrumbs list={breadcrumbsList} color="text-white" />
           <Image
             src={imgLogo}

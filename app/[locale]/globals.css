@@ -106,6 +106,13 @@ section {
     align-items: flex-end !important;
   }
 }
+@media (min-width: 641px) and (max-width: 1024px) {
+  .slide-container {
+    height: 389px !important;
+    display: flex !important;
+    align-items: flex-end !important;
+  }
+}
 .image-wrapper {
   width: 100%;
   position: relative;
