@@ -59,7 +59,7 @@ function FixedHeader() {
     }
   };
   const windowHeight = useWindowHeight();
-  const TABLET_MIN_HEIGHT = 768;
+  const TABLET_MIN_HEIGHT = 500;
   return (
     <div className="fixed hidden lg:block bottom-0 left-0 right-0   z-50 ">
       <div

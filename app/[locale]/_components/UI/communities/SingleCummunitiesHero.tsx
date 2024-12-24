@@ -38,7 +38,7 @@ export default function SingleCummunitiesHero({
   ];
   const locale = useLocale();
   const windowHeight = useWindowHeight();
-  const TABLET_MIN_HEIGHT = 768;
+  const TABLET_MIN_HEIGHT = 500;
   return (
     <section className="relative h-[60vh] md:h-[96vh] md:min-h-[711px] ">
       <div
