@@ -4,10 +4,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "strapi-182914-0.cloudclusters.net",
+        hostname: "gdev.cloudhosta.com",
         pathname: "/uploads/**",
       },
     ],
+    domains: ["gdev.cloudhosta.com"],
     minimumCacheTTL: 604800,
   },
 };

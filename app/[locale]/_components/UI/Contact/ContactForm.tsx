@@ -220,7 +220,7 @@ const ContactForm = () => {
             <div
               className={`text-${
                 status.type === "success" ? "green" : "red"
-              }-500 text-center`}
+              } text-black/90 text-center`}
             >
               {status.message}
             </div>
