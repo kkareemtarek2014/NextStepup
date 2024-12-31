@@ -2,6 +2,38 @@
 
 import FilteredGridSection from "../shared/FilteredGridSection";
 
+interface ApiImage {
+  url: string;
+  formats: {
+    thumbnail?: { url: string };
+    small?: { url: string };
+    medium?: { url: string };
+    large?: { url: string };
+  };
+}
+
+interface ApiCommunity {
+  id: number;
+  slug: string;
+  Location: string;
+  Type: string;
+  UnitType: string;
+  statusType: string;
+  HeroSection: {
+    Title: string;
+    MainImage: ApiImage;
+  };
+}
+
+interface ApiResponse {
+  data: ApiCommunity[];
+  meta: {
+    pagination: {
+      total: number;
+    };
+  };
+}
+
 type CommunitiesPost = {
   id: number;
   title: string;
@@ -13,9 +45,7 @@ type CommunitiesPost = {
   status?: string;
 };
 
-// Helper function to capitalize and format
 const formatLabel = (str: string) => {
-  // Handle camelCase
   const uncamelCased = str.replace(/([A-Z])/g, " $1");
   return uncamelCased
     .split(" ")
@@ -23,7 +53,6 @@ const formatLabel = (str: string) => {
     .join(" ");
 };
 
-// Function to get unique values and create filter options
 const getUniqueFilterOptions = (
   items: CommunitiesPost[],
   key: keyof CommunitiesPost
@@ -32,7 +61,6 @@ const getUniqueFilterOptions = (
   return [
     {
       value: "all",
-      //   label: `All ${key.charAt(0).toUpperCase() + key.slice(1)}s`,
       label: `All`,
     },
     ...uniqueValues.map((value) => ({
@@ -42,121 +70,60 @@ const getUniqueFilterOptions = (
   ];
 };
 
-const YOUR_COMMUNITIES_DATA: CommunitiesPost[] = [
-  {
-    id: 1,
-    title: "The Heart of Ras El Hekma",
-    location: "north Coast",
-    Type: "Coastal",
-    unitType: "Villa",
-    status: "completed",
-    image: "/img/blog1.svg",
+const transformApiData = (apiData: ApiCommunity[]): CommunitiesPost[] => {
+  if (!apiData || !Array.isArray(apiData)) return [];
 
-    link: "/community/static",
-  },
-  {
-    id: 2,
-    title: "Cairo Project",
-    location: "cairo",
-    Type: "Coastal",
-    unitType: "Twin House",
-    status: "completed",
-    image: "/img/blog1.svg",
-    link: "/community/static",
-  },
-  {
-    id: 3,
-    title: "The Heart of Ras El Hekma",
-    location: "north Coast",
-    Type: "City",
-    unitType: "Twin House",
-    status: "completed",
+  return apiData.map((item) => {
+    const imageUrl =
+      item.HeroSection?.MainImage?.formats?.medium?.url ||
+      item.HeroSection?.MainImage?.url ||
+      "/img/blog1.svg";
 
-    image: "/img/blog1.svg",
+    return {
+      id: item.id,
+      title: item.HeroSection?.Title || "Untitled Project",
+      location: item.Location || "Unknown Location",
+      Type: item.Type || "Unknown Type",
+      unitType: item.UnitType || "Unknown Unit Type",
+      status: item.statusType || "ongoing",
+      image: `${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${imageUrl}`,
+      link: `/community/${item.slug || "static"}`,
+    };
+  });
+};
 
-    link: "/community/static",
-  },
-  {
-    id: 4,
-    title: "The Heart of Ras El Hekma",
-    location: "north Coast",
-    Type: "City",
-    unitType: "Villa",
-    status: "completed",
-    image: "/img/blog1.svg",
+export default function CommunitiesSection({
+  apiData,
+}: {
+  apiData?: ApiResponse;
+}) {
+  // console.log("Raw API Data:", apiData);
 
-    link: "/community/static",
-  },
-  {
-    id: 5,
-    title: "The Heart of Ras El Hekma",
-    location: "north Coast",
-    Type: "City",
-    unitType: "Villa",
-    status: "ongoing",
-    image: "/img/blog1.svg",
+  const communities = apiData ? transformApiData(apiData.data) : [];
 
-    link: "/community/static",
-  },
-  {
-    id: 6,
-    title: "The Heart of Ras El Hekma",
-    location: "north Coast",
-    Type: "Coastal",
-    unitType: "Apartment",
-    status: "ongoing",
-    image: "/img/blog1.svg",
+  // console.log("Transformed Communities:", communities);
 
-    link: "/community/static",
-  },
-  {
-    id: 7,
-    title: "The Heart of Ras El Hekma",
-    location: "north Coast",
-    Type: "Coastal",
-    unitType: "Chalet",
-    status: "ongoing",
-    image: "/img/blog1.svg",
-
-    link: "/community/static",
-  },
-  {
-    id: 8,
-    title: "The Heart of Ras El Hekma",
-    location: "october",
-    Type: "Coastal",
-    unitType: "Townhouse",
-    status: "ongoing",
-    image: "/img/blog1.svg",
-
-    link: "/community/static",
-  },
-  // ... add more items
-];
-
-export default function CommunitiesSection() {
-  // Dynamically generate filter options
   const communityFilters = [
     {
       id: "location",
       title: "Location",
-      options: getUniqueFilterOptions(YOUR_COMMUNITIES_DATA, "location"),
+      options: getUniqueFilterOptions(communities, "location"),
     },
     {
       id: "Type",
       title: "Type",
-      options: getUniqueFilterOptions(YOUR_COMMUNITIES_DATA, "Type"),
+      options: getUniqueFilterOptions(communities, "Type"),
     },
     {
       id: "unitType",
       title: "Unit Types",
-      options: getUniqueFilterOptions(YOUR_COMMUNITIES_DATA, "unitType"),
+      options: getUniqueFilterOptions(communities, "unitType"),
     },
   ];
 
   return (
     <FilteredGridSection
-      items={YOUR_COMMUNITIES_DATA}
+      items={communities}
       filters={communityFilters}
       filterButton={true}
       itemsPerPage={4}

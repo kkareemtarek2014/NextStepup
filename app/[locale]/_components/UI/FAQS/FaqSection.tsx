@@ -2,75 +2,7 @@
 
 import { useState } from "react";
 
-interface FaqItem {
-  question: string;
-  answer: string;
-}
-
-const faqs: FaqItem[] = [
-  {
-    question: "What’s involved in the closing process?",
-    answer:
-      "Location serves as the foundation upon which we curate remarkable living spaces. We rigorously evaluate each plot we choose, with a focus on accessibility, convenience, and potential for growth. Our strategic selection spans diverse areas across the city, guaranteeing you the best of every neighborhood.",
-  },
-  {
-    question: "What’s involved in the closing process?",
-    answer:
-      "Location serves as the foundation upon which we curate remarkable living spaces. We rigorously evaluate each plot we choose, with a focus on accessibility, convenience, and potential for growth. Our strategic selection spans diverse areas across the city, guaranteeing you the best of every neighborhood.",
-  },
-  {
-    question: "What’s involved in the closing process?",
-    answer:
-      "Location serves as the foundation upon which we curate remarkable living spaces. We rigorously evaluate each plot we choose, with a focus on accessibility, convenience, and potential for growth. Our strategic selection spans diverse areas across the city, guaranteeing you the best of every neighborhood.",
-  },
-  {
-    question: "What’s involved in the closing process?",
-    answer:
-      "Location serves as the foundation upon which we curate remarkable living spaces. We rigorously evaluate each plot we choose, with a focus on accessibility, convenience, and potential for growth. Our strategic selection spans diverse areas across the city, guaranteeing you the best of every neighborhood.",
-  },
-  {
-    question: "What’s involved in the closing process??",
-    answer:
-      "Location serves as the foundation upon which we curate remarkable living spaces. We rigorously evaluate each plot we choose, with a focus on accessibility, convenience, and potential for growth. Our strategic selection spans diverse areas across the city, guaranteeing you the best of every neighborhood.",
-  },
-  {
-    question: "What’s involved in the closing process?",
-    answer:
-      "Location serves as the foundation upon which we curate remarkable living spaces. We rigorously evaluate each plot we choose, with a focus on accessibility, convenience, and potential for growth. Our strategic selection spans diverse areas across the city, guaranteeing you the best of every neighborhood.",
-  },
-  {
-    question: "What’s involved in the closing process?",
-    answer:
-      "Location serves as the foundation upon which we curate remarkable living spaces. We rigorously evaluate each plot we choose, with a focus on accessibility, convenience, and potential for growth. Our strategic selection spans diverse areas across the city, guaranteeing you the best of every neighborhood.",
-  },
-  {
-    question: "What’s involved in the closing process?",
-    answer:
-      "Location serves as the foundation upon which we curate remarkable living spaces. We rigorously evaluate each plot we choose, with a focus on accessibility, convenience, and potential for growth. Our strategic selection spans diverse areas across the city, guaranteeing you the best of every neighborhood.",
-  },
-  {
-    question: "What’s involved in the closing process?",
-    answer:
-      "Location serves as the foundation upon which we curate remarkable living spaces. We rigorously evaluate each plot we choose, with a focus on accessibility, convenience, and potential for growth. Our strategic selection spans diverse areas across the city, guaranteeing you the best of every neighborhood.",
-  },
-  {
-    question: "What’s involved in the closing process?",
-    answer:
-      "Location serves as the foundation upon which we curate remarkable living spaces. We rigorously evaluate each plot we choose, with a focus on accessibility, convenience, and potential for growth. Our strategic selection spans diverse areas across the city, guaranteeing you the best of every neighborhood.",
-  },
-  {
-    question: "What’s involved in the closing process?",
-    answer:
-      "Location serves as the foundation upon which we curate remarkable living spaces. We rigorously evaluate each plot we choose, with a focus on accessibility, convenience, and potential for growth. Our strategic selection spans diverse areas across the city, guaranteeing you the best of every neighborhood.",
-  },
-  {
-    question: "What’s involved in the closing process?",
-    answer:
-      "Location serves as the foundation upon which we curate remarkable living spaces. We rigorously evaluate each plot we choose, with a focus on accessibility, convenience, and potential for growth. Our strategic selection spans diverse areas across the city, guaranteeing you the best of every neighborhood.",
-  },
-];
-
-export default function FaqSection() {
+export default function FaqSection({ faqData }: { faqData: any }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFaq = (index: number) => {
@@ -81,7 +13,7 @@ export default function FaqSection() {
     <section className="relative bg-teamColor pb-[80px] lg:pb-[100px] px-4 sm:px-6">
       <div className="max-w-[1400px] mx-auto">
         <div className="flex flex-col md:flex-row flex-wrap gap-6">
-          {faqs.map((faq, index) => (
+          {faqData.map((faq: any, index: any) => (
             <div
               key={index}
               className="bg-white h-fit w-full md:w-[calc(50%-12px)]"
@@ -91,7 +23,7 @@ export default function FaqSection() {
                 className="w-full flex justify-between items-center cursor-pointer p-6"
               >
                 <span className="text-base sm:text-lg text-black text-left ">
-                  {faq.question}
+                  {faq.Question}
                 </span>
                 {openIndex === index ? (
                   <img src="/img/minus.svg" alt="minus" />
@@ -108,7 +40,7 @@ export default function FaqSection() {
                 }`}
               >
                 <p className="text-sm sm:text-base text-black px-6 py-4 font-normal lg:font-semimedium">
-                  {faq.answer}
+                  {faq.Answer}
                 </p>
               </div>
             </div>

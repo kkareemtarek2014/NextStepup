@@ -44,7 +44,11 @@ const Breadcrumb: FC<BreadcrumbProps> = ({ list, center, color }) => {
                         }`}
                       >
                         {item.title}
-                        <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-black transition-all duration-300 group-hover:w-full" />
+                        <span
+                          className={`absolute left-0 bottom-0 w-0 h-[1px]  transition-all duration-300 group-hover:w-full ${
+                            color ? "bg-white" : "bg-black"
+                          }`}
+                        />
                       </Link>
                     </div>
                     <h2

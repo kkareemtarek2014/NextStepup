@@ -4,11 +4,12 @@ import GetintouchSection from "../UI/General/GetintouchSection";
 
 export const runtime = "edge";
 
-export default function FaqsPage() {
+export default function FaqsPage({ faqData }: { faqData: any }) {
+  console.log("faqData", faqData);
   return (
     <div>
-      <FaqsTitle />
-      <FaqSection />
+      <FaqsTitle title={faqData.data.Title} />
+      <FaqSection faqData={faqData.data.FAQSection} />
       <GetintouchSection />
     </div>
   );

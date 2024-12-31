@@ -1,4 +1,3 @@
-import Communitypage from "../_components/mainpages/Communitypage";
 import ContactUsPage from "../_components/mainpages/ContactUsPage";
 export const runtime = "edge";
 

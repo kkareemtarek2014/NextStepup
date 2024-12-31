@@ -8,6 +8,16 @@ export default function Communitypage({
 }: {
   communityData: any;
 }) {
+  // Wrap the array in the expected ApiResponse format
+  const formattedApiData = {
+    data: communityData,
+    meta: {
+      pagination: {
+        total: communityData.length,
+      },
+    },
+  };
+
   const heroSectionData = {
     imageSrc: `${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${communityData[0].HeroSection.MainImage.url}`,
     heading: "Our Communities",
@@ -15,7 +25,7 @@ export default function Communitypage({
       "Our developments span across Cairo and the North Coast, blending timeless design with comfortable living spaces for every lifestyle.",
   };
 
-  console.log(heroSectionData.imageSrc);
+  // console.log(heroSectionData.imageSrc);
 
   return (
     <div>
@@ -24,7 +34,7 @@ export default function Communitypage({
         heading={heroSectionData.heading}
         subheading={heroSectionData.subheading}
       />
-      <CommunitiesSection />
+      <CommunitiesSection apiData={formattedApiData} />
       <GetintouchSection />
     </div>
   );

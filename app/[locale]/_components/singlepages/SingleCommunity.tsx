@@ -10,43 +10,78 @@ import HighlightSection from "../UI/communities/HighlightSection";
 import CalculationSection from "../UI/communities/CalculationSection";
 import FixedHeader from "../UI/communities/FixedHeader";
 import CommunitySlider from "../UI/General/CommunitySlider";
+
 export const runtime = "edge";
 
-export default function SingleCommunity() {
+// Define TypeScript interfaces for component props
+interface Image {
+  url: string;
+  alternativeText: string | null;
+  // Add other image properties as needed
+}
+
+interface Button {
+  ButtonTitle: string;
+  ButtonLink: string;
+}
+
+interface HeroSection {
+  Title: string;
+  Description: string;
+  SmallImage: Image;
+  MainImage: Image;
+  DownloadButton: Button;
+  Button: Button;
+}
+
+interface CommunityData {
+  HeroSection: HeroSection;
+  // Add other sections as needed
+}
+
+export default function SingleCommunity({
+  communityData,
+}: {
+  communityData: CommunityData;
+}) {
+  // Parse the data if it's a string
+  const parsedData =
+    typeof communityData === "string"
+      ? JSON.parse(communityData)
+      : communityData;
+
   const textSectionData = {
-    title: "Project Concept",
-    description:
-      "Nestled along the pristine shores of Ras El Hekma, Seashell brings you closer to crystal clear waters, golden sands and inescapable serenity that knows no bounds.",
-    paragraph:
-      "Every aspect of the destination is meticulously crafted around your lifestyle, offering an exceptional coastal experience where ultimate relaxation meets world-class hospitality and commercial enjoyment at your door. Harmoniously designed to inspire timeless summer memories, Seashell Ras El Hekma is the place to forge an uninterrupted connection with the natural world.",
+    title: parsedData.ConceptText.SubTitle,
+    description: parsedData.ConceptText.Title,
+    paragraph: parsedData.ConceptText.Description,
   };
 
   return (
     <div>
       <SingleCummunitiesHero
-        imageSrc="/img/cummunityHeero.png"
-        imgLogo="/img/LogoComm.svg"
-        heading="Seashell Ras El Hekma"
-        subheading="Nestled along the pristine shores of Ras El Hekma, Seashell brings you closer to crystal-clear waters, golden sands and inescapable serenity that knows no bounds."
+        imageSrc={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${parsedData.HeroSection.MainImage.url}`}
+        imgLogo={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${parsedData.HeroSection.SmallImage.url}`}
+        heading={parsedData.HeroSection.Title}
+        subheading={parsedData.HeroSection.Description}
       />
 
       <div id="concept">
         <TextSection {...textSectionData} />
       </div>
       <div id="gallery">
-        <GallerySlider mobile={true} />
+        <GallerySlider mobile={true} galleryData={parsedData.GallerySection} />
       </div>
       <div id="features">
-        <FeatureSection />
+        <FeatureSection featureData={parsedData.FeatureSection} />
       </div>
       <div id="amenities">
-        <AmentieSection />
+        <AmentieSection amenitieData={parsedData.AmenitieSection} />
       </div>
       <div id="location">
-        <HighlightSection />
+        <HighlightSection highlightData={parsedData.HighlightSection} />
       </div>
       <div id="calculator">
-        <CalculationSection />
+        <CalculationSection calculateData={parsedData.CalculateSection} />
       </div>
       <CommunitySlider
         title="Discover more projects"

@@ -8,38 +8,64 @@ import DiscoverSection from "../UI/General/DiscoverSection";
 
 export const runtime = "edge";
 
-export default function Aboutpage() {
+// First, let's define the types for our data structure
+interface HeroSectionData {
+  Title: string;
+  Description: string;
+  Image: {
+    url: string;
+    // Add other image properties if needed
+  };
+}
+
+interface AboutData {
+  HeroSection: HeroSectionData;
+  // Add other data types as needed
+}
+
+interface ConceptTextItem {
+  id: number;
+  SubTitle: string;
+  Title: string;
+  Description: string | null;
+}
+
+interface LeadershipText {
+  id: number;
+  SubTitle: string;
+  Title: string;
+  Description: string | null;
+}
+
+export default function Aboutpage({ aboutData }: { aboutData: AboutData }) {
+  const parsedData =
+    typeof aboutData === "string" ? JSON.parse(aboutData) : aboutData;
+  console.log(parsedData.data.HeroSection);
+
   const textSectionData = {
-    title: "Our Story",
-    description:
-      "We are a family-owned real estate development company based in Egypt. Since 1955, we have been committed to delivering timeless, quality developments that epitomize comfort and functionality.",
+    title: parsedData.data.ConceptText[0].SubTitle,
+    description: parsedData.data.ConceptText[0].Title,
+    paragraph: parsedData.data.ConceptText[0].Description || "",
   };
 
   const ThirdSectionData = {
-    title: "Leadership",
-    description:
-      "We aim to innovate and listen closely to our customers to provide them with the best customer experience in every aspect.",
-  };
-
-  const heroSectionData = {
-    imageSrc: "/img/aboutHero.png",
-    heading: "About us",
-    subheading:
-      "Real Estate developer blending timeless design with comfortable living.",
+    title: parsedData.data.LeadershipText.SubTitle,
+    description: parsedData.data.LeadershipText.Title,
+    paragraph: parsedData.data.LeadershipText.Description || "",
   };
 
   return (
     <div>
       <HeroSection
-        imageSrc={heroSectionData.imageSrc}
-        heading={heroSectionData.heading}
-        subheading={heroSectionData.subheading}
+        imageSrc={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${parsedData.data.HeroSection.Image.url}`}
+        heading={parsedData.data.HeroSection.Title}
+        subheading={parsedData.data.HeroSection.Description}
       />
       <TextSection {...textSectionData} />
-      <SummarySection />
+      <SummarySection featuredData={parsedData.data.FeaturedSection} />{" "}
       <TextSection {...ThirdSectionData} />
-      <TeamSlider />
-      <ApproachSection />
+      <TeamSlider teamMembers={parsedData.data.LeadershipSlider} />
+      <ApproachSection approachData={parsedData.data.ApproachSection} />
       <DiscoverSection />
       <GetintouchSection />
     </div>

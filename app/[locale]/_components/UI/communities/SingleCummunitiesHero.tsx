@@ -3,8 +3,7 @@ import Image from "next/image";
 import Breadcrumbs from "../General/Breadcrumbs";
 import Button from "../General/Button";
 import { useLocale } from "next-intl";
-import { useEffect } from "react";
-import { useState } from "react";
+
 import { useWindowHeight } from "@/app/hooks/useWindowHeight";
 
 interface SingleCummunitiesHeroProps {

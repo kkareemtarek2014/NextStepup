@@ -1,6 +1,12 @@
 import Aboutpage from "../_components/mainpages/Aboutpage";
+import { fetchAbout } from "../api/general";
 export const runtime = "edge";
 
+interface AboutPageProps {
+  params: {
+    locale: string;
+  };
+}
 // export async function generateMetadata({ params }: any) {
 //   const locale = params?.locale || "en";
 
@@ -16,7 +22,8 @@ export const runtime = "edge";
 //     keywords: pageKeywords ?? "",
 //   };
 // }
-export default async function About() {
+export default async function About({ params }: AboutPageProps) {
   // const data = await FetchHomePage(locale);
-  return <Aboutpage />;
+  const data = await fetchAbout(params.locale);
+  return <Aboutpage aboutData={data} />;
 }

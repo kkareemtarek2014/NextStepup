@@ -5,52 +5,31 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useState, useRef, useEffect } from "react";
 
-interface TeamMember {
-  name: string;
-  position: string;
-  image: string;
+interface ImageData {
+  url: string;
+  alternativeText: string | null;
+  formats?: {
+    small?: {
+      url: string;
+    };
+    thumbnail?: {
+      url: string;
+    };
+  };
 }
 
-const teamMembers: TeamMember[] = [
-  {
-    name: "Akram Ziyad",
-    position: "Vice President - Strategy",
-    image: "/img/team1.svg",
-  },
-  {
-    name: "Akram Ziyad",
-    position: "Vice President - Strategy",
-    image: "/img/team1.svg",
-  },
-  {
-    name: "Akram Ziyad",
-    position: "Vice President - Strategy",
-    image: "/img/team1.svg",
-  },
-  {
-    name: "Akram Ziyad",
-    position: "Vice President - Strategy",
-    image: "/img/team1.svg",
-  },
-  {
-    name: "Akram Ziyad",
-    position: "Vice President - Strategy",
-    image: "/img/team1.svg",
-  },
-  {
-    name: "Akram Ziyad",
-    position: "Vice President - Strategy",
-    image: "/img/team1.svg",
-  },
-  {
-    name: "Akram Ziyad",
-    position: "Vice President - Strategy",
-    image: "/img/team1.svg",
-  },
-  // ... add more team members
-];
+interface TeamMember {
+  id: number;
+  Name: string;
+  Position: string;
+  Image: ImageData;
+}
 
-export default function TeamSlider() {
+interface TeamSliderProps {
+  teamMembers?: TeamMember[];
+}
+
+export default function TeamSlider({ teamMembers = [] }: TeamSliderProps) {
   const sliderRef = useRef<Slider>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [slidesToShow, setSlidesToShow] = useState<number>(2.83);
@@ -141,22 +120,22 @@ export default function TeamSlider() {
               </button>
 
               <Slider ref={sliderRef} {...settings} className="team-slider">
-                {teamMembers.map((member, index) => (
-                  <div key={index} className="">
+                {teamMembers.map((member) => (
+                  <div key={member.id} className="">
                     <div className="h-[517px] bg-teamColor relative">
                       <Image
-                        src={member.image}
-                        alt={member.name}
+                        src={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${member.Image.url}`}
+                        alt={member.Image.alternativeText || member.Name}
                         fill
                         className="object-cover"
                       />
                       <div className="absolute bottom-[20px] left-[13px] lg:left-[18px] w-[92%] mx-auto h-[143px] bg-white">
                         <div className="w-full flex gap-3 p-[28px] flex-col text-start">
                           <h3 className="text-[28px] lg:text-[40px] font-medium leading-[35px] lg:leading-[50px] text-black">
-                            {member.name}
+                            {member.Name}
                           </h3>
                           <p className="text-[20px] leading-[25px] font-medium text-black">
-                            {member.position}
+                            {member.Position}
                           </p>
                         </div>
                       </div>
@@ -193,7 +172,7 @@ export default function TeamSlider() {
                 />
               </div>
             </div>
-          </div>{" "}
+          </div>
         </div>
       </div>
     </section>

@@ -24,7 +24,7 @@ export const sendRequest = async (
     }
 
     const data = await response.json();
-    console.log("API Response:", prettyStringify(data)); // Log formatted data
+    // console.log("API Response:", prettyStringify(data));
     return data;
   } catch (error) {
     console.error(
@@ -69,3 +69,49 @@ export const CummunityList = async (
 
   return response;
 };
+
+export const getCommunityBySlug = async (
+  lang: string,
+  slug: string
+): Promise<any> => {
+  try {
+    const response = await sendRequest(
+      `single-cummunities?locale=${lang}&filters[slug][$eq]=${slug}&pLevel`
+    );
+
+    if (!response?.data?.[0]) {
+      throw new Error(`Community with slug ${slug} not found`);
+    }
+
+    // Convert the response to JSON string and then parse it back
+    const jsonString = JSON.stringify(response.data[0]);
+    const parsedData = JSON.parse(jsonString);
+
+    const data = JSON.stringify(parsedData, null, 2);
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching community data:", error);
+    throw error;
+  }
+};
+export async function fetchAbout(lang: string) {
+  try {
+    const aboutData = await fetch(`${apiUrl}/about?pLevel&locale=${lang}`);
+    const aboutDataJson = await aboutData.json();
+    return aboutDataJson;
+  } catch (error) {
+    console.error("Error fetching  about-page", error);
+    throw error;
+  }
+}
+export async function fetchFaq(lang: string) {
+  try {
+    const faqData = await fetch(`${apiUrl}/faq?pLevel&locale=${lang}`);
+    const faqDataJson = await faqData.json();
+    return faqDataJson;
+  } catch (error) {
+    console.error("Error fetching  faq-page", error);
+    throw error;
+  }
+}
