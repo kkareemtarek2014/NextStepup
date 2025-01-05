@@ -1,5 +1,6 @@
 import Communitypage from "../_components/mainpages/Communitypage";
 import { CummunityList, fetchCommunityPage } from "../api/general";
+export const runtime = "edge";
 
 interface CommunityPageProps {
   params: {

@@ -1,6 +1,7 @@
 import SingleCommunity from "../../_components/singlepages/SingleCommunity";
 import { CummunityList, getCommunityBySlug } from "../../api/general";
 import { notFound } from "next/navigation";
+export const runtime = "edge";
 
 interface SingleCommunityPageProps {
   params: {
