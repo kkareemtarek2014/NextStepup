@@ -1,6 +1,48 @@
 "use client";
 
 import FilteredGridSection from "../shared/FilteredGridSection";
+
+interface ImageFormat {
+  url: string;
+  width: number;
+  height: number;
+}
+
+interface ImageData {
+  url: string;
+  formats?: {
+    large?: ImageFormat;
+    medium?: ImageFormat;
+    small?: ImageFormat;
+    thumbnail?: ImageFormat;
+  };
+}
+
+interface ApiMediaPost {
+  id: number;
+  documentId: string;
+  Title: string;
+  Description: string;
+  Type: string;
+  slug: string;
+  Image: ImageData;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+}
+
+interface ApiResponse {
+  data: ApiMediaPost[];
+  meta: {
+    pagination: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
+}
+
 type MediaPost = {
   id: number;
   title: string;
@@ -10,14 +52,15 @@ type MediaPost = {
   description: string;
   link: string;
 };
+
 const mediaFilters = [
   {
     id: "category",
-    title: "Type",
+    title: "Category",
     options: [
       { value: "all", label: "All" },
-      { value: "news", label: "News" },
-      { value: "events", label: "Events" },
+      { value: "News", label: "News" },
+      { value: "Events", label: "Events" },
     ],
   },
   {
@@ -29,94 +72,40 @@ const mediaFilters = [
     ],
   },
 ];
-const MEDIA_DATA: MediaPost[] = [
-  {
-    id: 1,
-    title: "The Heart of Ras El Hekma",
-    category: "news",
-    date: "March 15, 2024",
-    image: "/img/blog1.svg",
-    description:
-      "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
-    link: "/media/static",
-  },
-  {
-    id: 2,
-    title: "The Heart of Ras El Hekma",
-    category: "news",
-    date: "March 10, 2024",
-    image: "/img/blog1.svg",
-    description:
-      "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
-    link: "/media/static",
-  },
-  {
-    id: 3,
-    title: "The Heart of Ras El Hekma",
-    category: "news",
-    date: "March 5, 2024",
-    image: "/img/blog1.svg",
-    description:
-      "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
-    link: "/media/static",
-  },
-  {
-    id: 4,
-    title: "The Heart of Ras El Hekma",
-    category: "news",
-    date: "February 28, 2024",
-    image: "/img/blog1.svg",
-    description:
-      "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
-    link: "/media/static",
-  },
-  {
-    id: 5,
-    title: "The Heart of Ras El Hekma",
-    category: "news",
-    date: "February 20, 2024",
-    image: "/img/blog1.svg",
-    description:
-      "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
-    link: "/media/static",
-  },
-  {
-    id: 6,
-    title: "The Heart of Ras El Hekma",
-    category: "events",
-    date: "February 15, 2024",
-    image: "/img/blog1.svg",
-    description:
-      "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
-    link: "/media/static",
-  },
-  {
-    id: 7,
-    title: "The Heart of Ras El Hekma",
-    category: "events",
-    date: "February 10, 2024",
-    image: "/img/blog1.svg",
-    description:
-      "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
-    link: "/media/static",
-  },
-  {
-    id: 8,
-    title: "The Heart of Ras El Hekma",
-    category: "events",
-    date: "February 5, 2024",
-    image: "/img/blog1.svg",
-    description:
-      "The first fully-integrated coastal resort at the heart of the North Coast's Ras El Hekma.",
-    link: "/media/static",
-  },
-  // ... add more items
-];
 
-export default function MediaListSection() {
+const transformApiData = (apiData: ApiResponse): MediaPost[] => {
+  if (!apiData?.data) return [];
+
+  return apiData.data.map((item) => {
+    const imageUrl =
+      item.Image?.formats?.medium?.url || item.Image?.url || "/img/blog1.svg";
+
+    return {
+      id: item.id,
+      title: item.Title,
+      category: item.Type,
+      date: new Date(item.publishedAt).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+      image: `${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${imageUrl}`,
+      description: item.Description,
+      link: `/media/${item.slug}`,
+    };
+  });
+};
+
+interface MediaListSectionProps {
+  apiData?: ApiResponse;
+}
+
+export default function MediaListSection({ apiData }: MediaListSectionProps) {
+  const mediaItems = apiData ? transformApiData(apiData) : [];
+
   return (
     <FilteredGridSection
-      items={MEDIA_DATA}
+      items={mediaItems}
       filters={mediaFilters}
       itemsPerPage={4}
       page="media"

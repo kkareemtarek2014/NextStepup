@@ -4,7 +4,7 @@ import ArrowDownIcon from "../../Icons/ArrowDownIcon";
 import { useEffect, useState } from "react";
 import { useTextAnimation } from "@/app/[locale]/utils/textanimation";
 
-export default function HomeHero() {
+export default function HomeHero({ data }: { data: any }) {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const updateMedia = () => setIsMobile(window.innerWidth <= 768);
@@ -47,20 +47,20 @@ export default function HomeHero() {
           <div className="flex flex-col justify-start items-start  ">
             <h1
               id="homeHero_animate1"
-              className="md:text-[64px] text-[42px] leading-[52.8px] md:leading-[80px] font-normal"
+              className="md:text-[64px] text-[42px] leading-[52.8px] md:leading-[80px] font-normal w-fit  text-balance"
             >
-              Real Estate developer blending
+              {data.Title}
             </h1>{" "}
-            <h2
+            {/* <h2
               id="homeHero_animate2"
               className="md:text-[64px] text-[42px] leading-[52.8px] md:leading-[80px] font-normal"
             >
               timeless design with comfortable living.
-            </h2>
+            </h2> */}
           </div>{" "}
           <button onClick={handleScrollClick}>
             <div className="flex gap-[10px]">
-              <h4 id="textAnimate3">Scroll to explore</h4>
+              <h4 id="textAnimate3">{data.ScrollText}</h4>
               <ArrowDownIcon
                 className="w-[32px] h-[32px]"
                 id="homeHero_icon"

@@ -115,3 +115,84 @@ export async function fetchFaq(lang: string) {
     throw error;
   }
 }
+export async function fetchCareer(lang: string) {
+  try {
+    const careerData = await fetch(`${apiUrl}/career?pLevel&locale=${lang}`);
+    const careerDataJson = await careerData.json();
+    return careerDataJson;
+  } catch (error) {
+    console.error("Error fetching  career page", error);
+    throw error;
+  }
+}
+export async function fetchCareerBySlug(lang: string, slug: string) {
+  try {
+    const response = await sendRequest(
+      `single-careers?pLevel&locale=${lang}&filters[slug][$eq]=${slug}`
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching  career page", error);
+    throw error;
+  }
+}
+export async function fetchJobs(lang: string) {
+  try {
+    const response = await sendRequest(
+      `single-careers?locale=${lang}&fields[0]=Title&fields[1]=slug&fields[2]=CareerType&fields[3]=PositionType`
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching career listings", error);
+    throw error;
+  }
+}
+export async function fetchHomepage(lang: string) {
+  try {
+    const response = await sendRequest(`home?pLevel&locale=${lang}`);
+    return response;
+  } catch (error) {
+    console.error("Error fetching home page", error);
+    throw error;
+  }
+}
+export async function fetchBlogList(lang: string) {
+  try {
+    const response = await sendRequest(
+      `blogs?pLevel&locale=${lang}&fields[0]=Title&fields[1]=slug&fields[2]=Description&fields[3]=Type&fields[4]=publishedAt&populate[0]=Image`
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching blog list", error);
+    throw error;
+  }
+}
+export async function fetchSingleBlog(lang: string, slug: string) {
+  try {
+    const response = await sendRequest(
+      `blogs?pLevel&locale=${lang}&filters[slug][$eq]=${slug}`
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching blog list", error);
+    throw error;
+  }
+}
+export async function fetchMediaPage(lang: string) {
+  try {
+    const response = await sendRequest(`media?pLevel&locale=${lang}`);
+    return response;
+  } catch (error) {
+    console.error("Error fetching media page", error);
+    throw error;
+  }
+}
+export async function fetchCommunityPage(lang: string) {
+  try {
+    const response = await sendRequest(`community-page?pLevel&locale=${lang}`);
+    return response;
+  } catch (error) {
+    console.error("Error fetching media page", error);
+    throw error;
+  }
+}

@@ -29,6 +29,7 @@ export default async function CommunityPage({
 
   try {
     const communityData = await getCommunityBySlug(locale, slug);
+    console.log("Community Data:", communityData);
     return <SingleCommunity communityData={communityData} />;
   } catch (error) {
     notFound();
@@ -36,10 +37,10 @@ export default async function CommunityPage({
 }
 
 // Optionally, add generateStaticParams if you want to pre-render specific paths
-export async function generateStaticParams() {
-  const { data: communities } = await CummunityList("en");
+// export async function generateStaticParams() {
+//   const { data: communities } = await CummunityList("en");
 
-  return communities.map((community: { slug: any }) => ({
-    slug: community.slug,
-  }));
-}
+//   return communities.map((community: { slug: any }) => ({
+//     slug: community.slug,
+//   }));
+// }

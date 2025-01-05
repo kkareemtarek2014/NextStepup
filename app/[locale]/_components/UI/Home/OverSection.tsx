@@ -2,7 +2,7 @@
 
 import { useTextAnimation } from "@/app/[locale]/utils/textanimation";
 
-export default function StatSection() {
+export default function OverSection({ data }: { data: any }) {
   useTextAnimation({
     textIds: ["over_animate1", "over_animate2"],
     delay: 0.5,
@@ -17,7 +17,7 @@ export default function StatSection() {
             id="over_animate1"
             className="lg:text-[120px] text-[40px] md:text-[60px] leading-[50px] lg:leading-[150px] uppercase text-newRed font-medium text-center"
           >
-            OVER 60 YEARS
+            {data.Title1}
           </h2>{" "}
         </div>
 
@@ -26,8 +26,7 @@ export default function StatSection() {
             id="over_animate2"
             className="lg:text-[120px] text-[40px] md:text-[60px] leading-[50px] md:leading-[150px] uppercase text-newRed font-medium text-center w-fit xl:text-end justify-self-end flex  relative"
           >
-            {" "}
-            OF EXPERIENCE
+            {data.Title2}
           </h2>
         </div>
       </div>

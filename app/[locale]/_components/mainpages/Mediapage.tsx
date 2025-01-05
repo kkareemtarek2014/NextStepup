@@ -5,23 +5,22 @@ import MediaListSection from "../UI/media/MediaListSection";
 
 export const runtime = "edge";
 
-export default function MediaPage() {
-  const heroSectionData = {
-    imageSrc: "/img/mediahero.jpeg",
-    heading: "Media Center",
-    subheading: "Hear about our latest news and events.",
-  };
-
+export default function MediaPage({
+  data,
+  mediaPage,
+}: {
+  data: any;
+  mediaPage: any;
+}) {
   return (
     <div>
       <HeroSection
-        imageSrc={heroSectionData.imageSrc}
-        heading={heroSectionData.heading}
-        subheading={heroSectionData.subheading}
+        imageSrc={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${mediaPage?.data?.MediaHero?.Image?.url}`}
+        heading={mediaPage?.data?.MediaHero?.Title}
+        subheading={mediaPage?.data?.MediaHero?.Description}
       />
-      <MediaListSection />
-
-      <GallerySlider mobile={true} />
+      <MediaListSection apiData={data} />
+      <GallerySlider mobile={true} galleryData={mediaPage?.data?.Gallery} />
       <GetintouchSection />
     </div>
   );

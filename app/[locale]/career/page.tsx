@@ -1,4 +1,6 @@
 import Careerpage from "../_components/mainpages/Careerpage";
+import { fetchCareer } from "../api/general";
+import { fetchJobs } from "../api/general";
 export const runtime = "edge";
 
 // export async function generateMetadata({ params }: any) {
@@ -16,7 +18,15 @@ export const runtime = "edge";
 //     keywords: pageKeywords ?? "",
 //   };
 // }
-export default async function Career() {
+export default async function Career({
+  params,
+}: {
+  params: { locale: string };
+}) {
+  const locale = params?.locale || "en";
   // const data = await FetchHomePage(locale);
-  return <Careerpage />;
+  const data = await fetchCareer(locale);
+  const jobs = await fetchJobs(locale);
+  // console.log(data);
+  return <Careerpage data={data} jobs={jobs} />;
 }

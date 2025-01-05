@@ -1,4 +1,5 @@
 import SingleCareer from "../../_components/singlepages/SingleCareer";
+import { fetchCareerBySlug } from "../../api/general";
 export const runtime = "edge";
 
 // export async function generateMetadata({ params }: any) {
@@ -16,7 +17,13 @@ export const runtime = "edge";
 //     keywords: pageKeywords ?? "",
 //   };
 // }
-export default async function Career() {
-  // const data = await FetchHomePage(locale);
-  return <SingleCareer />;
+export default async function Career({
+  params,
+}: {
+  params: { locale: string; slug: string };
+}) {
+  const locale = params?.locale || "en";
+  const slug = params?.slug || "";
+  const data = await fetchCareerBySlug(locale, slug);
+  return <SingleCareer data={data} />;
 }

@@ -8,34 +8,38 @@ import OverSection from "../UI/Home/OverSection";
 import StatSection from "../UI/Home/StatSection";
 export const runtime = "edge";
 
-export default function Homepage({ locale }: { locale: string }) {
+export default function Homepage({
+  locale,
+  data,
+}: {
+  locale: string;
+  data: any;
+}) {
   const textSectionData = {
-    title: "About Us",
-    description:
-      "We are a family-owned real estate development company based in Egypt. Since 1955, we have been committed to delivering timeless, quality developments that epitomize comfort and functionality.",
+    title: data.data.TextSection.SubTitle,
+    description: data.data.TextSection.Title,
+    paragraph: data.data.TextSection.Description,
   };
   const textSectionData2 = {
-    title: "Featured Projects",
-    buttonText: "View All Communities",
-    description:
-      "Our developments span across Cairo and the North Coast, blending timeless design with comfortable living spaces for every lifestyle.",
+    title: data.data.FeaturedSection.SubTitle,
+    description: data.data.FeaturedSection.Title,
   };
   return (
     <>
-      <HomeHero />
+      <HomeHero data={data.data.HeroSection} />
       <TextSection {...textSectionData} />
-      <OverSection />
-      <StatSection />
+      <OverSection data={data.data.OverSection} />
+      <StatSection data={data.data.ProjectCount} />
       <TextSection
         {...textSectionData2}
         bgcolor="bg-teamColor"
         button={{
-          text: "View All Communities",
-          href: `/${locale}/community`,
+          text: data.data.FeaturedSection.buttonTitle,
+          href: data.data.FeaturedSection.buttonLink,
         }}
       />
       <CommunitySlider />
-      <ApproachSection />
+      <ApproachSection approachData={data.data.ApproachSection} />
       <DiscoverSection />
       <GetintouchSection />
     </>

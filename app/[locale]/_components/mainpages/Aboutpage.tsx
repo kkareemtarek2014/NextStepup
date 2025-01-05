@@ -40,7 +40,7 @@ interface LeadershipText {
 export default function Aboutpage({ aboutData }: { aboutData: AboutData }) {
   const parsedData =
     typeof aboutData === "string" ? JSON.parse(aboutData) : aboutData;
-  console.log(parsedData.data.HeroSection);
+  // console.log(parsedData.data.HeroSection);
 
   const textSectionData = {
     title: parsedData.data.ConceptText[0].SubTitle,

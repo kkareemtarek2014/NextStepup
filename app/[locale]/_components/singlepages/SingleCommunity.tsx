@@ -56,6 +56,8 @@ export default function SingleCommunity({
     paragraph: parsedData.ConceptText.Description,
   };
 
+  console.log("Parsed Data:", parsedData);
+
   return (
     <div>
       <SingleCummunitiesHero

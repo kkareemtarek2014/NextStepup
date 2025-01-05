@@ -7,19 +7,21 @@ import TextSection from "../UI/General/TextSection";
 
 export const runtime = "edge";
 
-export default function Aboutpage() {
+export default function Careerpage({ data, jobs }: { data: any; jobs: any }) {
   const textSectionData = {
-    title: "About Us",
-    description:
-      "We are a family-owned real estate development company based in Egypt. Since 1955, we have been committed to delivering timeless, quality developments that epitomize comfort and functionality.",
+    title: data.data.ConceptText.SubTitle,
+    description: data.data.ConceptText.Title,
+    paragraph: data.data.ConceptText.Description || "",
   };
+
+  const jobTitle = data.data.CareerText;
   return (
     <div>
-      <HeroCareer />
+      <HeroCareer data={data.data.CareerHero} />
       <TextSection {...textSectionData} />
-      <GallerySlider />
-      <ValusSection />
-      <JobSection />
+      <GallerySlider galleryData={data.data.GallerySection} />
+      <ValusSection valuesData={data.data.ValueSection} />
+      <JobSection jobs={jobs} jobTitle={jobTitle} />
       <GetintouchSection />
     </div>
   );

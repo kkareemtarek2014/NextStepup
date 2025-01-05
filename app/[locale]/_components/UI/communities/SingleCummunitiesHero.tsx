@@ -11,6 +11,7 @@ interface SingleCummunitiesHeroProps {
   heading: string;
   subheading: string;
   imgLogo: string;
+  brochureLink?: string;
 }
 
 export default function SingleCummunitiesHero({
@@ -18,6 +19,7 @@ export default function SingleCummunitiesHero({
   heading,
   subheading,
   imgLogo,
+  brochureLink,
 }: SingleCummunitiesHeroProps) {
   const breadcrumbsList = [
     {
@@ -97,7 +99,7 @@ export default function SingleCummunitiesHero({
               </span>
             </Button>{" "}
             <Button
-              href={`/${locale}`}
+              href={`/${locale}/contact-us`}
               className="px-5 py-3 bg-transparent border border-white hover:bg-black/70 transition-all duration-300 rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit"
             >
               <span className="text-white text-sm lg:text-base font-medium leading-[25px] text-start">

@@ -1,4 +1,5 @@
 import MediaPage from "../_components/mainpages/Mediapage";
+import { fetchBlogList, fetchMediaPage } from "../api/general";
 
 export const runtime = "edge";
 
@@ -17,7 +18,13 @@ export const runtime = "edge";
 //     keywords: pageKeywords ?? "",
 //   };
 // }
-export default async function Media() {
-  // const data = await FetchHomePage(locale);
-  return <MediaPage />;
+export default async function Media({
+  params,
+}: {
+  params: { locale: string };
+}) {
+  const data = await fetchBlogList(params.locale);
+  // console.log(data);
+  const mediaPage = await fetchMediaPage(params.locale);
+  return <MediaPage data={data} mediaPage={mediaPage} />;
 }

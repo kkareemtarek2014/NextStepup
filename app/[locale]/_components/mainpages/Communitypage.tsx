@@ -5,8 +5,10 @@ export const runtime = "edge";
 
 export default function Communitypage({
   communityData,
+  communityPageData,
 }: {
   communityData: any;
+  communityPageData: any;
 }) {
   // Wrap the array in the expected ApiResponse format
   const formattedApiData = {
@@ -19,10 +21,9 @@ export default function Communitypage({
   };
 
   const heroSectionData = {
-    imageSrc: `${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${communityData[0].HeroSection.MainImage.url}`,
-    heading: "Our Communities",
-    subheading:
-      "Our developments span across Cairo and the North Coast, blending timeless design with comfortable living spaces for every lifestyle.",
+    imageSrc: `${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${communityPageData.Image.url}`,
+    heading: communityPageData.Title,
+    subheading: communityPageData.Description,
   };
 
   // console.log(heroSectionData.imageSrc);

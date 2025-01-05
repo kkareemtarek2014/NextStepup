@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ArrowDownIcon from "../Icons/ArrowDownIcon";
+import { useLocale } from "next-intl";
 
 interface FooterProps {
   // Add any props if needed
@@ -14,6 +15,7 @@ export default function Footer({}: FooterProps) {
       behavior: "smooth", // Smooth scroll effect
     });
   };
+  const locale = useLocale();
   return (
     <footer className="block top-0 left-0 right-0 z-50 w-full bg-black">
       <div className="max-w-[1400px] mx-auto px-4 py-4 flex flex-col">
@@ -92,11 +94,15 @@ export default function Footer({}: FooterProps) {
                 <h5 className="text-base font-medium text-white">
                   Looking for something specific?
                 </h5>
-                <div className="flex gap-1 items-center">
-                  <h5 className="text-base font-medium text-white">
+                <div className="flex gap-1 items-center group">
+                  <Link
+                    href={`/${locale}/contact-us`}
+                    className="text-base font-medium text-white relative "
+                  >
                     Submit Your Interest
-                  </h5>
-                  <ArrowDownIcon className="w-[20px] h-[20px] -rotate-90" />
+                    <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
+                  </Link>
+                  <ArrowDownIcon className="w-[20px] h-[20px] -rotate-90 group-hover:ms-2 transition-all duration-300" />
                 </div>
               </div>
             </div>
@@ -153,10 +159,14 @@ export default function Footer({}: FooterProps) {
           </div>
           <h4 className="text-sm font-[325] text-white">
             Website by{" "}
-            <span className="relative group inline-block">
+            <Link
+              href="https://mitchdesigns.com"
+              target="_blank"
+              className="relative group inline-block"
+            >
               Mitch Designs
               <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
-            </span>
+            </Link>
           </h4>
         </div>
       </div>

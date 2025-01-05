@@ -63,6 +63,7 @@ section {
 }
 
 .slick-list {
+  overflow: visible !important;
   margin: 0;
 }
 
@@ -87,6 +88,8 @@ section {
 .slick-track {
   display: flex !important;
   gap: 20px !important;
+  margin: 0 !important;
+  height: 100% !important;
   /* align-items: start !important; */
 }
 
@@ -174,4 +177,44 @@ section {
 #banner-4 {
   background-color: #4d4d4d;
   z-index: 50;
+}
+
+.community-slider {
+  overflow: visible !important;
+}
+
+.community-slider .slick-list {
+  overflow: visible !important;
+  clip-path: inset(-100vh -100vw -100vh 0);
+}
+
+.community-slider .slick-track {
+  display: flex !important;
+  gap: 20px !important;
+}
+
+@media (max-width: 640px) {
+  .community-slider .slick-track {
+    gap: 12px !important;
+  }
+}
+
+.blog-slider {
+  overflow: visible !important;
+}
+
+.blog-slider .slick-list {
+  overflow: visible !important;
+  clip-path: inset(-100vh -100vw -100vh 0);
+}
+
+.blog-slider .slick-track {
+  display: flex !important;
+  gap: 20px !important;
+}
+
+@media (max-width: 640px) {
+  .blog-slider .slick-track {
+    gap: 12px !important;
+  }
 }

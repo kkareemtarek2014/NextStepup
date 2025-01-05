@@ -7,46 +7,52 @@ import { useState, useRef, useEffect } from "react";
 import Button from "./Button";
 import ArrowIcon from "../../Icons/ArrowIcon";
 import Link from "next/link";
+import { useParams, usePathname } from "next/navigation";
+import { CummunityList } from "@/app/[locale]/api/general";
 
-interface CommunityPost {
-  title: string;
-  stats: string;
-  image: string;
-  category: string;
+interface CommunityData {
+  id: number;
+  documentId: string;
+  slug: string;
+  Location: string;
+  statusType: string;
+  UnitType: string;
+  Type: string;
+  HeroSection: {
+    id: number;
+    Title: string;
+    Description: string;
+    MainImage: {
+      id: number;
+      documentId: string;
+      url: string;
+      formats: {
+        large: ImageFormat;
+        small: ImageFormat;
+        medium: ImageFormat;
+        thumbnail: ImageFormat;
+      };
+    };
+  };
+  HighlightSection: {
+    id: number;
+    Title: string;
+  };
 }
 
-const communitySlider: CommunityPost[] = [
-  {
-    title: "SEASHELL RAS EL HEKMA",
-    stats: "Completed",
-    image: "/img/ProjectExample.svg",
-    category: "North Coast",
-  },
-  {
-    title: "PLAYA GHAZALA BAY",
-    stats: "Completed",
-    image: "/img/ProjectExample.svg",
-    category: "North Coast",
-  },
-  {
-    title: "NEW KAIRO",
-    stats: "Completed",
-    image: "/img/ProjectExample.svg",
-    category: "North Coast",
-  },
-  {
-    title: "SEASHELL RAS EL HEKMA",
-    stats: "Completed",
-    image: "/img/ProjectExample.svg",
-    category: "North Coast",
-  },
-  {
-    title: "SEASHELL RAS EL HEKMA",
-    stats: "Completed",
-    image: "/img/ProjectExample.svg",
-    category: "North Coast",
-  },
-];
+interface ImageFormat {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
+  name: string;
+  path: null;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
+}
+
 interface CommunitySectionProps {
   title?: string;
   button?: {
@@ -54,13 +60,18 @@ interface CommunitySectionProps {
     href: string;
   };
 }
+
 export default function CommunitySection({
   title,
   button,
 }: CommunitySectionProps) {
+  const { locale } = useParams();
+  const pathname = usePathname();
+  const [communityData, setCommunityData] = useState<CommunityData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const sliderRef = useRef<Slider>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const [slidesToShow, setSlidesToShow] = useState<number>(2.3);
+  const [slidesToShow, setSlidesToShow] = useState<number>(2.2);
 
   useEffect(() => {
     const handleResize = () => {
@@ -69,7 +80,7 @@ export default function CommunitySection({
       } else if (window.innerWidth <= 1024) {
         setSlidesToShow(2);
       } else {
-        setSlidesToShow(2.3);
+        setSlidesToShow(2.2);
       }
     };
 
@@ -77,6 +88,31 @@ export default function CommunitySection({
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    const fetchCommunities = async () => {
+      try {
+        const response = await CummunityList(locale as string);
+
+        const uniqueCommunities = response.data
+          .filter(
+            (community, index, self) =>
+              index === self.findIndex((c) => c.slug === community.slug)
+          )
+          .filter(
+            (community) => !pathname.includes(community.slug)
+          ) as CommunityData[];
+
+        setCommunityData(uniqueCommunities);
+      } catch (error) {
+        console.error("Error fetching communities:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCommunities();
+  }, [locale, pathname]);
 
   const settings = {
     dots: false,
@@ -95,12 +131,12 @@ export default function CommunitySection({
       {
         breakpoint: 640,
         settings: {
-          slidesToShow: 1.05,
+          slidesToShow: 1.2,
         },
       },
     ],
     arrows: false,
-    className: "gap-5 ",
+    className: "community-slider",
   };
 
   const goToNext = () => {
@@ -110,8 +146,9 @@ export default function CommunitySection({
   const goToPrev = () => {
     sliderRef.current?.slickPrev();
   };
+
   const calculateProgress = () => {
-    const totalSlides = communitySlider.length;
+    const totalSlides = communityData.length;
     const maxProgress = totalSlides - slidesToShow;
     if (currentSlide === 0) {
       return "25%";
@@ -143,11 +180,10 @@ export default function CommunitySection({
               )}
             </div>
           )}
-          {/* Slider Section */}
           <div className={`relative  ${title ? "pb-[90px]" : "pb-[62px]"}`}>
             <button
               onClick={goToPrev}
-              className="absolute hidden lg:block top-1/2 -left-12 -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white hover:bg-primary rounded-full"
+              className="absolute hidden lg:block top-1/2 -left-[1rem] -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white hover:bg-primary rounded-full"
               aria-label="Previous slide"
             >
               <svg
@@ -169,53 +205,59 @@ export default function CommunitySection({
               {...settings}
               className="blog-slider pt-[40px] lg:pt-0"
             >
-              {communitySlider.map((post, index) => (
-                <div
-                  key={index}
-                  className=" bg-gray-100 relative flex flex-col  pe-[20px] lg:pe-0 h-full "
-                >
-                  <div className="relative h-full">
-                    <div className="relative h-[160px] lg:h-[320px]">
-                      <Image
-                        src={post.image}
-                        alt={post.title}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="relative w-full">
-                      <div className="bg-white p-4 lg:p-[28px] !pb-[48px]  h-[222px]  md:h-[280px] 2xl:h-full   ">
-                        <div className="flex flex-col gap-5 justify-between h-full ">
-                          <div className="flex flex-col gap-3">
-                            <span className="text-base font-medium text-primary leading-[22.4px] uppercase tracking-wider">
-                              {post.category} • {post.stats}
-                            </span>
-                            <h3 className=" text-[28px]  lg:text-[40px] font-medium leading-[35px] lg:leading-[50px] text-black   uppercase ">
-                              {post.title}
-                            </h3>
+              {isLoading ? (
+                <div className="flex justify-center items-center min-h-[400px]">
+                  <div className="animate-spin">Loading...</div>
+                </div>
+              ) : (
+                communityData.map((community, index) => (
+                  <div
+                    key={community.id}
+                    className="bg-gray-100 relative flex flex-col pe-[20px] lg:pe-0 h-full"
+                  >
+                    <div className="relative h-full">
+                      <div className="relative h-[160px] lg:h-[320px]">
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${community.HeroSection.MainImage.url}`}
+                          alt={community.Location}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="relative w-full h-full">
+                        <div className="bg-white p-4 lg:p-[28px] !pb-[48px] h-[222px] md:h-[280px] 2xl:!h-full">
+                          <div className="flex flex-col gap-5 justify-between h-full">
+                            <div className="flex flex-col gap-3">
+                              <span className="text-base font-medium text-primary leading-[22.4px] uppercase tracking-wider">
+                                {community.Location} • {community.statusType}
+                              </span>
+                              <h3 className="text-[28px] lg:text-[40px] font-medium leading-[35px] lg:leading-[50px] text-black uppercase">
+                                {community.HeroSection.Title}
+                              </h3>
+                            </div>
+                            <Button
+                              href={`/community/${community.slug}`}
+                              className="px-4 lg:px-5 py-[10px] lg:py-3 bg-black rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit"
+                              iconComponent={
+                                <ArrowIcon className="rotate-180 text-white" />
+                              }
+                            >
+                              <span className="text-white text-sm lg:text-base font-medium leading-[25px] text-start">
+                                View Project
+                              </span>
+                            </Button>
                           </div>
-                          <Button
-                            href="/"
-                            className="px-4 lg:px-5 py-[10px] lg:py-3 bg-black rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit"
-                            iconComponent={
-                              <ArrowIcon className="rotate-180 text-white" />
-                            }
-                          >
-                            <span className="text-white text-sm lg:text-base font-medium leading-[25px] text-start">
-                              View Project
-                            </span>
-                          </Button>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              )}
             </Slider>
 
             <button
               onClick={goToNext}
-              className="absolute hidden lg:block top-1/2 -right-12 -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white rounded-full"
+              className="absolute hidden lg:block top-1/2 -right-[1rem] -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white rounded-full"
               aria-label="Next slide"
             >
               <svg
@@ -234,7 +276,6 @@ export default function CommunitySection({
             </button>
           </div>
 
-          {/* Progress Bar */}
           <div className="relative w-auto lg:ms-4 h-[2px]  bg-black/20">
             <div
               className="absolute h-full bg-black transition-all duration-300 ease-in-out"

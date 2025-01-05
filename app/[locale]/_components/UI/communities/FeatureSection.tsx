@@ -56,7 +56,7 @@ export default function FeatureSection({ featureData }: Props) {
 
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
@@ -164,7 +164,7 @@ export default function FeatureSection({ featureData }: Props) {
           </div>
 
           {/* Image Slider */}
-          <div className="lg:w-1/2 w-full py-4 lg:p-5">
+          <div className="lg:w-1/2 w-full max-w-[716px] my-4 lg:m-5 overflow-hidden">
             <Slider
               ref={sliderRef}
               {...settings}
