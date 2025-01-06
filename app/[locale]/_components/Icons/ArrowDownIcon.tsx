@@ -2,11 +2,13 @@ interface ArrowDownIconProps {
   className?: string;
   handleScrollClick?: () => void;
   id?: string;
+  ref?: React.RefObject<SVGSVGElement>;
 }
 
 const ArrowDownIcon = ({
   className,
   id,
+  ref,
   handleScrollClick,
 }: ArrowDownIconProps) => {
   return (
@@ -18,6 +20,7 @@ const ArrowDownIcon = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       id={id}
+      ref={ref}
     >
       <path
         d="M15.7918 4L15.7918 27.2367M28 16.4804L16 28L4 16.4804"

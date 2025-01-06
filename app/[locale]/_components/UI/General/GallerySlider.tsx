@@ -3,8 +3,10 @@ import Image from "next/image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import ArrowIcon from "../../Icons/ArrowIcon";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 interface ImageFormat {
   url: string;
@@ -44,9 +46,76 @@ interface Props {
   galleryData?: GallerySection;
 }
 
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
+
 export default function GallerySlider({ mobile, galleryData }: Props) {
+  const sectionRef = useRef<HTMLElement>(null);
   const sliderRef = useRef<Slider>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLHeadingElement>(null);
+  const controlsRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState<number>(0);
+
+  // Initialize GSAP animations with ScrollTrigger
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Create a timeline for the animations
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%", // Starts animation when the top of the section hits 80% from the top of the viewport
+          end: "top 20%",
+          toggleActions: "play none none reverse", // play on enter, reverse on leave
+        },
+      });
+
+      // Add animations to the timeline
+      tl.from(subtitleRef.current, {
+        opacity: 0,
+        y: 20,
+        duration: 0.6,
+        ease: "power3.out",
+      })
+        .from(
+          titleRef.current,
+          {
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        ) // Start slightly before previous animation ends
+        .from(
+          controlsRef.current,
+          {
+            opacity: 0,
+            x: -20,
+            duration: 0.6,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        )
+        .from(
+          ".slide-container",
+          {
+            opacity: 0,
+            x: 100,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        );
+    });
+
+    return () => {
+      ctx.revert();
+      // Clean up ScrollTrigger
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
 
   const settings = {
     dots: false,
@@ -84,7 +153,7 @@ export default function GallerySlider({ mobile, galleryData }: Props) {
       return galleryData.ImageSlider.map((item, index) => (
         <div key={item.id} className="slide-container">
           <div
-            className={`image-wrapper transition-all ease-linear ${
+            className={`image-wrapper transition-all duration-500 ease-out ${
               activeSlide === index
                 ? "h-[162.38px] md:h-[400px] lg:h-[600px]"
                 : "h-[108.25px] md:h-[300px] lg:h-[400px]"
@@ -126,6 +195,7 @@ export default function GallerySlider({ mobile, galleryData }: Props) {
 
   return (
     <section
+      ref={sectionRef}
       className={`relative ${
         mobile ? "block" : "hidden"
       } lg:block bg-white pb-[90px]`}
@@ -133,13 +203,19 @@ export default function GallerySlider({ mobile, galleryData }: Props) {
       <div className="max-w-[1512px] mx-auto">
         <div className="relative lg:min-h-[664px] h-full">
           <div className="w-[362px] flex flex-col gap-3 ps-4 lg:pt-[55px] lg:pl-[56px] z-10 relative">
-            <h4 className="text-black text-xs uppercase tracking-wider">
+            <h4
+              ref={subtitleRef}
+              className="text-black text-xs uppercase tracking-wider"
+            >
               {galleryData?.SubTitle || "Gallery"}
             </h4>
-            <h2 className="text-[28px] lg:text-[40px] leading-[38px] lg:leading-[50px] font-medium text-black">
+            <h2
+              ref={titleRef}
+              className="text-[28px] lg:text-[40px] leading-[38px] lg:leading-[50px] font-medium text-black"
+            >
               {galleryData?.Title || "Life at\nG Developments"}
             </h2>
-            <div className="flex gap-3 lg:gap-4 lg:mt-4">
+            <div ref={controlsRef} className="flex gap-3 lg:gap-4 lg:mt-4">
               <button
                 onClick={goToPrev}
                 className=" p-2 lg:p-4 hover:opacity-75 transition-opacity bg-black text-white rounded-full"

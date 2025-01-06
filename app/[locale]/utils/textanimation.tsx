@@ -10,19 +10,23 @@ interface TextAnimationProps {
   delay?: number;
   stagger?: number;
   fromHero?: boolean;
+  buttonWithTitle?: boolean;
+  animationType?: "letter" | "word";
 }
 
 export const useTextAnimation = ({
   textIds,
   iconId,
   videoId,
-  delay = 0.5,
-  stagger = 0.05,
+  delay = 0.02,
+  stagger = 0.01,
   fromHero = false,
+  buttonWithTitle = false,
+  animationType = "letter",
 }: TextAnimationProps) => {
   const textRefs = useRef<(HTMLElement | null)[]>([]);
   const hasAnimated = useRef(false);
-
+  // console.log(textIds[2]);
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -36,9 +40,8 @@ export const useTextAnimation = ({
         ? undefined
         : {
             trigger: firstElement,
-            start: "top 40%",
-            toggleActions: "play none none none",
-            // markers: true,
+            start: "top 75%",
+            toggleActions: "play complete none none",
             onEnter: () => {
               startAnimation();
             },
@@ -46,106 +49,97 @@ export const useTextAnimation = ({
       paused: true,
     });
 
-    // Get only existing elements
-    const existingElements = textIds
+    const textElements = textIds
       .map((id) => document.getElementById(id))
       .filter((element): element is HTMLElement => element !== null);
 
-    if (existingElements.length === 0) return;
+    if (textElements.length === 0) return;
 
-    // Initially hide the icon if it exists
-    if (iconId) {
-      const iconElement = document.getElementById(iconId);
-      if (iconElement) {
-        gsap.set(iconElement, { opacity: 0 });
-      }
-    }
-
-    // Initially hide the video if it exists
-    if (videoId) {
-      const videoElement = document.getElementById(videoId);
-      if (videoElement) {
-        gsap.set(videoElement, {
+    textElements.forEach((element, index) => {
+      if (index === 2) {
+        gsap.set(element, {
           opacity: 0,
-          yPercent: 50,
+          y: 50,
         });
-      }
-    }
 
-    // Text animations only for existing elements
-    existingElements.forEach((element, index) => {
-      const originalText = element.textContent || "";
-      textRefs.current[index] = element;
-
-      // Store original text content
-      element.setAttribute("data-original-text", originalText);
-
-      const letters = originalText.split("").map((letter) => {
-        const span = document.createElement("span");
-        if (letter === " ") {
-          span.innerHTML = " ";
-          span.style.width = "0.3em";
-        } else {
-          span.innerHTML = letter;
-        }
-        span.style.display = "inline-block";
-        span.style.opacity = "0";
-        return span;
-      });
-
-      element.innerHTML = "";
-      letters.forEach((span) => element.appendChild(span));
-
-      tl.to(
-        letters,
-        {
-          opacity: 1,
-          duration: 0.5,
-          stagger: stagger,
-          ease: "power2.out",
-        },
-        index === 0 ? ">" : `>-${delay}`
-      );
-    });
-
-    // Add icon animation after text animations complete
-    if (iconId) {
-      const iconElement = document.getElementById(iconId);
-      if (iconElement) {
-        tl.to(iconElement, {
-          opacity: 1,
-          duration: 0.3,
-        }).to(
-          iconElement,
-          {
-            y: -20,
-            duration: 0.5,
-            ease: "power2.out",
-            repeat: -1,
-            yoyo: true,
-            yoyoEase: "bounce.out",
-          },
-          ">"
-        );
-      }
-    }
-
-    // Add video animation after text animations complete
-    if (videoId) {
-      const videoElement = document.getElementById(videoId);
-      if (videoElement) {
         tl.to(
-          videoElement,
+          element,
           {
             opacity: 1,
-            yPercent: 0,
-            duration: 0.2,
+            y: 0,
+            duration: 0.7,
+            ease: "power3.out",
+          },
+          "+=0.3"
+        );
+      } else if (buttonWithTitle && index === 2) {
+        gsap.set(element, {
+          opacity: 0,
+          x: 100,
+        });
+
+        tl.to(
+          element,
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          "<"
+        );
+      } else {
+        const originalText = element.textContent || "";
+        textRefs.current[index] = element;
+        element.setAttribute("data-original-text", originalText);
+
+        const container = document.createElement("div");
+        container.style.display = "block";
+        container.style.width = "100%";
+
+        if (animationType === "word") {
+          const words = originalText.split(/\s+/);
+          words.forEach((word, wordIndex) => {
+            const wordSpan = document.createElement("span");
+            wordSpan.style.display = "inline-block";
+            wordSpan.style.whiteSpace = "nowrap";
+            wordSpan.style.opacity = "0";
+            wordSpan.textContent = word;
+            container.appendChild(wordSpan);
+
+            if (wordIndex < words.length - 1) {
+              const spaceSpan = document.createElement("span");
+              spaceSpan.style.display = "inline-block";
+              spaceSpan.innerHTML = "&nbsp;";
+              container.appendChild(spaceSpan);
+            }
+          });
+        } else {
+          const chars = originalText.split("");
+          chars.forEach((char) => {
+            const charSpan = document.createElement("span");
+            charSpan.style.display = "inline-block";
+            charSpan.style.opacity = "0";
+            charSpan.textContent = char === " " ? "\u00A0" : char;
+            container.appendChild(charSpan);
+          });
+        }
+
+        element.innerHTML = "";
+        element.appendChild(container);
+
+        tl.to(
+          container.getElementsByTagName("span"),
+          {
+            opacity: 1,
+            duration: 0.3,
+            stagger: stagger,
             ease: "power2.out",
           },
-          ">"
+          index === 0 ? ">" : `>-${delay}`
         );
       }
-    }
+    });
 
     const startAnimation = () => {
       tl.play();
@@ -164,7 +158,6 @@ export const useTextAnimation = ({
 
     function cleanup() {
       tl.kill();
-      // Restore original text on cleanup
       textRefs.current.forEach((element) => {
         if (element) {
           const originalText = element.getAttribute("data-original-text");
@@ -174,7 +167,16 @@ export const useTextAnimation = ({
         }
       });
     }
-  }, [textIds, iconId, videoId, delay, stagger, fromHero]);
+  }, [
+    textIds,
+    iconId,
+    videoId,
+    delay,
+    stagger,
+    fromHero,
+    buttonWithTitle,
+    animationType,
+  ]);
 
   return null;
 };
@@ -184,6 +186,7 @@ interface TextAnimateProps {
   ids: string[];
   className?: string;
   fromHero?: boolean;
+  animationType?: "letter" | "word";
 }
 
 export const TextAnimate: React.FC<TextAnimateProps> = ({
@@ -191,8 +194,9 @@ export const TextAnimate: React.FC<TextAnimateProps> = ({
   ids,
   className = "",
   fromHero = false,
+  animationType = "letter",
 }) => {
-  useTextAnimation({ textIds: ids, fromHero });
+  useTextAnimation({ textIds: ids, fromHero, animationType });
 
   return (
     <div>

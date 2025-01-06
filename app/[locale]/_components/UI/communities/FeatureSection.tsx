@@ -1,9 +1,11 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Image from "next/image";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 interface ImageFormat {
   url: string;
@@ -52,7 +54,115 @@ interface Props {
 
 export default function FeatureSection({ featureData }: Props) {
   const sliderRef = useRef<Slider>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLSpanElement>(null);
+  const taglineRef = useRef<HTMLParagraphElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const controlsRef = useRef<HTMLDivElement>(null);
+  const sliderContainerRef = useRef<HTMLDivElement>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // Set initial states
+      gsap.set(
+        [
+          subtitleRef.current,
+          titleRef.current,
+          taglineRef.current,
+          descriptionRef.current,
+        ],
+        {
+          opacity: 0,
+          y: 30,
+        }
+      );
+
+      gsap.set(controlsRef.current, {
+        opacity: 0,
+        x: -30,
+      });
+
+      gsap.set(sliderContainerRef.current, {
+        opacity: 0,
+        x: 50,
+      });
+
+      // Create the animation timeline
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 70%",
+          end: "top 20%",
+          toggleActions: "play none none reverse",
+        },
+      });
+
+      // Animate content elements
+      tl.to(subtitleRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power3.out",
+      })
+        .to(
+          titleRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        )
+        .to(
+          taglineRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        )
+        .to(
+          descriptionRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        )
+        .to(
+          controlsRef.current,
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.6,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        )
+        .to(
+          sliderContainerRef.current,
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.8,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        );
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   const settings = {
     dots: false,
@@ -100,29 +210,44 @@ export default function FeatureSection({ featureData }: Props) {
   };
 
   return (
-    <section className="bg-teamColor h-fit pb-[40px] lg:p-0">
+    <section ref={sectionRef} className="bg-teamColor h-fit pb-[40px] lg:p-0">
       <div className="max-w-[1512px] mx-auto">
         <div className="flex lg:flex-row flex-col-reverse gap-y-[40px]">
           {/* Static Content */}
-          <div className="lg:w-1/2 w-full flex flex-col items-start justify-center gap-[40px] px-4 lg:p-10">
+          <div
+            ref={contentRef}
+            className="lg:w-1/2 w-full flex flex-col items-start justify-center gap-[40px] px-4 lg:p-10"
+          >
             <div className="flex flex-col gap-3 items-start justify-start max-w-[556px]">
-              <span className="text-xs tracking-[20%] text-black uppercase">
+              <span
+                ref={subtitleRef}
+                className="text-xs tracking-[20%] text-black uppercase"
+              >
                 {featureData?.SubTitle || "Community features"}
               </span>
               <div className="flex flex-col gap-2">
-                <h3 className="text-[40px] font-medium text-black leading-[50px]">
+                <h3
+                  ref={titleRef}
+                  className="text-[40px] font-medium text-black leading-[50px]"
+                >
                   {featureData?.Title || staticFeatureContent.title}
                 </h3>
-                <p className="text-[28px] leading-[35px] text-primary font-medium">
+                <p
+                  ref={taglineRef}
+                  className="text-[28px] leading-[35px] text-primary font-medium"
+                >
                   {featureData?.Tagline || staticFeatureContent.subtitle}
                 </p>
               </div>
-              <p className="text-base text-black font-normal">
+              <p
+                ref={descriptionRef}
+                className="text-base text-black font-normal"
+              >
                 {featureData?.Description || staticFeatureContent.description}
               </p>
             </div>
 
-            <div className="flex gap-3 lg:gap-5">
+            <div ref={controlsRef} className="flex gap-3 lg:gap-5">
               <button
                 onClick={goToPrev}
                 className="relative block p-[10px] lg:p-4 hover:opacity-75 transition-opacity bg-black text-white rounded-full"
@@ -164,7 +289,10 @@ export default function FeatureSection({ featureData }: Props) {
           </div>
 
           {/* Image Slider */}
-          <div className="lg:w-1/2 w-full max-w-[716px] my-4 lg:m-5 overflow-hidden">
+          <div
+            ref={sliderContainerRef}
+            className="lg:w-1/2 w-full max-w-[716px] my-4 lg:m-5 overflow-hidden"
+          >
             <Slider
               ref={sliderRef}
               {...settings}

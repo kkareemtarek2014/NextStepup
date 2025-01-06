@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import React, { JSX } from "react";
+import React, { JSX, useEffect, useRef } from "react";
+import gsap from "gsap";
 
 interface HighlightItem {
   id: number;
@@ -84,10 +85,96 @@ interface Props {
 export default function HighlightSection({
   highlightData,
 }: Props): JSX.Element {
+  const sectionRef = useRef<HTMLElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Image animation
+            gsap.fromTo(
+              imageRef.current,
+              {
+                opacity: 0,
+                x: -50,
+              },
+              {
+                opacity: 1,
+                x: 0,
+                duration: 1,
+                ease: "power2.out",
+              }
+            );
+
+            // Header animation
+            const headerElement = contentRef.current?.querySelector("header");
+            if (headerElement) {
+              gsap.fromTo(
+                headerElement,
+                {
+                  opacity: 0,
+                  y: 30,
+                },
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 1,
+                  delay: 0.3,
+                  ease: "power2.out",
+                }
+              );
+            }
+
+            // Highlight cards animation
+            const cards = contentRef.current?.querySelectorAll(
+              ".flex.flex-col.gap-3"
+            );
+            cards?.forEach((card, index) => {
+              gsap.fromTo(
+                card,
+                {
+                  opacity: 0,
+                  y: 30,
+                },
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.8,
+                  delay: 0.5 + index * 0.2,
+                  ease: "power2.out",
+                }
+              );
+            });
+
+            // Disconnect the observer after animation
+            observer.disconnect();
+          }
+        });
+      },
+      {
+        threshold: 0.2, // Trigger when 20% of the element is visible
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
-    <section className="bg-teamColor">
+    <section ref={sectionRef} className="bg-teamColor">
       <div className="max-w-[1512px] mx-auto flex flex-col lg:flex-row h-fit">
-        <div className="w-full lg:w-1/2 lg:m-5 h-[343px] lg:h-[800px] relative">
+        <div
+          ref={imageRef}
+          className="w-full lg:w-1/2 lg:m-5 h-[343px] lg:h-[800px] relative opacity-0"
+        >
           <Image
             src={
               highlightData?.Image
@@ -101,7 +188,10 @@ export default function HighlightSection({
           />
         </div>
 
-        <div className="w-full lg:w-1/2 flex justify-center items-center py-[40px] 2xl:py-0 px-4 xl:px-0">
+        <div
+          ref={contentRef}
+          className="w-full lg:w-1/2 flex justify-center items-center py-[40px] 2xl:py-0 px-4 xl:px-0"
+        >
           <div className="flex flex-col justify-center items-center gap-20 max-w-[556px] w-full">
             <header className="flex flex-col justify-center items-start gap-3 w-fit">
               <span className="text-xs tracking-[0.2em] uppercase text-black">

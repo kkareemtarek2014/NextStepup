@@ -1,6 +1,6 @@
 "use client";
-import Image from "next/image";
 import { useState } from "react";
+import AnimatedSection from "./AnimatedSection";
 
 interface ApproachStep {
   id: number;
@@ -33,12 +33,17 @@ export default function ApproachSection({
     <section className="relative h-fit min-h-[330px] bg-white">
       <div className="max-w-[1512px] mx-auto flex flex-col py-[40px] px-4 lg:px-[56px]">
         <div className="flex flex-col lg:flex-row lg:mb-12 gap-[40px] lg:gap-0">
-          <div className="w-full lg:w-[47.29%]">
+          <AnimatedSection direction="left" className="w-full lg:w-[47.29%]">
             <h3 className="text-[24px] lg:text-[28px] leading-[35px] font-medium text-start text-primary">
               {approachData.SubTitle}
             </h3>
-          </div>
-          <div className="w-full lg:w-[52.71%]">
+          </AnimatedSection>
+
+          <AnimatedSection
+            direction="right"
+            className="w-full lg:w-[52.71%]"
+            delay={0.2}
+          >
             <div className="w-full max-w-[900px] mx-auto flex flex-col">
               {approachData.ApproachSteps.map((step, index) => (
                 <div key={step.id} className="border-b border-borderColor">
@@ -54,9 +59,7 @@ export default function ApproachSection({
                         {step.Title}
                       </span>
                     </div>
-                    <div
-                      className={`w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 transition-transform duration-300`}
-                    >
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 transition-transform duration-300">
                       {openIndex === index ? (
                         <img src="/img/minus.svg" alt="minus" />
                       ) : (
@@ -79,7 +82,7 @@ export default function ApproachSection({
                 </div>
               ))}
             </div>
-          </div>
+          </AnimatedSection>
         </div>
       </div>
     </section>

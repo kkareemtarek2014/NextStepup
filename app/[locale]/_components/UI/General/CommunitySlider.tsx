@@ -9,6 +9,8 @@ import ArrowIcon from "../../Icons/ArrowIcon";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import { CummunityList } from "@/app/[locale]/api/general";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 interface CommunityData {
   id: number;
@@ -93,7 +95,6 @@ export default function CommunitySection({
     const fetchCommunities = async () => {
       try {
         const response = await CummunityList(locale as string);
-
         const uniqueCommunities = response.data
           .filter(
             (community, index, self) =>
@@ -113,6 +114,76 @@ export default function CommunitySection({
 
     fetchCommunities();
   }, [locale, pathname]);
+
+  useEffect(() => {
+    if (!communityData.length || typeof window === "undefined") return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // Header elements (title and button)
+      const headerElements = document.querySelectorAll(
+        ".community-section .animate-header > *"
+      );
+      gsap.set(headerElements, {
+        opacity: 0,
+        y: -50,
+      });
+
+      // Slider element
+      const sliderElement = document.querySelector(".animate-slider");
+      gsap.set(sliderElement, {
+        opacity: 0,
+        x: 100,
+      });
+
+      // Progress bar
+      const progressElement = document.querySelector(".animate-progress");
+      gsap.set(progressElement, {
+        opacity: 0,
+        y: 50,
+      });
+
+      // Create timeline for animations
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: ".community-section",
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+        })
+        .to(headerElements, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.2,
+          ease: "power2.out",
+        })
+        .to(
+          sliderElement,
+          {
+            opacity: 1,
+            x: 0,
+            duration: 1,
+            ease: "power2.out",
+          },
+          "-=0.4"
+        )
+        .to(
+          progressElement,
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+          },
+          "-=0.6"
+        );
+    });
+
+    return () => ctx.revert();
+  }, [communityData]);
 
   const settings = {
     dots: false,
@@ -159,11 +230,11 @@ export default function CommunitySection({
   };
 
   return (
-    <section className="relative h-fit bg-teamColor pb-[40px] lg:pb-0">
+    <section className="relative h-fit bg-teamColor pb-[40px] lg:pb-0 community-section">
       <div className="max-w-[1512px] mx-auto">
-        <div className="flex flex-col lg:gap-0 px-4 lg:px-[56px] lg:pb-[40px] h-fit ">
+        <div className="flex flex-col lg:gap-0 px-4 lg:px-[56px] lg:pb-[40px] h-fit">
           {title && (
-            <div className="flex flex-col lg:flex-row justify-start pt-[40px] lg:py-[40px] lg:justify-between items-start lg:items-center  lg:ps-4 gap-[24px]">
+            <div className="animate-header flex flex-col lg:flex-row justify-start pt-[40px] lg:py-[40px] lg:justify-between items-start lg:items-center lg:ps-4 gap-[24px]">
               <h3 className="text-[28px] lg:text-[64px] lg:leading-[80px] font-medium text-start text-black">
                 {title}
               </h3>
@@ -180,7 +251,7 @@ export default function CommunitySection({
               )}
             </div>
           )}
-          <div className={`relative  ${title ? "pb-[90px]" : "pb-[62px]"}`}>
+          <div className="animate-slider relative lg:mb-[90px] mb-[40px]">
             <button
               onClick={goToPrev}
               className="absolute hidden lg:block top-1/2 -left-[1rem] -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white hover:bg-primary rounded-full"
@@ -203,7 +274,7 @@ export default function CommunitySection({
             <Slider
               ref={sliderRef}
               {...settings}
-              className="blog-slider pt-[40px] lg:pt-0"
+              className="community-slider pt-[40px] lg:pt-0"
             >
               {isLoading ? (
                 <div className="flex justify-center items-center min-h-[400px]">
@@ -276,7 +347,7 @@ export default function CommunitySection({
             </button>
           </div>
 
-          <div className="relative w-auto lg:ms-4 h-[2px]  bg-black/20">
+          <div className="animate-progress relative w-auto lg:ms-4 h-[2px] bg-black/20">
             <div
               className="absolute h-full bg-black transition-all duration-300 ease-in-out"
               style={{ width: calculateProgress() }}

@@ -30,7 +30,7 @@ export default function SingleMedia({ data }: SingleMediaProps) {
       pointerEvents: false,
     },
   ];
-  console.log("blogData", blogData);
+  // console.log("blogData", blogData);
   return (
     <section className="relative h-fit bg-white">
       <div className="pt-[48px] pb-8 md:pt-[60px] lg:pt-[72px] lg:pb-[100px] px-4 md:px-10 flex flex-col relative mt-[100px] lg:mt-[120px]">

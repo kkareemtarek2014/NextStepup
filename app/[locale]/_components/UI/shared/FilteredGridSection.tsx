@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import CustomSelect from "../General/CustomSelect";
 import Link from "next/link";
 import ArrowIcon from "../../Icons/ArrowIcon";
 import Button from "../General/Button";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 type BasePost = {
   id: number;
@@ -71,6 +73,89 @@ export default function FilteredGridSection<T extends BasePost>({
   const [visibleItems, setVisibleItems] = useState(itemsPerPage);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
+  const previousItems = useRef<T[]>([]);
+
+  // Initial animation setup
+  useEffect(() => {
+    if (!items.length) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // Set initial states
+      gsap.set([".filter-controls", ".grid-item"], {
+        y: 50,
+        opacity: 0,
+      });
+
+      timelineRef.current = gsap.timeline({
+        paused: true,
+        scrollTrigger: {
+          trigger: ".filtered-section",
+          start: "top 85%",
+        },
+      });
+
+      timelineRef.current
+        .to(".filter-controls", {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: "power3.out",
+        })
+        .to(
+          ".grid-item",
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        );
+
+      // Start animation when page transition is complete
+      const startAnimation = () => {
+        setTimeout(() => {
+          timelineRef.current?.play();
+        }, 1000); // Delay to ensure template animation is complete
+      };
+
+      window.addEventListener("pageTransitionComplete", startAnimation);
+
+      return () => {
+        window.removeEventListener("pageTransitionComplete", startAnimation);
+        ctx.revert();
+      };
+    });
+  }, [items]);
+
+  // Filter change animation
+  useEffect(() => {
+    if (previousItems.current !== items) {
+      gsap.to(".grid-item", {
+        scale: 0.95,
+        opacity: 0,
+        duration: 0.3,
+        stagger: 0.05,
+        onComplete: () => {
+          gsap.to(".grid-item", {
+            scale: 1,
+            opacity: 1,
+            duration: 0.5,
+            stagger: 0.08,
+            ease: "power3.out",
+          });
+        },
+      });
+
+      previousItems.current = items;
+    }
+  }, [items]);
+
   useEffect(() => {
     if (isMobileFilterOpen) {
       document.body.style.overflow = "hidden";
@@ -144,9 +229,33 @@ export default function FilteredGridSection<T extends BasePost>({
   };
 
   const handleConfirm = () => {
-    setActiveFilters(filterValues);
-    setVisibleItems(itemsPerPage);
-    onFilterChange?.(filterValues);
+    // First, animate out current items
+    gsap.to(".grid-item", {
+      scale: 0.95,
+      opacity: 0,
+      y: 20,
+      duration: 0.3,
+      stagger: 0.05,
+      ease: "power3.out",
+      onComplete: () => {
+        // Update the filters
+        setActiveFilters(filterValues);
+        setVisibleItems(itemsPerPage);
+        onFilterChange?.(filterValues);
+        handleClose();
+
+        // Then animate in new items
+        gsap.to(".grid-item", {
+          scale: 1,
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: "power3.out",
+          clearProps: "all", // Clean up GSAP properties after animation
+        });
+      },
+    });
   };
 
   const handleClear = () => {
@@ -156,10 +265,35 @@ export default function FilteredGridSection<T extends BasePost>({
         checkbox ? ["all"] : filter.options[0].value,
       ])
     );
-    setFilterValues(defaultValues);
-    setActiveFilters(defaultValues);
-    setVisibleItems(itemsPerPage);
-    onFilterChange?.(defaultValues);
+
+    // Animate out
+    gsap.to(".grid-item", {
+      scale: 0.95,
+      opacity: 0,
+      y: 20,
+      duration: 0.3,
+      stagger: 0.05,
+      ease: "power3.out",
+      onComplete: () => {
+        // Reset filters
+        setFilterValues(defaultValues);
+        setActiveFilters(defaultValues);
+        setVisibleItems(itemsPerPage);
+        onFilterChange?.(defaultValues);
+        handleClose();
+
+        // Animate in
+        gsap.to(".grid-item", {
+          scale: 1,
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          stagger: 0.08,
+          ease: "power3.out",
+          clearProps: "all",
+        });
+      },
+    });
   };
 
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -315,7 +449,10 @@ export default function FilteredGridSection<T extends BasePost>({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[20px] gap-y-[32px]">
           {displayedItems.length > 0 ? (
             displayedItems.map((item) => (
-              <div key={item.id} className="bg-gray-100 relative flex flex-col">
+              <div
+                key={item.id}
+                className="grid-item bg-gray-100 relative flex flex-col"
+              >
                 <div className="relative h-full">
                   <Link href={item.link} key={item.id}>
                     <div
@@ -382,7 +519,7 @@ export default function FilteredGridSection<T extends BasePost>({
               </div>
             ))
           ) : (
-            <div className="col-span-1 lg:col-span-2 flex justify-center items-center flex-col py-20 gap-3">
+            <div className="grid-item col-span-1 lg:col-span-2 flex justify-center items-center flex-col py-20 gap-3">
               <h3 className="text-[40px] leading-[50px] lg:text-[64px] lg:leading-[80px]  font-medium text-black">
                 There’s no projects{" "}
               </h3>

@@ -23,6 +23,7 @@ export default function Homepage({
   const textSectionData2 = {
     title: data.data.FeaturedSection.SubTitle,
     description: data.data.FeaturedSection.Title,
+    paragraph: data.data.FeaturedSection.Description,
   };
   return (
     <>
