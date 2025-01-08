@@ -10,7 +10,6 @@ import HighlightSection from "../UI/communities/HighlightSection";
 import CalculationSection from "../UI/communities/CalculationSection";
 import FixedHeader from "../UI/communities/FixedHeader";
 import CommunitySlider from "../UI/General/CommunitySlider";
-import GooglePropertyMap from "../UI/maps/GooglePropertyMap";
 import ImagePropertyMap from "../UI/maps/ImagePropertyMap";
 
 export const runtime = "edge";
