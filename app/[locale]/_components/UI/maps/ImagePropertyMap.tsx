@@ -1,8 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Range, getTrackBackground } from "react-range";
+import Image from "next/image";
+import PropertyDetailsPopup from "./PropertyDetailsPopup";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useInView,
+  AnimatePresence,
+} from "framer-motion";
 
-interface MapMarker {
+export interface MapMarker {
   id: string;
   title: string;
   x: number;
@@ -11,6 +20,19 @@ interface MapMarker {
   isActive?: boolean;
   description: string;
   price: number;
+  fromArea: number;
+  toArea: number;
+  fromBedrooms: number;
+  toBedrooms: number;
+  fromBathrooms: number;
+  toBathrooms: number;
+  paymentPlan: string;
+  deliveryDate: string;
+  downloadButton: {
+    ButtonTitle: string;
+    ButtonLink: string;
+  };
+  image: string;
 }
 
 interface ImagePropertyMapProps {
@@ -25,6 +47,11 @@ interface FilterState {
     min: number;
     max: number;
   };
+}
+
+interface SelectedProperty {
+  marker: MapMarker | null;
+  position: { x: number; y: number } | null;
 }
 
 const CheckedIcon = () => (
@@ -80,6 +107,11 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
 
   const [values, setValues] = useState([0, 2000000]);
 
+  const [selectedProperty, setSelectedProperty] = useState<SelectedProperty>({
+    marker: null,
+    position: null,
+  });
+
   const staticMarkers = [
     {
       id: "1",
@@ -98,6 +130,11 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
       price: 1000000,
       paymentPlan: "8 years",
       deliveryDate: "01/2025",
+      downloadButton: {
+        ButtonTitle: "Download Brochure",
+        ButtonLink: "/",
+      },
+      image: "/img/property-map.png",
     },
     {
       id: "2",
@@ -116,6 +153,11 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
       price: 1000000,
       paymentPlan: "8 years",
       deliveryDate: "01/2025",
+      downloadButton: {
+        ButtonTitle: "Download Brochure",
+        ButtonLink: "/",
+      },
+      image: "/img/community.jpeg",
     },
     {
       id: "3",
@@ -134,6 +176,11 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
       price: 3000000,
       paymentPlan: "8 years",
       deliveryDate: "01/2025",
+      downloadButton: {
+        ButtonTitle: "Download Brochure",
+        ButtonLink: "/",
+      },
+      image: "/img/cummunityHeero.png",
     },
     {
       id: "4",
@@ -152,6 +199,11 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
       price: 1000000,
       paymentPlan: "8 years",
       deliveryDate: "01/2025",
+      downloadButton: {
+        ButtonTitle: "Download Brochure",
+        ButtonLink: "/",
+      },
+      image: "/img/gallary4.png",
     },
     {
       id: "5",
@@ -170,6 +222,11 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
       price: 2000000,
       paymentPlan: "8 years",
       deliveryDate: "01/2025",
+      downloadButton: {
+        ButtonTitle: "Download Brochure",
+        ButtonLink: "/",
+      },
+      image: "/img/property-map.png",
     },
     {
       id: "6",
@@ -188,6 +245,11 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
       price: 1000000,
       paymentPlan: "8 years",
       deliveryDate: "01/2025",
+      downloadButton: {
+        ButtonTitle: "Download Brochure",
+        ButtonLink: "/",
+      },
+      image: "/img/property-map.png",
     },
   ];
 
@@ -239,25 +301,36 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
     navigator.clipboard.writeText(`x: ${x.toFixed(2)}, y: ${y.toFixed(2)}`);
   };
 
-  const handleMarkerClick = (markerId: string) => {
+  const handleMarkerClick = (marker: MapMarker, e: React.MouseEvent) => {
+    e.stopPropagation();
     setActiveMarkers((prev) => {
       const newActive = new Set(prev);
-      if (newActive.has(markerId)) {
-        newActive.delete(markerId);
+      if (newActive.has(marker.id)) {
+        newActive.delete(marker.id);
       } else {
-        newActive.add(markerId);
+        newActive.add(marker.id);
       }
       return newActive;
     });
+
+    setSelectedProperty({
+      marker,
+      position: { x: e.clientX, y: e.clientY },
+    });
   };
 
-  // const priceRanges = [
-  //   { min: 0, max: 500000, label: "Up to $500,000" },
-  //   { min: 500000, max: 1000000, label: "$500,000 - $1,000,000" },
-  //   { min: 1000000, max: 1500000, label: "$1,000,000 - $1,500,000" },
-  //   { min: 1500000, max: 2000000, label: "$1,500,000 - $2,000,000" },
-  //   { min: 0, max: 2000000, label: "All Prices" },
-  // ];
+  const handleOutsideClick = (e: React.MouseEvent) => {
+    // Check if the click is on a filter element or the popup itself
+    const isFilterClick = (e.target as Element).closest(".filter-controls");
+    const isPopupClick = (e.target as Element).closest(
+      ".property-details-popup"
+    );
+
+    // Only close if click is not on filters or popup
+    if (!isFilterClick && !isPopupClick) {
+      setSelectedProperty({ marker: null, position: null });
+    }
+  };
 
   const toggleDropdown = (type: "property" | "price") => {
     setOpenDropdown((prev) => {
@@ -271,13 +344,33 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
     });
   };
 
+  // Add refs for scroll animations
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { once: true, amount: 0.2 });
+
   return (
-    <div className="relative">
-      <div className="flex flex-col gap-[19px] absolute top-[47px] left-[56px]">
-        <h2 className="relative text-[40px] leading-[50px] text-white z-10 font-medium">
+    <div className="relative" onClick={handleOutsideClick} ref={containerRef}>
+      <motion.div
+        className="flex flex-col gap-[19px] absolute top-[47px] left-[56px]"
+        initial={{ opacity: 0, x: -50 }}
+        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+        transition={{ delay: 0.8, duration: 0.6 }}
+      >
+        <motion.h2
+          className="relative text-[40px] leading-[50px] text-white z-10 font-medium"
+          initial={{ opacity: 0, y: -20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+          transition={{ delay: 1, duration: 0.5 }}
+        >
           Masterplan
-        </h2>
-        <div className="relative w-[348px] bg-white shadow-lg z-10">
+        </motion.h2>
+
+        <motion.div
+          className="relative w-[348px] bg-white shadow-lg z-10 filter-controls"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ delay: 1.2, duration: 0.5 }}
+        >
           <div className="border-b border-gray-200">
             <button
               className="w-full px-5 py-4 flex items-center justify-between"
@@ -286,10 +379,10 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
               <span className="text-[28px] leading-[35px] text-black font-medium">
                 Filters
               </span>
-              <svg
-                className={`w-5 h-5 transition-transform text-black ${
-                  openDropdown.has("property") ? "rotate-180" : ""
-                }`}
+              <motion.svg
+                animate={{ rotate: openDropdown.has("property") ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+                className="w-5 h-5 text-black"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -300,37 +393,47 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
                   strokeWidth="2"
                   d="M19 9l-7 7-7-7"
                 />
-              </svg>
+              </motion.svg>
             </button>
 
-            {openDropdown.has("property") && (
-              <div className="px-5 pb-4 space-y-2">
-                {uniqueTitles.map((title) => (
-                  <label
-                    key={title}
-                    className="flex items-center space-x-3 cursor-pointer"
-                  >
-                    <div className="relative">
-                      <input
-                        type="checkbox"
-                        checked={filters.selectedTitles.has(title)}
-                        onChange={() => handleTitleFilter(title)}
-                        className="hidden peer"
-                      />
-                      <span className="hidden peer-checked:block">
-                        <CheckedIcon />
-                      </span>
-                      <span className="block peer-checked:hidden">
-                        <UnCheckedIcon />
-                      </span>
-                    </div>
-                    <span className="text-base font-semimedium text-black">
-                      {title}
-                    </span>
-                  </label>
-                ))}
-              </div>
-            )}
+            <AnimatePresence>
+              {openDropdown.has("property") && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-5 pb-4 space-y-2">
+                    {uniqueTitles.map((title) => (
+                      <label
+                        key={title}
+                        className="flex items-center space-x-3 cursor-pointer"
+                      >
+                        <div className="relative">
+                          <input
+                            type="checkbox"
+                            checked={filters.selectedTitles.has(title)}
+                            onChange={() => handleTitleFilter(title)}
+                            className="hidden peer"
+                          />
+                          <span className="hidden peer-checked:block">
+                            <CheckedIcon />
+                          </span>
+                          <span className="block peer-checked:hidden">
+                            <UnCheckedIcon />
+                          </span>
+                        </div>
+                        <span className="text-base font-semimedium text-black">
+                          {title}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           <div className="">
@@ -341,10 +444,10 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
               <span className="text-[28px] leading-[35px] font-medium text-black">
                 Price
               </span>
-              <svg
-                className={`w-5 h-5 transition-transform text-black ${
-                  openDropdown.has("price") ? "rotate-180" : ""
-                }`}
+              <motion.svg
+                animate={{ rotate: openDropdown.has("price") ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+                className="w-5 h-5 text-black"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -355,111 +458,141 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
                   strokeWidth="2"
                   d="M19 9l-7 7-7-7"
                 />
-              </svg>
+              </motion.svg>
             </button>
 
-            {openDropdown.has("price") && (
-              <div className="px-5 pb-6 space-y-6">
-                <div className="flex justify-between items-center">
-                  <div className="space-y-1">
-                    <span className="text-xs text-gray-500">From</span>
-                    <span className="block text-sm font-medium text-black">
-                      {values[0].toLocaleString()} EGP
-                    </span>
-                  </div>
-                  <div className="space-y-1 text-right">
-                    <span className="text-xs text-gray-500">To</span>
-                    <span className="block text-sm font-medium text-black">
-                      {values[1].toLocaleString()} EGP
-                    </span>
-                  </div>
-                </div>
-
-                <div className="py-4">
-                  <Range
-                    values={values}
-                    step={100000}
-                    min={0}
-                    max={2000000}
-                    onChange={(newValues) => {
-                      setValues(newValues);
-                      handlePriceRangeChange(newValues[0], newValues[1]);
-                    }}
-                    renderTrack={({ props, children }) => (
-                      <div
-                        className="h-2 w-full"
-                        style={{
-                          ...props.style,
-                        }}
-                      >
-                        <div
-                          ref={props.ref}
-                          className="h-2 w-full rounded-full"
-                          style={{
-                            background: getTrackBackground({
-                              values,
-                              colors: ["#E5E7EB", "#000000", "#E5E7EB"],
-                              min: 0,
-                              max: 2000000,
-                            }),
-                          }}
-                        >
-                          {children}
-                        </div>
+            <AnimatePresence>
+              {openDropdown.has("price") && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-5 pb-6 space-y-6">
+                    <div className="flex justify-between items-center">
+                      <div className="space-y-1">
+                        <span className="text-xs text-gray-500">From</span>
+                        <span className="block text-sm font-medium text-black">
+                          {values[0].toLocaleString()} EGP
+                        </span>
                       </div>
-                    )}
-                    renderThumb={({ props }) => (
-                      <div
-                        {...props}
-                        className="h-4 w-4 rounded-full bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
-                        style={{
-                          ...props.style,
-                          boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.12)",
+                      <div className="space-y-1 text-right">
+                        <span className="text-xs text-gray-500">To</span>
+                        <span className="block text-sm font-medium text-black">
+                          {values[1].toLocaleString()} EGP
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="py-4">
+                      <Range
+                        values={values}
+                        step={100000}
+                        min={0}
+                        max={2000000}
+                        onChange={(newValues) => {
+                          setValues(newValues);
+                          handlePriceRangeChange(newValues[0], newValues[1]);
                         }}
+                        renderTrack={({ props, children }) => (
+                          <div
+                            className="h-2 w-full"
+                            style={{
+                              ...props.style,
+                            }}
+                          >
+                            <div
+                              ref={props.ref}
+                              className="h-2 w-full rounded-full"
+                              style={{
+                                background: getTrackBackground({
+                                  values,
+                                  colors: ["#E5E7EB", "#000000", "#E5E7EB"],
+                                  min: 0,
+                                  max: 2000000,
+                                }),
+                              }}
+                            >
+                              {children}
+                            </div>
+                          </div>
+                        )}
+                        renderThumb={({ props }) => (
+                          <div
+                            {...props}
+                            className="h-4 w-4 rounded-full bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+                            style={{
+                              ...props.style,
+                              boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.12)",
+                            }}
+                          />
+                        )}
                       />
-                    )}
-                  />
-                </div>
-              </div>
-            )}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
-        </div>
-      </div>
-      <div
-        className="relative w-full h-[900px] max-w-[1512px] mx-auto overflow-hidden bg-gray-100"
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        className="relative w-full max-w-[1512px] aspect-[1512/900] mx-auto overflow-hidden bg-gray-100"
         onClick={handleImageClick}
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={
+          isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }
+        }
+        transition={{ duration: 0.8 }}
       >
-        <img
+        <Image
           src="/img/property-map.png"
           alt="Property Map"
-          className="w-full h-full object-cover"
+          className="object-cover object-center"
+          fill
         />
 
-        {filteredMarkers.map((marker) => (
-          <div
+        {filteredMarkers.map((marker, index) => (
+          <motion.div
             key={marker.id}
             className="absolute transform -translate-x-1/2 -translate-y-1/2"
             style={{
               left: `${marker.x}%`,
               top: `${marker.y}%`,
             }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={
+              isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }
+            }
+            transition={{
+              delay: 0.4 + index * 0.1,
+              duration: 0.3,
+              type: "spring",
+              stiffness: 260,
+              damping: 20,
+            }}
           >
             <button
               className="relative"
-              onClick={() => handleMarkerClick(marker.id)}
+              onClick={(e) => handleMarkerClick(marker, e)}
             >
-              <img
+              <motion.img
                 src={
                   activeMarkers.has(marker.id)
                     ? "/img/Excludeyellow.svg"
                     : "/img/Exclude.svg"
                 }
                 alt="Marker"
-                className="w-[33.51px] h-[40px] hover:scale-110 transition-transform duration-300"
+                className="w-[33.51px] h-[40px]"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
               />
               <span
-                className={`absolute top-full left-1/2 -translate-x-1/2 mt- 2 
-                           whitespace-nowrap  font-medium capitalize  px-3 py-1.5 
+                className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 
+                           whitespace-nowrap font-medium capitalize px-3 py-1.5 
                            text-[20px] leading-[25px] rounded z-10 ${
                              activeMarkers.has(marker.id)
                                ? "text-[#FAC63E]"
@@ -469,7 +602,7 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
                 {marker.title}
               </span>
             </button>
-          </div>
+          </motion.div>
         ))}
 
         {isEditMode && clickedPosition && (
@@ -485,7 +618,23 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
             </div>
           </div>
         )}
-      </div>
+
+        {selectedProperty.marker && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.2 }}
+          >
+            <PropertyDetailsPopup
+              marker={selectedProperty.marker}
+              onClose={() =>
+                setSelectedProperty({ marker: null, position: null })
+              }
+            />
+          </motion.div>
+        )}
+      </motion.div>
 
       {isEditMode && (
         <div className="fixed bottom-4 right-4 bg-black/90 text-white p-4 rounded-lg shadow-lg z-50">

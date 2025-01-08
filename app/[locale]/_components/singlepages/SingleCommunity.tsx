@@ -1,7 +1,6 @@
 import TextSection from "../UI/General/TextSection";
 
 import GetintouchSection from "../UI/General/GetintouchSection";
-import DiscoverSection from "../UI/General/DiscoverSection";
 import GallerySlider from "../UI/General/GallerySlider";
 import SingleCummunitiesHero from "../UI/communities/SingleCummunitiesHero";
 import FeatureSection from "../UI/communities/FeatureSection";
@@ -14,11 +13,9 @@ import ImagePropertyMap from "../UI/maps/ImagePropertyMap";
 
 export const runtime = "edge";
 
-// Define TypeScript interfaces for component props
 interface Image {
   url: string;
   alternativeText: string | null;
-  // Add other image properties as needed
 }
 
 interface Button {
@@ -37,7 +34,6 @@ interface HeroSection {
 
 interface CommunityData {
   HeroSection: HeroSection;
-  // Add other sections as needed
 }
 
 export default function SingleCommunity({
@@ -45,7 +41,6 @@ export default function SingleCommunity({
 }: {
   communityData: CommunityData;
 }) {
-  // Parse the data if it's a string
   const parsedData =
     typeof communityData === "string"
       ? JSON.parse(communityData)

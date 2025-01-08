@@ -42,7 +42,6 @@ export default function SingleCummunitiesHero({
   ];
 
   useEffect(() => {
-    // Split text into words for animation
     const splitHeading = heading
       .split(" ")
       .map(
@@ -67,7 +66,6 @@ export default function SingleCummunitiesHero({
     if (subheadingRef.current)
       subheadingRef.current.innerHTML = splitSubheading;
 
-    // Set initial states
     gsap.set([imageRef.current, overlayRef.current], {
       scale: 1.1,
       opacity: 0,
@@ -89,7 +87,6 @@ export default function SingleCummunitiesHero({
       opacity: 0,
     });
 
-    // Create animation timeline
     timelineRef.current = gsap.timeline({ paused: true });
 
     timelineRef.current
