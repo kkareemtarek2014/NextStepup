@@ -3,13 +3,7 @@ import { useState, useRef } from "react";
 import { Range, getTrackBackground } from "react-range";
 import Image from "next/image";
 import PropertyDetailsPopup from "./PropertyDetailsPopup";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useInView,
-  AnimatePresence,
-} from "framer-motion";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 
 export interface MapMarker {
   id: string;
@@ -97,7 +91,7 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
     selectedTitles: new Set(),
     priceRange: {
       min: 0,
-      max: 2000000,
+      max: 4000000,
     },
   });
 
@@ -105,7 +99,7 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
     new Set(["property"])
   );
 
-  const [values, setValues] = useState([0, 2000000]);
+  const [values, setValues] = useState([0, 4000000]);
 
   const [selectedProperty, setSelectedProperty] = useState<SelectedProperty>({
     marker: null,
@@ -161,7 +155,7 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
     },
     {
       id: "3",
-      title: "Twin House",
+      title: "Twinhouse",
       x: 41.7,
       y: 53.99,
       name: "Pool Front Twinhouse",
@@ -304,12 +298,11 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
   const handleMarkerClick = (marker: MapMarker, e: React.MouseEvent) => {
     e.stopPropagation();
     setActiveMarkers((prev) => {
-      const newActive = new Set(prev);
-      if (newActive.has(marker.id)) {
-        newActive.delete(marker.id);
-      } else {
-        newActive.add(marker.id);
+      const newActive = new Set<string>();
+      if (prev.has(marker.id)) {
+        return newActive;
       }
+      newActive.add(marker.id);
       return newActive;
     });
 
@@ -320,13 +313,11 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
   };
 
   const handleOutsideClick = (e: React.MouseEvent) => {
-    // Check if the click is on a filter element or the popup itself
     const isFilterClick = (e.target as Element).closest(".filter-controls");
     const isPopupClick = (e.target as Element).closest(
       ".property-details-popup"
     );
 
-    // Only close if click is not on filters or popup
     if (!isFilterClick && !isPopupClick) {
       setSelectedProperty({ marker: null, position: null });
     }
@@ -491,7 +482,7 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
                         values={values}
                         step={100000}
                         min={0}
-                        max={2000000}
+                        max={4000000}
                         onChange={(newValues) => {
                           setValues(newValues);
                           handlePriceRangeChange(newValues[0], newValues[1]);
@@ -511,7 +502,7 @@ const ImagePropertyMap: React.FC<ImagePropertyMapProps> = ({
                                   values,
                                   colors: ["#E5E7EB", "#000000", "#E5E7EB"],
                                   min: 0,
-                                  max: 2000000,
+                                  max: 4000000,
                                 }),
                               }}
                             >
