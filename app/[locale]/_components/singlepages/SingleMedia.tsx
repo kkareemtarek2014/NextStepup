@@ -1,3 +1,7 @@
+"use client";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 import DiscoverSection from "../UI/General/DiscoverSection";
 import GetintouchSection from "../UI/General/GetintouchSection";
 import Breadcrumbs from "../UI/General/Breadcrumbs";
@@ -6,13 +10,18 @@ import SocialShare from "../UI/media/SocialShare";
 import BlogContent from "../UI/media/BlogContent";
 import { MediaResponse } from "@/app/[locale]/types/media";
 import Image from "next/image";
+
 interface SingleMediaProps {
   data: MediaResponse;
 }
 
 export default function SingleMedia({ data }: SingleMediaProps) {
-  // Access the first item from the data array
   const blogData = data.data[0];
+  const contentRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
   const breadcrumbsList = [
     {
@@ -30,11 +39,79 @@ export default function SingleMedia({ data }: SingleMediaProps) {
       pointerEvents: false,
     },
   ];
-  // console.log("blogData", blogData);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (sectionRef.current) {
+      gsap.set(sectionRef.current, { opacity: 0 });
+    }
+
+    timelineRef.current = gsap.timeline({ paused: true });
+
+    const setupAnimation = () => {
+      if (!timelineRef.current) return;
+
+      timelineRef.current
+        .to(sectionRef.current, {
+          opacity: 1,
+          duration: 0.5,
+        })
+        .from(headerRef.current, {
+          opacity: 0,
+          y: 30,
+          duration: 1,
+          delay: 0.2,
+        })
+        .from(
+          imageRef.current,
+          {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+          },
+          "-=0.5"
+        );
+
+      gsap.utils
+        .toArray<HTMLElement>(".blog-content > *")
+        .forEach((element, i) => {
+          gsap.from(element, {
+            scrollTrigger: {
+              trigger: element,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            delay: i * 0.1,
+          });
+        });
+    };
+
+    setupAnimation();
+
+    const startAnimation = () => {
+      timelineRef.current?.play();
+    };
+
+    window.addEventListener("pageTransitionComplete", startAnimation);
+
+    return () => {
+      window.removeEventListener("pageTransitionComplete", startAnimation);
+      timelineRef.current?.kill();
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
+  }, []);
+
   return (
-    <section className="relative h-fit bg-white">
+    <section ref={sectionRef} className="relative h-fit bg-white">
       <div className="pt-[48px] pb-8 md:pt-[60px] lg:pt-[72px] lg:pb-[100px] px-4 md:px-10 flex flex-col relative mt-[100px] lg:mt-[120px]">
-        <div className="max-w-[776px] mx-auto w-full flex flex-col gap-6 lg:gap-[40px]">
+        <div
+          ref={headerRef}
+          className="max-w-[776px] mx-auto w-full flex flex-col gap-6 lg:gap-[40px]"
+        >
           <Breadcrumbs list={breadcrumbsList} />
           <div className="flex flex-col gap-3">
             <FormattedDate
@@ -50,17 +127,24 @@ export default function SingleMedia({ data }: SingleMediaProps) {
           </div>
           <SocialShare slug={blogData.slug} title={blogData.Title} widthFull />
         </div>
-        <div className=" h-[186.01px] lg:h-[750px] relative pb-[4px]  mt-[44px]  lg:mt-[72px] lg:pb-[100px]">
+
+        <div
+          ref={imageRef}
+          className="h-[186.01px] lg:h-[750px] relative pb-[4px] mt-[44px] lg:mt-[72px] lg:pb-[100px]"
+        >
           <Image
             src={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${blogData.Image?.url}`}
             alt={blogData.Image?.alternativeText}
             fill
-            className="w-full    h-[400px] lg:h-[750px] !relative object-cover"
+            className="w-full h-[400px] lg:h-[750px] !relative object-cover"
           />
         </div>
-        <BlogContent content={blogData.Content} />
 
-        <div className="max-w-[776px] mx-auto w-full mt-8">
+        <div ref={contentRef} className="blog-content">
+          <BlogContent content={blogData.Content} />
+        </div>
+
+        <div className="max-w-[776px] mx-auto w-full mt-8 social-share">
           <SocialShare slug={blogData.slug} title={blogData.Title} />
         </div>
       </div>

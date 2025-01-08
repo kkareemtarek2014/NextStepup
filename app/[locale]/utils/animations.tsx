@@ -33,7 +33,7 @@ export const animatePageIn = (pageName: string) => {
 
     tl.to([bannerOne, bannerTwo, bannerThree, bannerFour], {
       yPercent: 100,
-      duration: 0.4,
+      duration: 0.2,
       stagger: 0.1,
       ease: "power3.inOut",
       onComplete: () => {

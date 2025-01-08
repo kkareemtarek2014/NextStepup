@@ -3,12 +3,43 @@ import Image from "next/image";
 import Link from "next/link";
 import ArrowDownIcon from "../Icons/ArrowDownIcon";
 import { useLocale } from "next-intl";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
 
 interface FooterProps {
   // Add any props if needed
 }
 
 export default function Footer({}: FooterProps) {
+  const arrowRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const arrow = arrowRef.current;
+    if (!arrow) return;
+
+    // Create hover animations
+    const hoverAnimation = gsap.to(arrow, {
+      y: -10,
+      duration: 0.4,
+      ease: "power2.out",
+      paused: true, // Animation is created but not played immediately
+    });
+
+    // Add event listeners
+    const onHover = () => hoverAnimation.play();
+    const onLeave = () => hoverAnimation.reverse();
+
+    arrow.addEventListener("mouseenter", onHover);
+    arrow.addEventListener("mouseleave", onLeave);
+
+    // Cleanup
+    return () => {
+      arrow.removeEventListener("mouseenter", onHover);
+      arrow.removeEventListener("mouseleave", onLeave);
+      hoverAnimation.kill();
+    };
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -68,7 +99,9 @@ export default function Footer({}: FooterProps) {
             onClick={scrollToTop}
             className="flex items-start justify-start lg:items-center lg:justify-center  transition-all"
           >
-            <ArrowDownIcon className="block w-[32px] h-[32px] rotate-180" />
+            <div ref={arrowRef}>
+              <ArrowDownIcon className="block w-[32px] h-[32px] rotate-180" />
+            </div>
           </button>
         </div>
         <div className="flex flex-col-reverse border-t border-white md:border-t-0 md:flex-row items-center pt-[40px] pb-[20px] md:justify-between">

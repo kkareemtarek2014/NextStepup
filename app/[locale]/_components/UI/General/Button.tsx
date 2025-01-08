@@ -1,7 +1,8 @@
 import { Link } from "@/navigation";
-import { JSX, ReactNode } from "react";
+import { JSX, ReactNode, useRef, useEffect } from "react";
 import SpinnerIcon from "../../Icons/SpinnerIcon";
 import ArrowIcon from "../../Icons/ArrowIcon";
+import gsap from "gsap";
 
 interface Props {
   button_type?:
@@ -67,6 +68,45 @@ const Button = ({
   bigger,
   noPadding,
 }: Props): JSX.Element => {
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const linkRef = useRef<HTMLAnchorElement | null>(null);
+
+  useEffect(() => {
+    const element = buttonRef.current || linkRef.current;
+    if (!element) return;
+
+    // Setup hover animation
+    const onEnter = () => {
+      gsap.to(element, {
+        scale: 1.015,
+        y: -1,
+        duration: 0.15,
+        ease: "power1.out",
+        boxShadow: "0 6px 15px rgba(0,0,0,0.07)",
+        filter: "brightness(1.05)",
+      });
+    };
+
+    const onLeave = () => {
+      gsap.to(element, {
+        scale: 1,
+        y: 0,
+        duration: 0.15,
+        ease: "power1.out",
+        boxShadow: "none",
+        filter: "brightness(1)",
+      });
+    };
+
+    element.addEventListener("mouseenter", onEnter);
+    element.addEventListener("mouseleave", onLeave);
+
+    return () => {
+      element.removeEventListener("mouseenter", onEnter);
+      element.removeEventListener("mouseleave", onLeave);
+    };
+  }, []);
+
   const disabledStyle =
     disabled || isLoading
       ? "opacity-50 cursor-not-allowed"
@@ -143,6 +183,7 @@ const Button = ({
     ];
     return (
       <Link
+        ref={linkRef}
         href={href}
         target={target}
         onClick={onClick}
@@ -157,6 +198,7 @@ const Button = ({
 
   return (
     <button
+      ref={buttonRef}
       onClick={onClick}
       className={baseClasses.join(" ")}
       disabled={disabled || isLoading}

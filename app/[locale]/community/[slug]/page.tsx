@@ -30,7 +30,7 @@ export default async function CommunityPage({
 
   try {
     const communityData = await getCommunityBySlug(locale, slug);
-    console.log("Community Data:", communityData);
+    // console.log("Community Data:", communityData);
     return <SingleCommunity communityData={communityData} />;
   } catch (error) {
     notFound();

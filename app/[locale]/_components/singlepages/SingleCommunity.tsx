@@ -10,6 +10,8 @@ import HighlightSection from "../UI/communities/HighlightSection";
 import CalculationSection from "../UI/communities/CalculationSection";
 import FixedHeader from "../UI/communities/FixedHeader";
 import CommunitySlider from "../UI/General/CommunitySlider";
+import GooglePropertyMap from "../UI/maps/GooglePropertyMap";
+import ImagePropertyMap from "../UI/maps/ImagePropertyMap";
 
 export const runtime = "edge";
 
@@ -66,9 +68,11 @@ export default function SingleCommunity({
         heading={parsedData.HeroSection.Title}
         subheading={parsedData.HeroSection.Description}
       />
-
       <div id="concept">
         <TextSection {...textSectionData} />
+      </div>{" "}
+      <div id="map" className="max-w-[1512px] mx-auto px-4 xl:px-0">
+        <ImagePropertyMap markers={[]} mapImage="" isEditMode={true} />
       </div>
       <div id="gallery">
         <GallerySlider mobile={true} galleryData={parsedData.GallerySection} />

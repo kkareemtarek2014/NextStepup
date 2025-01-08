@@ -76,33 +76,25 @@ export default function FilteredGridSection<T extends BasePost>({
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
   const previousItems = useRef<T[]>([]);
 
-  // Initial animation setup
   useEffect(() => {
     if (!items.length) return;
 
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // Set initial states
       gsap.set([".filter-controls", ".grid-item"], {
         y: 50,
         opacity: 0,
       });
 
-      timelineRef.current = gsap.timeline({
-        paused: true,
-        scrollTrigger: {
-          trigger: ".filtered-section",
-          start: "top 85%",
-        },
-      });
+      timelineRef.current = gsap.timeline({ paused: true });
 
       timelineRef.current
         .to(".filter-controls", {
           y: 0,
           opacity: 1,
-          duration: 0.6,
-          stagger: 0.1,
+          duration: 0.3,
+          stagger: 0.05,
           ease: "power3.out",
         })
         .to(
@@ -110,18 +102,21 @@ export default function FilteredGridSection<T extends BasePost>({
           {
             y: 0,
             opacity: 1,
-            duration: 0.8,
-            stagger: 0.15,
+            duration: 0.4,
+            stagger: {
+              each: 0.08,
+              grid: "auto",
+              from: "start",
+            },
             ease: "power3.out",
           },
-          "-=0.4"
+          "-=0.2"
         );
 
-      // Start animation when page transition is complete
       const startAnimation = () => {
         setTimeout(() => {
           timelineRef.current?.play();
-        }, 1000); // Delay to ensure template animation is complete
+        }, 300);
       };
 
       window.addEventListener("pageTransitionComplete", startAnimation);
@@ -133,28 +128,37 @@ export default function FilteredGridSection<T extends BasePost>({
     });
   }, [items]);
 
-  // Filter change animation
   useEffect(() => {
     if (previousItems.current !== items) {
-      gsap.to(".grid-item", {
-        scale: 0.95,
+      const tl = gsap.timeline();
+
+      tl.to(".grid-item", {
+        scale: 0.98,
         opacity: 0,
+        y: 20,
         duration: 0.3,
-        stagger: 0.05,
-        onComplete: () => {
-          gsap.to(".grid-item", {
-            scale: 1,
-            opacity: 1,
-            duration: 0.5,
-            stagger: 0.08,
-            ease: "power3.out",
-          });
+        stagger: {
+          each: 0.05,
+          grid: "auto",
+          from: "start",
         },
+        ease: "power2.in",
+      }).to(".grid-item", {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        stagger: {
+          each: 0.08,
+          grid: "auto",
+          from: "start",
+        },
+        ease: "power3.out",
       });
 
       previousItems.current = items;
     }
-  }, [items]);
+  }, [items, filterValues, activeFilters]);
 
   useEffect(() => {
     if (isMobileFilterOpen) {
@@ -229,7 +233,6 @@ export default function FilteredGridSection<T extends BasePost>({
   };
 
   const handleConfirm = () => {
-    // First, animate out current items
     gsap.to(".grid-item", {
       scale: 0.95,
       opacity: 0,
@@ -238,13 +241,11 @@ export default function FilteredGridSection<T extends BasePost>({
       stagger: 0.05,
       ease: "power3.out",
       onComplete: () => {
-        // Update the filters
         setActiveFilters(filterValues);
         setVisibleItems(itemsPerPage);
         onFilterChange?.(filterValues);
         handleClose();
 
-        // Then animate in new items
         gsap.to(".grid-item", {
           scale: 1,
           opacity: 1,
@@ -252,7 +253,7 @@ export default function FilteredGridSection<T extends BasePost>({
           duration: 0.5,
           stagger: 0.08,
           ease: "power3.out",
-          clearProps: "all", // Clean up GSAP properties after animation
+          clearProps: "all",
         });
       },
     });
@@ -266,7 +267,6 @@ export default function FilteredGridSection<T extends BasePost>({
       ])
     );
 
-    // Animate out
     gsap.to(".grid-item", {
       scale: 0.95,
       opacity: 0,
@@ -275,14 +275,12 @@ export default function FilteredGridSection<T extends BasePost>({
       stagger: 0.05,
       ease: "power3.out",
       onComplete: () => {
-        // Reset filters
         setFilterValues(defaultValues);
         setActiveFilters(defaultValues);
         setVisibleItems(itemsPerPage);
         onFilterChange?.(defaultValues);
         handleClose();
 
-        // Animate in
         gsap.to(".grid-item", {
           scale: 1,
           opacity: 1,
@@ -445,7 +443,6 @@ export default function FilteredGridSection<T extends BasePost>({
           </div>
         )}
 
-        {/* Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[20px] gap-y-[32px]">
           {displayedItems.length > 0 ? (
             displayedItems.map((item) => (
