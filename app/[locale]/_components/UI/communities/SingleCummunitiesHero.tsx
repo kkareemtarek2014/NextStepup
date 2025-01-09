@@ -229,7 +229,7 @@ export default function SingleCummunitiesHero({
             </Button>
             <Button
               href={`/${locale}/contact-us`}
-              className="px-4 lg:px-5 py-[10px] lg:py-3 bg-transparent border border-white hover:bg-black/70 transition-all duration-300 rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit"
+              className="px-4 lg:px-5 py-[10px] lg:py-3 bg-transparent border-[2px] border-white hover:bg-black/70 transition-all duration-300 rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit"
             >
               <span className="text-white text-sm lg:text-base font-medium leading-[25px] text-start">
                 Inquire Now

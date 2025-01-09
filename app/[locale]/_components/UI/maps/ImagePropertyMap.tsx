@@ -311,16 +311,55 @@ export default function ImagePropertyMap({
                           onChange={() => handleTitleFilter(title)}
                           className="hidden peer"
                         />
-                        <span className="hidden peer-checked:block">
+                        <motion.span
+                          initial={false}
+                          animate={{
+                            scale: filters.selectedTitles.has(title)
+                              ? [1, 1.2, 1]
+                              : 1,
+                            rotate: filters.selectedTitles.has(title)
+                              ? [0, 10, 0]
+                              : 0,
+                          }}
+                          transition={{
+                            duration: 0.3,
+                            type: "spring",
+                            stiffness: 200,
+                          }}
+                          className="hidden peer-checked:block"
+                        >
                           <CheckedIcon />
-                        </span>
-                        <span className="block peer-checked:hidden">
+                        </motion.span>
+                        <motion.span
+                          initial={false}
+                          animate={{
+                            scale: !filters.selectedTitles.has(title)
+                              ? [1, 0.8, 1]
+                              : 1,
+                          }}
+                          transition={{
+                            duration: 0.2,
+                          }}
+                          className="block peer-checked:hidden"
+                        >
                           <UnCheckedIcon />
-                        </span>
+                        </motion.span>
                       </div>
-                      <span className="text-[1.6vh] font-medium text-black">
+                      <motion.span
+                        initial={false}
+                        animate={{
+                          color: filters.selectedTitles.has(title)
+                            ? "#000000"
+                            : "#4B5563",
+                          scale: filters.selectedTitles.has(title)
+                            ? [1, 1.05, 1]
+                            : 1,
+                        }}
+                        transition={{ duration: 0.2 }}
+                        className="text-[1.6vh] font-medium"
+                      >
                         {title}
-                      </span>
+                      </motion.span>
                     </label>
                   ))}
                 </div>
@@ -467,16 +506,55 @@ export default function ImagePropertyMap({
                             onChange={() => handleTitleFilter(title)}
                             className="hidden peer"
                           />
-                          <span className="hidden peer-checked:block">
+                          <motion.span
+                            initial={false}
+                            animate={{
+                              scale: filters.selectedTitles.has(title)
+                                ? [1, 1.2, 1]
+                                : 1,
+                              rotate: filters.selectedTitles.has(title)
+                                ? [0, 10, 0]
+                                : 0,
+                            }}
+                            transition={{
+                              duration: 0.3,
+                              type: "spring",
+                              stiffness: 200,
+                            }}
+                            className="hidden peer-checked:block"
+                          >
                             <CheckedIcon />
-                          </span>
-                          <span className="block peer-checked:hidden">
+                          </motion.span>
+                          <motion.span
+                            initial={false}
+                            animate={{
+                              scale: !filters.selectedTitles.has(title)
+                                ? [1, 0.8, 1]
+                                : 1,
+                            }}
+                            transition={{
+                              duration: 0.2,
+                            }}
+                            className="block peer-checked:hidden"
+                          >
                             <UnCheckedIcon />
-                          </span>
+                          </motion.span>
                         </div>
-                        <span className="text-base font-semimedium text-black">
+                        <motion.span
+                          initial={false}
+                          animate={{
+                            color: filters.selectedTitles.has(title)
+                              ? "#000000"
+                              : "#4B5563",
+                            scale: filters.selectedTitles.has(title)
+                              ? [1, 1.05, 1]
+                              : 1,
+                          }}
+                          transition={{ duration: 0.2 }}
+                          className="text-base font-semimedium text-black"
+                        >
                           {title}
-                        </span>
+                        </motion.span>
                       </label>
                     ))}
                   </div>
