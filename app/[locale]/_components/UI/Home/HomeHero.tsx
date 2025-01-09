@@ -63,19 +63,17 @@ export default function HomeHero({ data }: { data: any }) {
         duration: 1.5,
         ease: "power3.out",
       })
-      // Text animation
       .to(
         ".word",
         {
           y: 0,
           opacity: 1,
-          duration: 0.8,
-          stagger: 0.1,
+          duration: 1.2,
+          stagger: 0.3,
           ease: "power3.out",
         },
         "-=0.8"
       )
-      // Scroll button animation
       .to(
         scrollButtonRef.current,
         {
@@ -86,7 +84,6 @@ export default function HomeHero({ data }: { data: any }) {
         },
         "-=0.4"
       )
-      // Arrow animation with continuous bounce
       .to(
         arrowRef.current,
         {
@@ -107,7 +104,6 @@ export default function HomeHero({ data }: { data: any }) {
         "-=0.3"
       );
 
-    // Start animation when page transition is complete
     const startAnimation = () => {
       timelineRef.current?.play();
     };

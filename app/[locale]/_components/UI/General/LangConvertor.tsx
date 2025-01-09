@@ -42,7 +42,7 @@ export default function LangConv({ isBlack = false }: LangConvProps) {
         <button
           onClick={() => onLocaleChange("ar")}
           className={`flex items-center gap-2 text-base font-medium p-2 border border-transparent ${
-            isBlack ? "hover:border-white " : "hover:border-black"
+            isBlack ? "hover:border-black" : "hover:border-white"
           } rounded-[100px] ${textColorClass}`}
         >
           العربية <Image src={iconSrc} alt="language" width={24} height={16} />

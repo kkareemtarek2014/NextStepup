@@ -26,15 +26,12 @@ export const useFadeInUp = ({
   const contextRef = useRef<gsap.Context | null>(null);
 
   useEffect(() => {
-    // Register ScrollTrigger
     if (typeof window !== "undefined") {
       gsap.registerPlugin(ScrollTrigger);
     }
 
-    // Reset animation state when elements change
     hasAnimated.current = false;
 
-    // Kill previous timeline if it exists
     if (timelineRef.current) {
       timelineRef.current.kill();
     }
@@ -51,14 +48,13 @@ export const useFadeInUp = ({
       y: fromY,
     });
 
-    // Create new context and timeline
     contextRef.current = gsap.context(() => {
       timelineRef.current = gsap.timeline({
         paused: true,
         scrollTrigger: {
           trigger: elements[0],
           start: "top 80%",
-          toggleActions: "play none none reset",
+          toggleActions: "play none none none",
           onEnter: () => {
             if (!hasAnimated.current && timelineRef.current) {
               timelineRef.current.play();
@@ -67,7 +63,6 @@ export const useFadeInUp = ({
         },
       });
 
-      // Add animation to timeline
       timelineRef.current.to(elements, {
         opacity: 1,
         y: 0,
@@ -82,7 +77,6 @@ export const useFadeInUp = ({
       });
     });
 
-    // Cleanup
     return () => {
       if (timelineRef.current) {
         timelineRef.current.kill();

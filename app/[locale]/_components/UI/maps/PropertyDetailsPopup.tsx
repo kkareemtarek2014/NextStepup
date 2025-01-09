@@ -151,6 +151,8 @@ export default function PropertyDetailsPopup({
                 </a>
                 <a
                   href={marker.downloadButton.ButtonLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="block w-fit text-center bg-white border text-sm lg:text-base border-black text-black py-[10px] lg:py-3 lg:px-5 px-4 hover:bg-black hover:text-white transition-colors rounded-[100px]"
                 >
                   {marker.downloadButton.ButtonTitle}

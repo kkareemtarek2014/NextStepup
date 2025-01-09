@@ -97,7 +97,7 @@ export default function ImagePropertyMap({
   mapImage,
   mapImageMobile,
   data,
-  isEditMode = false,
+  isEditMode = true,
 }: ImagePropertyMapProps) {
   const [clickedPosition, setClickedPosition] = useState<{
     x: number;
@@ -214,15 +214,14 @@ export default function ImagePropertyMap({
 
   const handleMarkerClick = (marker: MapMarker, e: React.MouseEvent) => {
     e.stopPropagation();
-    setActiveMarkers((prev) => {
-      const newActive = new Set<string | number>();
-      if (prev.has(marker.id)) {
-        return newActive;
-      }
-      newActive.add(marker.id);
-      return newActive;
-    });
 
+    if (selectedProperty.marker?.id === marker.id) {
+      setSelectedProperty({ marker: null, position: null });
+      setActiveMarkers(new Set());
+      return;
+    }
+
+    setActiveMarkers(new Set([marker.id]));
     setSelectedProperty({
       marker,
       position: { x: e.clientX, y: e.clientY },

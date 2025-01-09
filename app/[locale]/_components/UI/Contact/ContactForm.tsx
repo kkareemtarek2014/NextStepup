@@ -5,6 +5,7 @@ import CustomSelect from "../General/CustomSelect";
 import CustomInput from "../General/CustomInput";
 import Button from "../General/Button";
 import ArrowIcon from "../../Icons/ArrowIcon";
+import Image from "next/image";
 
 interface FormData {
   inquiryType: string;
@@ -71,7 +72,6 @@ const ContactForm = () => {
     setStatus({ type: "", message: "" });
 
     try {
-      // Format the data for Salesforce
       const salesforceData = {
         firstName: formData.firstName,
         lastName: formData.lastName,
@@ -82,7 +82,6 @@ const ContactForm = () => {
         inquiryType: formData.inquiryType,
       };
 
-      // Send to Strapi endpoint
       const response = await fetch("https://gdev.cloudhosta.com/api/contacts", {
         method: "POST",
         headers: {
@@ -102,7 +101,6 @@ const ContactForm = () => {
         message: "Your message has been sent successfully!",
       });
 
-      // Clear form
       setFormData({
         inquiryType: "inquiry",
         firstName: "",
@@ -126,120 +124,174 @@ const ContactForm = () => {
     }
   };
 
+  const resetForm = () => {
+    setStatus({ type: "", message: "" });
+    setFormData({
+      inquiryType: "inquiry",
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneCode: "EG (+20)",
+      phoneNumber: "",
+      message: "",
+    });
+  };
+
   return (
     <div className="flex flex-col justify-center text-center items-center pt-[60px] px-4 lg:px-0 pb-[40px] lg:pb-[64px] bg-borderColor">
-      <div className="flex flex-col text-center items-center gap-3 lg:gap-6">
-        <h1 className="text-black text-[25px] md:text-[40px] font-medium leading-[62px] md:leading-[50px]">
-          Send ad Inquiry
-        </h1>
-        <p className="text-black text-xs md:text-base font-normal lg:font-semimedium max-w-[475px]">
-          We'd love to hear from you, if you have any inquires please fill this
-          form and we'll get in touch with you as soon as possible.
-        </p>
-      </div>
-
-      <div className="max-w-[784px] mx-auto w-full">
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-3 lg:gap-6 mt-[40px] lg:mt-16"
-        >
-          <CustomSelect
-            options={typeOptions}
-            value={formData.inquiryType}
-            onChange={handleSelectChange("inquiryType")}
-            bgColor="bg-white"
-            size="medium"
-            fullWidth
-          />
-
-          <div className="flex gap-4 w-full">
-            <CustomInput
-              config={{
-                type: "text",
-                name: "firstName",
-                placeholder: "First name",
-                value: formData.firstName,
-                onChange: handleInputChange("firstName"),
-                required: true,
-              }}
-            />
-            <CustomInput
-              config={{
-                type: "text",
-                name: "lastName",
-                placeholder: "Last name",
-                value: formData.lastName,
-                onChange: handleInputChange("lastName"),
-                required: true,
-              }}
-            />
+      {status.type === "success" ? (
+        <div>
+          <div className="flex flex-col text-center items-center gap-3 lg:gap-6 mb-4 lg:mb-16 ">
+            <h1 className="text-black text-[25px] md:text-[40px] font-medium leading-[62px] md:leading-[50px]">
+              Send ad Inquiry
+            </h1>
+            <p className="text-black text-xs md:text-base font-normal lg:font-semimedium max-w-[475px]">
+              We'd love to hear from you, if you have any inquires please fill
+              this form and we'll get in touch with you as soon as possible.
+            </p>
           </div>
-
-          <CustomInput
-            config={{
-              type: "email",
-              name: "email",
-              placeholder: "Email address",
-              value: formData.email,
-              onChange: handleInputChange("email"),
-              required: true,
-            }}
-          />
-
-          <div className="flex gap-4 w-full">
-            <CustomSelect
-              options={PhoneOptions}
-              value={formData.phoneCode}
-              onChange={handleSelectChange("phoneCode")}
-              bgColor="bg-white"
-              size="medium"
-              width="max-w-[140px] lg:!w-[140px]"
+          <div className="flex flex-col items-center max-w-[784px] mx-auto w-full">
+            <Image
+              src="/img/Thanks.svg"
+              alt="Thank you"
+              width={96}
+              height={96}
+              className="mb-6"
             />
-            <CustomInput
-              config={{
-                type: "tel",
-                name: "phoneNumber",
-                placeholder: "Phone number",
-                value: formData.phoneNumber,
-                onChange: handleInputChange("phoneNumber"),
-                required: true,
-              }}
-            />
-          </div>
-
-          <textarea
-            name="message"
-            placeholder="Add your message"
-            value={formData.message}
-            onChange={handleInputChange("message")}
-            required
-            className="form-field h-[112px] resize-none placeholder:!text-black font-normal lg:font-semimedium !text-black px-4 py-3 !border-bordercontact"
-          />
-
-          {status.message && (
-            <div
-              className={`text-${
-                status.type === "success" ? "green" : "red"
-              } text-black/90 text-center`}
+            <h2 className="text-black text-[25px] md:text-[40px] md:leading-[50px] font-medium mb-6">
+              Thanks! We've got your message.
+            </h2>
+            <p className="text-black text-xs md:text-base font-normal lg:font-semimedium max-w-[475px] mb-6">
+              We've received your message and our team will get in touch with
+              you as soon as possible.
+            </p>
+            <Button
+              onClick={resetForm}
+              className="px-5 py-3 lg:py-6 w-full lg:w-fit lg:px-10 border border-black bg-transparent hover:bg-black/80 transition-all duration-300 rounded-[100px] hover:text-white text-black"
             >
-              {status.message}
-            </div>
-          )}
+              Send another message
+            </Button>
+          </div>{" "}
+        </div>
+      ) : (
+        <>
+          <div className="flex flex-col text-center items-center gap-3 lg:gap-6">
+            <h1 className="text-black text-[25px] md:text-[40px] font-medium leading-[62px] md:leading-[50px]">
+              Send ad Inquiry
+            </h1>
+            <p className="text-black text-xs md:text-base font-normal lg:font-semimedium max-w-[475px]">
+              We'd love to hear from you, if you have any inquires please fill
+              this form and we'll get in touch with you as soon as possible.
+            </p>
+          </div>
+          <div className="max-w-[784px] mx-auto w-full">
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-3 lg:gap-6 mt-[40px] lg:mt-16"
+            >
+              <CustomSelect
+                options={typeOptions}
+                value={formData.inquiryType}
+                onChange={handleSelectChange("inquiryType")}
+                bgColor="bg-white"
+                size="medium"
+                fullWidth
+              />
 
-          <Button
-            type="submit"
-            disabled={loading}
-            className="px-5 py-3 lg:py-6 lg:px-10 bg-black hover:bg-black/80 transition-all duration-300 rounded-[100px] h-fit text-nowrap flex items-center !self-end !justify-end gap-2 !w-fit"
-            iconComponent={
-              <ArrowIcon className="rotate-180 h-4 w-4 lg:h-5 lg:w-5 text-white" />
-            }
-          >
-            <span className="text-white text-sm lg:text-base font-medium leading-[25px] text-start">
-              {loading ? "Sending..." : "Send Message"}
-            </span>
-          </Button>
-        </form>
-      </div>
+              <div className="flex gap-4 w-full">
+                <CustomInput
+                  config={{
+                    type: "text",
+                    name: "firstName",
+                    placeholder: "First name",
+                    value: formData.firstName,
+                    onChange: handleInputChange("firstName"),
+                    required: true,
+                  }}
+                />
+                <CustomInput
+                  config={{
+                    type: "text",
+                    name: "lastName",
+                    placeholder: "Last name",
+                    value: formData.lastName,
+                    onChange: handleInputChange("lastName"),
+                    required: true,
+                  }}
+                />
+              </div>
+
+              <CustomInput
+                config={{
+                  type: "email",
+                  name: "email",
+                  placeholder: "Email address",
+                  value: formData.email,
+                  onChange: handleInputChange("email"),
+                  required: true,
+                }}
+              />
+
+              <div className="flex gap-4 w-full">
+                <CustomSelect
+                  options={PhoneOptions}
+                  value={formData.phoneCode}
+                  onChange={handleSelectChange("phoneCode")}
+                  bgColor="bg-white"
+                  size="medium"
+                  width="max-w-[140px] lg:!w-[140px]"
+                />
+                <CustomInput
+                  config={{
+                    type: "tel",
+                    name: "phoneNumber",
+                    placeholder: "Phone number",
+                    value: formData.phoneNumber,
+                    onChange: handleInputChange("phoneNumber"),
+                    required: true,
+                  }}
+                />
+              </div>
+
+              <textarea
+                name="message"
+                placeholder="Add your message"
+                value={formData.message}
+                onChange={handleInputChange("message")}
+                required
+                className="form-field h-[112px] resize-none placeholder:!text-black font-normal lg:font-semimedium !text-black px-4 py-3 !border-bordercontact"
+              />
+
+              {status.message && (
+                <div
+                  className={`${
+                    status.type === "success"
+                      ? "text-green-600"
+                      : status.type === "error"
+                      ? "text-red-600"
+                      : ""
+                  } text-black/90 text-center`}
+                >
+                  {status.message}
+                </div>
+              )}
+
+              <Button
+                type="submit"
+                disabled={loading}
+                className="px-5 py-3 lg:py-6 lg:px-10 bg-black hover:bg-black/80 transition-all duration-300 rounded-[100px] h-fit text-nowrap flex items-center !self-end !justify-end gap-2 !w-fit"
+                iconComponent={
+                  <ArrowIcon className="rotate-180 h-4 w-4 lg:h-5 lg:w-5 text-white" />
+                }
+              >
+                <span className="text-white text-sm lg:text-base font-medium leading-[25px] text-start">
+                  {loading ? "Sending..." : "Send Message"}
+                </span>
+              </Button>
+            </form>
+          </div>
+        </>
+      )}
     </div>
   );
 };

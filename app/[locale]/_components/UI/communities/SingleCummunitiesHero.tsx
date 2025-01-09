@@ -37,7 +37,7 @@ export default function SingleCummunitiesHero({
 
   const breadcrumbsList = [
     { title: "home", link: "/", pointerEvents: true },
-    { title: "Communities", link: "/communities", pointerEvents: true },
+    { title: "Communities", link: "/community", pointerEvents: true },
     { title: heading, pointerEvents: false },
   ];
 
@@ -149,7 +149,6 @@ export default function SingleCummunitiesHero({
         "-=0.4"
       );
 
-    // Start animation when page transition is complete
     const startAnimation = () => {
       timelineRef.current?.play();
     };

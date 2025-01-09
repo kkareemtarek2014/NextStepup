@@ -74,6 +74,8 @@ export default function CommunitySection({
   const sliderRef = useRef<Slider>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [slidesToShow, setSlidesToShow] = useState<number>(2.2);
+  const [isStart, setIsStart] = useState(true);
+  const [isEnd, setIsEnd] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -146,7 +148,7 @@ export default function CommunitySection({
           scrollTrigger: {
             trigger: ".community-section",
             start: "top 85%",
-            toggleActions: "play none none reverse",
+            toggleActions: "play none none none",
           },
         })
         .to(headerElements, {
@@ -187,7 +189,11 @@ export default function CommunitySection({
     speed: 500,
     slidesToShow: slidesToShow,
     slidesToScroll: 1,
-    beforeChange: (current: number, next: number) => setCurrentSlide(next),
+    beforeChange: (current: number, next: number) => {
+      setCurrentSlide(next);
+      setIsStart(next === 0);
+      setIsEnd(next >= communityData.length - slidesToShow);
+    },
     responsive: [
       {
         breakpoint: 1024,
@@ -250,7 +256,13 @@ export default function CommunitySection({
           <div className="animate-slider relative lg:mb-[90px] mb-[40px]">
             <button
               onClick={goToPrev}
-              className="absolute hidden lg:block top-1/2 -left-[2rem] -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white hover:bg-primary rounded-full"
+              disabled={isStart}
+              className={`absolute hidden lg:block top-1/2 -left-[2rem] -translate-y-1/2 z-10 p-4 transition-all rounded-full
+                ${
+                  isStart
+                    ? "opacity-50 cursor-not-allowed text-black/90 bg-gray-700"
+                    : "hover:opacity-75 bg-black text-white hover:bg-primary"
+                }`}
               aria-label="Previous slide"
             >
               <svg
@@ -262,7 +274,7 @@ export default function CommunitySection({
               >
                 <path
                   d="M21 12.1561H3.57249M11.6397 3L3 12L11.6397 21"
-                  stroke="white"
+                  stroke={isStart ? "white" : "white"}
                 />
               </svg>
             </button>
@@ -324,7 +336,13 @@ export default function CommunitySection({
 
             <button
               onClick={goToNext}
-              className="absolute hidden lg:block top-1/2 -right-[1rem] -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white rounded-full"
+              disabled={isEnd}
+              className={`absolute hidden lg:block top-1/2 -right-[1rem] -translate-y-1/2 z-10 p-4 transition-all rounded-full
+                ${
+                  isEnd
+                    ? "opacity-50 cursor-not-allowed text-black/90 bg-gray-700"
+                    : "hover:opacity-75 bg-black text-white hover:bg-primary"
+                }`}
               aria-label="Next slide"
             >
               <svg
@@ -337,7 +355,7 @@ export default function CommunitySection({
               >
                 <path
                   d="M21 12.1561H3.57249M11.6397 3L3 12L11.6397 21"
-                  stroke="white"
+                  stroke={isEnd ? "white" : "white"}
                 />
               </svg>
             </button>
