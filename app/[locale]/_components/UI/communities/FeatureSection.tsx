@@ -35,7 +35,6 @@ interface FeatureSection {
   ImageSlider: GalleryImage[];
 }
 
-// Fallback static data
 const staticFeatureContent = {
   title: "Sports Club",
   subtitle: "Break a sweat or simply connect",
@@ -68,7 +67,6 @@ export default function FeatureSection({ featureData }: Props) {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // Set initial states
       gsap.set(
         [
           subtitleRef.current,
@@ -92,17 +90,15 @@ export default function FeatureSection({ featureData }: Props) {
         x: 50,
       });
 
-      // Create the animation timeline
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 70%",
           end: "top 20%",
-          toggleActions: "play none none reverse",
+          toggleActions: "play complete none none",
         },
       });
 
-      // Animate content elements
       tl.to(subtitleRef.current, {
         opacity: 1,
         y: 0,
@@ -196,7 +192,6 @@ export default function FeatureSection({ featureData }: Props) {
       ));
     }
 
-    // Fallback to static images
     return staticFeatureContent.images.map((image, index) => (
       <div key={index} className="relative h-[375px] lg:h-[600px]">
         <Image

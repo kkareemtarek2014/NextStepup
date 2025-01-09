@@ -81,30 +81,26 @@ export default function BlogSlider() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // Header elements (title and button)
       const headerElements = document.querySelectorAll(
         ".blog-section .animate-header > *"
       );
       gsap.set(headerElements, {
         opacity: 0,
-        y: -50, // Start from above
+        y: -50,
       });
 
-      // Slider element
       const sliderElement = document.querySelector(".animate-slider");
       gsap.set(sliderElement, {
         opacity: 0,
-        x: 100, // Start from right
+        x: 100,
       });
 
-      // Progress bar
       const progressElement = document.querySelector(".animate-progress");
       gsap.set(progressElement, {
         opacity: 0,
-        y: 50, // Start from below
+        y: 50,
       });
 
-      // Create timeline for animations
       gsap
         .timeline({
           scrollTrigger: {
@@ -129,7 +125,7 @@ export default function BlogSlider() {
             ease: "power2.out",
           },
           "-=0.4"
-        ) // Start slightly before header animation finishes
+        )
         .to(
           progressElement,
           {
@@ -139,7 +135,7 @@ export default function BlogSlider() {
             ease: "power2.out",
           },
           "-=0.6"
-        ); // Start slightly before slider animation finishes
+        );
     });
 
     return () => ctx.revert();
@@ -224,7 +220,7 @@ export default function BlogSlider() {
           <div className="animate-slider relative">
             <button
               onClick={goToPrev}
-              className="slider-nav absolute hidden lg:block top-1/2 -left-4 -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white rounded-full"
+              className="slider-nav absolute hidden lg:block top-1/2 left-[-2rem] -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white rounded-full"
               aria-label="Previous slide"
             >
               <svg
@@ -300,7 +296,7 @@ export default function BlogSlider() {
             </button>
           </div>
 
-          <div className="animate-progress mx-4">
+          <div className="animate-progress ">
             <div className="relative w-full h-[2px] bg-black/20 max-w-[1512px] mx-auto">
               <div
                 className="absolute h-full bg-black transition-all duration-300 ease-in-out"

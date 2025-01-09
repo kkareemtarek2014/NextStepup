@@ -52,8 +52,6 @@ export default function SingleCommunity({
     paragraph: parsedData.ConceptText.Description,
   };
 
-  // console.log("Parsed Data:", parsedData);
-
   return (
     <div>
       <SingleCummunitiesHero
@@ -65,8 +63,13 @@ export default function SingleCommunity({
       <div id="concept">
         <TextSection {...textSectionData} />
       </div>{" "}
-      <div id="map" className="max-w-[1512px] mx-auto px-4 xl:px-0">
-        <ImagePropertyMap markers={[]} mapImage="" isEditMode={true} />
+      <div id="map" className="max-w-[1512px] mx-auto pb-4 xlxl:px-0">
+        <ImagePropertyMap
+          markers={parsedData.MapSection}
+          mapImage={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${parsedData.MapImage.url}`}
+          mapImageMobile={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${parsedData.MapImageMob.url}`}
+          data={parsedData.MapSection}
+        />
       </div>
       <div id="gallery">
         <GallerySlider mobile={true} galleryData={parsedData.GallerySection} />

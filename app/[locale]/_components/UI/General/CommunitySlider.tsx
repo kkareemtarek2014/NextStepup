@@ -121,7 +121,6 @@ export default function CommunitySection({
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // Header elements (title and button)
       const headerElements = document.querySelectorAll(
         ".community-section .animate-header > *"
       );
@@ -130,21 +129,18 @@ export default function CommunitySection({
         y: -50,
       });
 
-      // Slider element
       const sliderElement = document.querySelector(".animate-slider");
       gsap.set(sliderElement, {
         opacity: 0,
         x: 100,
       });
 
-      // Progress bar
       const progressElement = document.querySelector(".animate-progress");
       gsap.set(progressElement, {
         opacity: 0,
         y: 50,
       });
 
-      // Create timeline for animations
       gsap
         .timeline({
           scrollTrigger: {
@@ -230,7 +226,7 @@ export default function CommunitySection({
   };
 
   return (
-    <section className="relative h-fit bg-teamColor pb-[40px] lg:pb-0 community-section">
+    <section className="relative h-fit bg-teamColor pb-[40px] lg:pb-0 community-section overflow-hidden">
       <div className="max-w-[1512px] mx-auto">
         <div className="flex flex-col lg:gap-0 px-4 lg:px-[56px] lg:pb-[40px] h-fit">
           {title && (
@@ -254,7 +250,7 @@ export default function CommunitySection({
           <div className="animate-slider relative lg:mb-[90px] mb-[40px]">
             <button
               onClick={goToPrev}
-              className="absolute hidden lg:block top-1/2 -left-[1rem] -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white hover:bg-primary rounded-full"
+              className="absolute hidden lg:block top-1/2 -left-[2rem] -translate-y-1/2 z-10 p-4 hover:opacity-75 transition-opacity bg-black text-white hover:bg-primary rounded-full"
               aria-label="Previous slide"
             >
               <svg
@@ -347,7 +343,7 @@ export default function CommunitySection({
             </button>
           </div>
 
-          <div className="animate-progress relative w-auto lg:ms-4 h-[2px] bg-black/20">
+          <div className="animate-progress relative w-auto  h-[2px] bg-black/20">
             <div
               className="absolute h-full bg-black transition-all duration-300 ease-in-out"
               style={{ width: calculateProgress() }}

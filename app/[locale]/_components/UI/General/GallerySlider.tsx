@@ -57,20 +57,17 @@ export default function GallerySlider({ mobile, galleryData }: Props) {
   const controlsRef = useRef<HTMLDivElement>(null);
   const [activeSlide, setActiveSlide] = useState<number>(0);
 
-  // Initialize GSAP animations with ScrollTrigger
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Create a timeline for the animations
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 80%", // Starts animation when the top of the section hits 80% from the top of the viewport
+          start: "top 80%",
           end: "top 20%",
-          toggleActions: "play none none reverse", // play on enter, reverse on leave
+          toggleActions: "play none none none",
         },
       });
 
-      // Add animations to the timeline
       tl.from(subtitleRef.current, {
         opacity: 0,
         y: 20,
@@ -86,7 +83,7 @@ export default function GallerySlider({ mobile, galleryData }: Props) {
             ease: "power3.out",
           },
           "-=0.4"
-        ) // Start slightly before previous animation ends
+        )
         .from(
           controlsRef.current,
           {
@@ -112,7 +109,6 @@ export default function GallerySlider({ mobile, galleryData }: Props) {
 
     return () => {
       ctx.revert();
-      // Clean up ScrollTrigger
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
@@ -171,7 +167,6 @@ export default function GallerySlider({ mobile, galleryData }: Props) {
       ));
     }
 
-    // Fallback to static data
     return staticGalleryItems.map((item, index) => (
       <div key={item.id} className="slide-container">
         <div

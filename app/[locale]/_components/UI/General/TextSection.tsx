@@ -24,7 +24,6 @@ export default function TextSection({
 }: TextSectionProps) {
   const uniqueId = useId().replace(/:/g, "");
 
-  // Create IDs array based on available content
   const textIds = [
     `textSection_title_${uniqueId}`,
     `textSection_desc_${uniqueId}`,
@@ -32,7 +31,6 @@ export default function TextSection({
     ...(paragraph ? [`textSection_para_${uniqueId}`] : []),
   ];
 
-  // Get the correct paragraph index
   const paragraphIndex = button ? 3 : 2;
 
   useTextAnimation({
@@ -41,6 +39,7 @@ export default function TextSection({
     stagger: 0.03,
     buttonWithTitle: !!button,
     animationType: "word",
+    paragraphIndex: paragraphIndex,
   });
 
   return (
@@ -84,14 +83,14 @@ export default function TextSection({
               paragraph
                 ? "text-[28px] leading-[35px] "
                 : "text-[28px] lg:text-[40px] leading-[35px] lg:leading-[50px] "
-            } font-medium text-start text-black `}
+            } font-medium text-start text-black`}
           >
             {description}
           </h3>
           {paragraph && (
             <p
               id={textIds[paragraphIndex]}
-              className="text-base lg:text-[20px] font-normal text-start text-primary leading-[30px] lg:leading-[25px] opacity-0"
+              className="text-base lg:text-[20px] font-normal text-start text-primary leading-[25px] lg:leading-[30px] transition-opacity duration-300"
             >
               {paragraph}
             </p>

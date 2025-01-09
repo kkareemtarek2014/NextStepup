@@ -12,6 +12,7 @@ interface TextAnimationProps {
   fromHero?: boolean;
   buttonWithTitle?: boolean;
   animationType?: "letter" | "word";
+  paragraphIndex?: number;
 }
 
 export const useTextAnimation = ({
@@ -23,11 +24,25 @@ export const useTextAnimation = ({
   fromHero = false,
   buttonWithTitle = false,
   animationType = "letter",
+  paragraphIndex = 2,
 }: TextAnimationProps) => {
   const textRefs = useRef<(HTMLElement | null)[]>([]);
   const hasAnimated = useRef(false);
-  // console.log(textIds[2]);
+
   useEffect(() => {
+    // Check if it's a mobile device
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      // For mobile, just make elements visible without animation
+      textIds.forEach((id) => {
+        const element = document.getElementById(id);
+        if (element) {
+          gsap.set(element, { opacity: 1, y: 0 });
+        }
+      });
+      return;
+    }
+
     gsap.registerPlugin(ScrollTrigger);
 
     if (hasAnimated.current) return;
@@ -56,10 +71,10 @@ export const useTextAnimation = ({
     if (textElements.length === 0) return;
 
     textElements.forEach((element, index) => {
-      if (index === 2) {
+      if (index === paragraphIndex || (buttonWithTitle && index === 3)) {
         gsap.set(element, {
           opacity: 0,
-          y: 50,
+          y: 20,
         });
 
         tl.to(
@@ -67,10 +82,10 @@ export const useTextAnimation = ({
           {
             opacity: 1,
             y: 0,
-            duration: 0.7,
+            duration: 0.8,
             ease: "power3.out",
           },
-          "+=0.3"
+          "-=0.4"
         );
       } else if (buttonWithTitle && index === 2) {
         gsap.set(element, {

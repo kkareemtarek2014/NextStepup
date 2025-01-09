@@ -1,6 +1,5 @@
 const apiUrl = process.env.NEXT_PUBLIC_STRAPI_URL;
 
-// Helper function to stringify data with proper formatting
 const prettyStringify = (data: any) => JSON.stringify(data, null, 2);
 
 export const sendRequest = async (
@@ -35,7 +34,6 @@ export const sendRequest = async (
   }
 };
 
-// Define the type for the community data
 interface CommunityData {
   slug: string;
   Location: string;
@@ -83,7 +81,6 @@ export const getCommunityBySlug = async (
       throw new Error(`Community with slug ${slug} not found`);
     }
 
-    // Convert the response to JSON string and then parse it back
     const jsonString = JSON.stringify(response.data[0]);
     const parsedData = JSON.parse(jsonString);
 

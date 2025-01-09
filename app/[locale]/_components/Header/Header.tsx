@@ -57,7 +57,9 @@ export default function Header({}: HeaderProps) {
                 alt="Logo"
                 width={323.6}
                 height={40}
-                className={`h-auto w-auto ${isMenuOpen ? "hidden" : ""}`}
+                className={`h-[28px] w-[226.52px] lg:h-auto lg:w-auto ${
+                  isMenuOpen ? "hidden" : ""
+                }`}
                 priority
               />
             </Link>
@@ -68,7 +70,9 @@ export default function Header({}: HeaderProps) {
                 alt="Logo"
                 width={226.52}
                 height={28}
-                className={`h-auto w-auto ${isMenuOpen ? "hidden" : ""}`}
+                className={`h-[28px] w-[226.52px] lg:h-auto lg:w-auto ${
+                  isMenuOpen ? "hidden" : ""
+                }`}
                 priority
               />
             </Link>

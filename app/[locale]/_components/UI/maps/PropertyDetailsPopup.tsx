@@ -58,9 +58,9 @@ export default function PropertyDetailsPopup({
   }, []);
 
   return (
-    <div ref={popupRef} className="relative">
+    <div ref={popupRef} className="relative z-50">
       <div
-        className="property-details-popup absolute right-0 w-[600px] bg-white shadow-lg z-20  me-[56px] translate-y-[15%]"
+        className="property-details-popup absolute lg:right-0 translate-y-[21%] sm:translate-y-[53%] md:translate-y-[42%]  max-h-[90vh] lg:max-h-none   mx-4 lg:mx-0 w-[calc(100%-32px)] lg:w-[600px] bg-white shadow-lg z-20  lg:me-[56px] lg:translate-y-[15%]"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="relative">
@@ -73,7 +73,7 @@ export default function PropertyDetailsPopup({
                 onComplete: onClose,
               });
             }}
-            className="absolute right-0 top-0 text-black p-4 z-10 bg-white hover:bg-black hover:text-white rounded-full m-4"
+            className="absolute right-0 top-0 text-black p-2 lg:p-4 z-10 bg-white hover:bg-black hover:text-white rounded-full m-4"
           >
             <svg
               className="w-5 h-5"
@@ -91,26 +91,29 @@ export default function PropertyDetailsPopup({
           </button>
           <div
             ref={imageRef}
-            className="relative w-full aspect-[600/300] max-w-[600px]"
+            className="relative aspect-[343/172] w-full lg:aspect-[600/300] lg:max-w-[600px]"
           >
             <Image
-              src={marker.image}
+              src={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${marker.Image.url}`}
               alt={marker.name}
               className="w-full h-full object-cover"
               fill
             />
           </div>
-          <div ref={contentRef} className="flex flex-col gap-4 py-4">
-            <div className="flex flex-col gap-3 px-4 lg:px-7">
-              <h3 className="text-[40px] leading-[50px] text-black font-medium">
+          <div
+            ref={contentRef}
+            className="flex flex-col galg:gap-4 py-[2vh] lg:py-4"
+          >
+            <div className="flex flex-col gap-[1.5vh] lg:gap-3 px-[2vh] lg:px-7">
+              <h3 className="text-[3vh] lg:text-[40px] leading-[4vh] lg:leading-[50px] text-black font-medium">
                 {marker.name}
               </h3>
-              <p className="text-primary text-base font-medium leading-[22.4px]">
-                {marker.description}
+              <p className="text-primary text-sm lg:text-base font-medium  lg:leading-[22.4px]">
+                {marker.Description}
               </p>
             </div>
-            <div className="flex flex-col gap-[40px] py-[17px] px-4 lg:px-7">
-              <div className="flex gap-6 border-b border-borderColor py-[17px] border-t">
+            <div className="flex flex-col gap-[3vh] lg:gap-[40px] py-[2vh] lg:py-[17px] px-4 lg:px-7">
+              <div className="flex gap-6 border-b border-borderColor py-[17px] border-t  overflow-x-auto lg:overflow-x-none">
                 <PropertyDetail
                   icon="/img/IconDetails.svg"
                   value={`${marker.fromArea} - ${marker.toArea} m²`}
@@ -126,7 +129,7 @@ export default function PropertyDetailsPopup({
                   label="Bathrooms"
                 />
               </div>
-              <div className="flex gap-6">
+              <div className="flex gap-[2vh] lg:gap-6">
                 <InfoColumn
                   label="Starting Price"
                   value={`EGP ${marker.price.toLocaleString()}`}
@@ -139,16 +142,16 @@ export default function PropertyDetailsPopup({
                 />
                 <InfoColumn label="Delivery Date" value={marker.deliveryDate} />
               </div>
-              <div className="flex gap-3 justify-end">
+              <div className="flex gap-[1.5vh] lg:gap-3 justify-end">
                 <a
                   href={marker.downloadButton.ButtonLink}
-                  className="block w-fit text-center bg-black text-white py-3 px-5 hover:bg-white hover:text-black hover:border-black border transition-colors rounded-[100px]"
+                  className="block w-fit text-center bg-black text-white text-sm lg:text-base py-[10px] lg:py-3 lg:px-5 px-4 hover:bg-white hover:text-black hover:border-black border transition-colors rounded-[100px]"
                 >
                   Inquire Now
                 </a>
                 <a
                   href={marker.downloadButton.ButtonLink}
-                  className="block w-fit text-center bg-white border border-black text-black py-3 px-5 hover:bg-black hover:text-white transition-colors rounded-[100px]"
+                  className="block w-fit text-center bg-white border text-sm lg:text-base border-black text-black py-[10px] lg:py-3 lg:px-5 px-4 hover:bg-black hover:text-white transition-colors rounded-[100px]"
                 >
                   {marker.downloadButton.ButtonTitle}
                 </a>
@@ -169,11 +172,18 @@ interface PropertyDetailProps {
 
 function PropertyDetail({ icon, value, label }: PropertyDetailProps) {
   return (
-    <div className="flex gap-3 w-1/3">
+    <div className="flex relative pe-3 lg:pe-0 lg:!gap-3 w-full lg:w-1/3   ">
       <img src={icon} alt="icon" />
-      <div className="flex gap-1 items-center">
-        <p className="font-medium text-black">{value}</p>
-        {label && <p className="text-base text-black font-medium">{label}</p>}
+      <div className=" relative flex gap-1 items-center whitespace-nowrap min-w-0">
+        <p className="relative font-medium text-black text-sm lg:text-base shrink-0">
+          {value}
+        </p>
+        {label && (
+          <p className="text-sm lg:text-base text-black font-medium shrink-0">
+            {" "}
+            {label}
+          </p>
+        )}
       </div>
     </div>
   );
@@ -188,12 +198,14 @@ interface InfoColumnProps {
 function InfoColumn({ label, value, showBorder }: InfoColumnProps) {
   return (
     <div
-      className={`flex flex-col gap-1 w-1/3 ${
+      className={`flex flex-col gap-[1vh] lg:gap-1 w-1/3 ${
         showBorder ? "border-e border-borderColor" : ""
       }`}
     >
-      <p className="text-sm text-black font-semimedium">{label}</p>
-      <p className="font-medium text-black text-base">{value}</p>
+      <p className="text-[10px] lg:text-sm text-black font-normal lg:font-semimedium">
+        {label}
+      </p>
+      <p className="font-medium text-black text-sm lg:text-base">{value}</p>
     </div>
   );
 }
