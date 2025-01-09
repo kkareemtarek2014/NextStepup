@@ -158,6 +158,7 @@ export default function TeamSlider({ teamMembers = [] }: TeamSliderProps) {
       },
     ],
     arrows: false,
+    className: "team-slider",
   };
 
   const goToNext = () => {
@@ -180,6 +181,10 @@ export default function TeamSlider({ teamMembers = [] }: TeamSliderProps) {
   };
   const progressWidth = calculateProgress();
 
+  const isFirstSlide = () => currentSlide === 0;
+  const isLastSlide = () =>
+    currentSlide === teamMembers.length - Math.ceil(slidesToShow);
+
   return (
     <section
       ref={sectionRef}
@@ -191,7 +196,12 @@ export default function TeamSlider({ teamMembers = [] }: TeamSliderProps) {
             <div className="flex flex-col gap-[48px] px-4 lg:px-[56px] py-[40px]">
               <button
                 onClick={goToPrev}
-                className="slider-controls absolute hidden lg:block top-1/2 left-16 -translate-y-1/2 z-10 p-2 hover:opacity-75 transition-opacity bg-black text-white rounded-full"
+                disabled={isFirstSlide()}
+                className={`slider-controls absolute hidden lg:block top-1/2 left-[2rem] -translate-y-1/2 z-10 p-4 transition-opacity bg-black text-white rounded-full ${
+                  isFirstSlide()
+                    ? " !opacity-50 cursor-not-allowed text-black/90 bg-gray-700/50"
+                    : "hover:opacity-75"
+                }`}
                 aria-label="Previous slide"
               >
                 <svg
@@ -237,7 +247,12 @@ export default function TeamSlider({ teamMembers = [] }: TeamSliderProps) {
 
               <button
                 onClick={goToNext}
-                className="slider-controls absolute hidden lg:block top-1/2 right-12 -translate-y-1/2 z-10 p-2 hover:opacity-75 transition-opacity bg-black text-white rounded-full"
+                disabled={isLastSlide()}
+                className={`slider-controls absolute hidden lg:block top-1/2 right-[2rem] -translate-y-1/2 z-10 p-4 transition-opacity bg-black text-white rounded-full ${
+                  isLastSlide()
+                    ? " !opacity-50 cursor-not-allowed text-black/90 bg-gray-700/50"
+                    : "hover:opacity-75"
+                }`}
                 aria-label="Next slide"
               >
                 <svg

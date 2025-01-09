@@ -83,6 +83,7 @@ section {
 .gallery-slider .slick-track {
   display: flex !important;
   gap: 20px;
+  margin-left: -20px !important;
 }
 /* Default gap for larger screens */
 .slick-track {
@@ -90,7 +91,12 @@ section {
   gap: 20px !important;
   margin: 0 !important;
   height: 100% !important;
+
   /* align-items: start !important; */
+}
+
+.team-slider .slick-track {
+  margin-inline-start: -20px !important;
 }
 
 /* Adjust gap for mobile screens */
@@ -187,7 +193,7 @@ section {
 
 .community-slider .slick-list {
   overflow: visible !important;
-  margin-left: -20px !important;
+  margin-inline-start: -20px !important;
 }
 
 .community-slider .slick-track {
@@ -210,7 +216,7 @@ section {
 
 .blog-slider .slick-list {
   overflow: visible !important;
-  margin-left: -20px !important;
+  margin-inline-start: -20px !important;
 }
 
 .blog-slider .slick-track {
