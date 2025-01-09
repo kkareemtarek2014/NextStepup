@@ -633,57 +633,69 @@ export default function ImagePropertyMap({
           fill
         />
 
-        {filteredMarkers.map((marker, index) => (
-          <motion.div
-            key={marker.id}
-            className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer ${
-              selectedProperty?.marker?.id === marker.id ? "z-50" : "z-40"
-            }`}
-            style={{
-              left: `${isMobile ? marker.mobileX : marker.X_axis}%`,
-              top: `${isMobile ? marker.mobileY : marker.Y_Axis}%`,
-            }}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={
-              isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }
-            }
-            transition={{
-              delay: 0.4 + index * 0.1,
-              duration: 0.3,
-              type: "spring",
-              stiffness: 260,
-              damping: 20,
-            }}
-          >
-            <button
-              className="relative"
-              onClick={(e) => handleMarkerClick(marker, e)}
+        {markers.map((marker, index) => {
+          const isVisible = filteredMarkers.some((m) => m.id === marker.id);
+
+          return (
+            <motion.div
+              key={marker.id}
+              className={`absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer ${
+                selectedProperty?.marker?.id === marker.id ? "z-50" : "z-40"
+              }`}
+              style={{
+                left: `${isMobile ? marker.mobileX : marker.X_axis}%`,
+                top: `${isMobile ? marker.mobileY : marker.Y_Axis}%`,
+              }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={
+                isInView
+                  ? isVisible
+                    ? { opacity: 1, scale: 1, display: "block" }
+                    : {
+                        opacity: 0,
+                        scale: 0,
+                        transitionEnd: { display: "none" },
+                      }
+                  : { opacity: 0, scale: 0 }
+              }
+              transition={{
+                delay: isVisible ? 0.4 + index * 0.1 : 0,
+                duration: 0.3,
+                type: "spring",
+                stiffness: 260,
+                damping: 20,
+              }}
             >
-              <motion.img
-                src={
-                  activeMarkers.has(marker.id)
-                    ? "/img/Excludeyellow.svg"
-                    : "/img/Exclude.svg"
-                }
-                alt="Marker"
-                className="w-[20.34px] h-[24.28px] lg:w-[33.51px] lg:h-[40px]"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              />
-              <span
-                className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 lg:mt-2 
-                           whitespace-nowrap font-medium capitalize px-3 lg:py-1.5 
-                           text-[12.14px] lg:text-[20px] leading-[15px] lg:leading-[25px] rounded z-10 ${
-                             activeMarkers.has(marker.id)
-                               ? "text-[#FAC63E]"
-                               : "text-white"
-                           }`}
+              <button
+                className="relative"
+                onClick={(e) => handleMarkerClick(marker, e)}
               >
-                {marker.Title}
-              </span>
-            </button>
-          </motion.div>
-        ))}
+                <motion.img
+                  src={
+                    activeMarkers.has(marker.id)
+                      ? "/img/Excludeyellow.svg"
+                      : "/img/Exclude.svg"
+                  }
+                  alt="Marker"
+                  className="w-[20.34px] h-[24.28px] lg:w-[33.51px] lg:h-[40px]"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                />
+                <span
+                  className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 lg:mt-2 
+                             whitespace-nowrap font-medium capitalize px-3 lg:py-1.5 
+                             text-[12.14px] lg:text-[20px] leading-[15px] lg:leading-[25px] rounded z-10 ${
+                               activeMarkers.has(marker.id)
+                                 ? "text-[#FAC63E]"
+                                 : "text-white"
+                             }`}
+                >
+                  {marker.Title}
+                </span>
+              </button>
+            </motion.div>
+          );
+        })}
 
         {isEditMode && clickedPosition && (
           <div
@@ -731,7 +743,7 @@ export default function ImagePropertyMap({
             <div>
               <p>Click anywhere on the map to get coordinates</p>
               <p className="text-xs mt-2 text-gray-300">
-                This shows on Developer Mode
+                This shows on Development Mode
               </p>
             </div>
           )}
