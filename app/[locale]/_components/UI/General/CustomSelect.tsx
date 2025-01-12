@@ -21,6 +21,7 @@ interface CustomSelectProps {
   className?: string;
   popupMobile?: boolean;
   checkbox?: boolean;
+  height?: string;
 }
 
 export default function CustomSelect({
@@ -37,6 +38,7 @@ export default function CustomSelect({
   className,
   popupMobile,
   checkbox,
+  height,
 }: CustomSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValues, setSelectedValues] = useState<string[]>(
@@ -161,12 +163,12 @@ export default function CustomSelect({
         <div
           className={`${
             popupMobile ? "relative" : "absolute border border-borderColor"
-          } top-full left-0 w-full bg-white mt-1 z-50`}
+          } top-full left-0 w-full bg-white mt-1 z-50 ${height}`}
         >
           {options.map((option) => (
             <div
               key={option.value}
-              className={`px-4 py-2 cursor-pointer hover:bg-gray-50 text-black text-base font-normal lg:font-semimedium ${
+              className={`px-4 py-2 cursor-pointer hover:bg-gray-50 text-black text-base font-normal lg:font-semimedium  ${
                 selectedValues.includes(option.value) ? "bg-gray-100" : ""
               } ${textCenter ? "text-center" : "text-start"} ${
                 checkbox ? "flex items-center gap-2" : ""

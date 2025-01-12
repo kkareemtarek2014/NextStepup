@@ -6,6 +6,7 @@ import CustomInput from "../General/CustomInput";
 import Button from "../General/Button";
 import ArrowIcon from "../../Icons/ArrowIcon";
 import Image from "next/image";
+import { PhoneCodes } from "../General/PhoneCodes";
 
 interface FormData {
   inquiryType: string;
@@ -43,11 +44,7 @@ const ContactForm = () => {
     { value: "events", label: "Events" },
   ] as const;
 
-  const PhoneOptions = [
-    { value: "EG (+20)", label: "EG (+20)" },
-    { value: "US (+1)", label: "US (+1)" },
-    { value: "UK (+44)", label: "UK (+44)" },
-  ] as const;
+  const PhoneOptions = PhoneCodes;
 
   const handleInputChange =
     (name: keyof FormData) =>
@@ -239,7 +236,8 @@ const ContactForm = () => {
                   onChange={handleSelectChange("phoneCode")}
                   bgColor="bg-white"
                   size="medium"
-                  width="max-w-[140px] lg:!w-[140px]"
+                  height="max-h-[200px] h-fit lg:max-h-[400px] overflow-auto"
+                  width="max-w-[140px] lg:!w-[140px] "
                 />
                 <CustomInput
                   config={{

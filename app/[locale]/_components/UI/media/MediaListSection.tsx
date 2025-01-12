@@ -56,7 +56,7 @@ type MediaPost = {
 const mediaFilters = [
   {
     id: "category",
-    title: "Category",
+    title: "Type",
     options: [
       { value: "all", label: "All" },
       { value: "News", label: "News" },

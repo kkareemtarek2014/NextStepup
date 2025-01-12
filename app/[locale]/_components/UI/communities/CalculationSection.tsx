@@ -32,7 +32,6 @@ export default function CalculationSection({ calculateData }: Props) {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // Initial states
       gsap.set(overlayRef.current, {
         opacity: 0,
       });
@@ -51,7 +50,6 @@ export default function CalculationSection({ calculateData }: Props) {
           opacity: 0,
         });
 
-        // Create scroll-triggered animation
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -61,7 +59,6 @@ export default function CalculationSection({ calculateData }: Props) {
           },
         });
 
-        // Animate overlay, form, and form elements
         tl.to(overlayRef.current, {
           opacity: 0.2,
           duration: 1.2,
@@ -89,7 +86,6 @@ export default function CalculationSection({ calculateData }: Props) {
             "-=0.6"
           );
 
-        // Enhanced hover effect
         if (formRef.current) {
           formRef.current.addEventListener("mouseenter", () => {
             gsap.to(overlayRef.current, {
