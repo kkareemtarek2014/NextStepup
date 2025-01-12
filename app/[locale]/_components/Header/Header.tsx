@@ -197,7 +197,7 @@ export default function Header({}: HeaderProps) {
                 />
               </Link>{" "}
               <Link
-                href="/"
+                href="/media"
                 onClick={handleLinkClick}
                 className="text-base font-medium py-[13px] border-b border-[#c3c0ba] justify-between flex "
               >

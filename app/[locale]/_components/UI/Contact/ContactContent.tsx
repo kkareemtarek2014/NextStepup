@@ -22,7 +22,7 @@ export default function ContactContent() {
                 Are you interested in a property or have any other <br />
                 inquiries, feel free to send us at:
               </h3>
-              <h2 className="text-2xl text-wrap lg:text-[40px] leading-[50px] font-medium text-start text-black  w-fit   lg:text-balance">
+              <h2 className="text-[28px] leading-[35px] text-wrap lg:text-[40px] lg:leading-[50px] font-medium text-start text-black  w-fit   lg:text-balance">
                 hello@gdevelopments.com
                 <div className="w-full h-[3px] bg-black"></div>
               </h2>
