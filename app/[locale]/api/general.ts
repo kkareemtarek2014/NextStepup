@@ -199,7 +199,7 @@ export const getCommunityBySlugLoader = async (
 ): Promise<any> => {
   try {
     const response = await sendRequest(
-      `single-cummunities?locale=${lang}&filters[slug][$eq]=${slug}&pLevel`
+      `single-cummunities?locale=${lang}&filters[slug][$eq]=${slug}&pLevel&populate[0]=ImagesLoader`
     );
 
     if (!response?.data?.[0]) {

@@ -1,26 +1,32 @@
 "use client";
 
 export const getPageName = (pathname: string): string => {
-  if (pathname === "/") return "G DEVELOPMENTS";
+  if (pathname === "/") return "G Developments";
 
-  // Remove locale and leading slash
   const path = pathname.split("/").pop() || "";
 
-  // Convert path to display format
+  // Helper function to capitalize first letter of each word
+  const toTitleCase = (str: string): string => {
+    return str
+      .split("-")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
   switch (path) {
     case "about-us":
-      return "ABOUT US";
+      return "About Us";
     case "community":
-      return "COMMUNITIES";
+      return "Communities";
     case "career":
-      return "CAREERS";
+      return "Careers";
     case "contact-us":
-      return "CONTACT US";
+      return "Contact Us";
     case "media":
-      return "MEDIA CENTER";
+      return "Media Center";
     case "faqs":
-      return "FAQS";
+      return "FAQs";
     default:
-      return path.toUpperCase().replace(/-/g, " ");
+      return toTitleCase(path);
   }
 };

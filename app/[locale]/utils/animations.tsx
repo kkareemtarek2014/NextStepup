@@ -18,23 +18,31 @@ export const animatePageIn = (pageName: string) => {
       yPercent: 0,
     });
 
-    tl.to(bannerText, {
-      opacity: 1,
-      duration: 0.8,
-      ease: "power2.inOut",
-    });
+    tl.fromTo(bannerText, 
+      {
+        opacity: 0,
+        scale: 0.98,
+      },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 0.8,
+        ease: "power2.out"
+      }
+    );
 
     tl.to(bannerText, {
       opacity: 0,
-      duration: 0.3,
-      delay: 0.5,
-      ease: "power2.inOut",
+      scale: 1.02,
+      duration: 0.6,
+      delay: 0.05,
+      ease: "power2.inOut"
     });
 
     tl.to([bannerOne, bannerTwo, bannerThree, bannerFour], {
       yPercent: 100,
-      duration: 0.2,
-      stagger: 0.1,
+      duration: 0.8,
+      stagger: 0.08,
       ease: "power3.inOut",
       onComplete: () => {
         window.dispatchEvent(new Event("pageTransitionComplete"));
@@ -59,8 +67,8 @@ export const animatePageOut = (href: string, route: AppRouterInstance) => {
 
     tl.to([bannerOne, bannerTwo, bannerThree, bannerFour], {
       yPercent: 0,
-      duration: 0.4,
-      stagger: 0.2,
+      duration: 0.8,
+      stagger: 0.08,
       ease: "power3.inOut",
       onComplete: () => {
         route.push(href);
