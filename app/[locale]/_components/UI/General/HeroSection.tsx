@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { usePathname } from "next/navigation";
 
 interface HeroSectionProps {
   imageSrc: string;
@@ -18,6 +19,7 @@ export default function HeroSection({
   const headingRef = useRef<HTMLDivElement>(null);
   const subheadingRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const splitHeading = heading
@@ -59,52 +61,76 @@ export default function HeroSection({
       opacity: 0,
     });
 
-    // Create timeline but don't start it yet
-    timelineRef.current = gsap.timeline({ paused: true });
+    const shouldUseTimeline = pathname === "/" || pathname === "/community" || pathname === "/community/[slug]";
+console.log(shouldUseTimeline)
+    if (shouldUseTimeline) {
+      timelineRef.current = gsap.timeline({ paused: true });
 
-    timelineRef.current
-      .to(imageRef.current, {
+      timelineRef.current
+        .to(imageRef.current, {
+          scale: 1,
+          y: 0,
+          opacity: 1,
+          duration: 1.5,
+          ease: "power3.out",
+        })
+        .to(
+          ".heading .word",
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: "power3.out",
+          },
+          "-=0.8"
+        )
+        .to(
+          ".subheading .word",
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power3.out",
+          },
+          "-=0.4"
+        );
+
+      const startAnimation = () => {
+        timelineRef.current?.play();
+      };
+
+      window.addEventListener("pageTransitionComplete", startAnimation);
+
+      return () => {
+        window.removeEventListener("pageTransitionComplete", startAnimation);
+        timelineRef.current?.kill();
+      };
+    } else {
+      gsap.to(imageRef.current, {
         scale: 1,
         y: 0,
         opacity: 1,
         duration: 1.5,
         ease: "power3.out",
-      })
-      .to(
-        ".heading .word",
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.15,
-          ease: "power3.out",
-        },
-        "-=0.8"
-      )
-      .to(
-        ".subheading .word",
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-          stagger: 0.1,
-          ease: "power3.out",
-        },
-        "-=0.4"
-      );
-
-    // Start animation when page transition is complete
-    const startAnimation = () => {
-      timelineRef.current?.play();
-    };
-
-    window.addEventListener("pageTransitionComplete", startAnimation);
-
-    return () => {
-      window.removeEventListener("pageTransitionComplete", startAnimation);
-      timelineRef.current?.kill();
-    };
-  }, [heading, subheading]);
+      });
+      gsap.to(".heading .word", {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+      });
+      gsap.to(".subheading .word", {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power3.out",
+      });
+    }
+  }, [heading, subheading, pathname]);
 
   return (
     <section className="relative h-[60vh] md:h-[71vh] overflow-hidden">

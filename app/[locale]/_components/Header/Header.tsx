@@ -82,7 +82,7 @@ export default function Header({}: HeaderProps) {
         <div className="hidden md:flex items-center gap-2 lg:gap-[24px]">
           <Link
             href="/community"
-            className={`text-base font-medium p-2 border border-transparent ${
+            className={`text-base font-medium p-2 hover:px-4 transition-all duration-300 border border-transparent ${
               isTransparentPage
                 ? "text-white hover:border-white"
                 : "text-black hover:border-black"
@@ -92,7 +92,7 @@ export default function Header({}: HeaderProps) {
           </Link>
           <Link
             href="/media"
-            className={`text-base font-medium p-2 border border-transparent   ${
+            className={`text-base font-medium p-2  hover:px-4 transition-all duration-300 border border-transparent   ${
               isTransparentPage
                 ? "text-white hover:border-white"
                 : "text-black hover:border-black"
@@ -107,7 +107,7 @@ export default function Header({}: HeaderProps) {
                 ${
                   isTransparentPage
                     ? "text-black bg-white hover:bg-black hover:text-white"
-                    : "text-white bg-black hover:bg-white hover:text-black"
+                    : "text-white bg-black hover:bg-black/30 hover:text-black hover:px-6 transition-all duration-300"
                 }  leading-[24px] px-5 py-3 rounded-[100px]`}
           >
             <p>Get In Touch</p>

@@ -41,7 +41,7 @@ export default function LangConv({ isBlack = false }: LangConvProps) {
       {locale === "en" ? (
         <button
           onClick={() => onLocaleChange("ar")}
-          className={`flex items-center gap-2 text-base font-medium p-2 border border-transparent ${
+          className={`flex items-center gap-2 hover:px-4 transition-all duration-300 text-base font-medium p-2 border border-transparent ${
             isBlack ? "hover:border-black" : "hover:border-white"
           } rounded-[100px] ${textColorClass}`}
         >
@@ -50,7 +50,7 @@ export default function LangConv({ isBlack = false }: LangConvProps) {
       ) : (
         <button
           onClick={() => onLocaleChange("en")}
-          className={`flex items-center gap-2 text-base font-medium p-2 border border-transparent ${
+          className={`flex items-center gap-2 text-base font-medium p-2 hover:px-4 transition-all duration-300 border border-transparent ${
             isBlack ? "hover:border-black" : "hover:border-white"
           } rounded-[100px] ${textColorClass}`}
         >
