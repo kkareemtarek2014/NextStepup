@@ -257,11 +257,11 @@ export default function CommunitySection({
             <button
               onClick={goToPrev}
               disabled={isStart}
-              className={`absolute hidden lg:block top-1/2 -left-[2rem] -translate-y-1/2 z-10 p-4 transition-all rounded-full
+              className={`absolute hidden lg:block top-1/2 -left-[2rem] -translate-y-1/2 z-10 p-5 transition-all rounded-full
                 ${
                   isStart
-                    ? "opacity-50 cursor-not-allowed text-black/90 bg-gray-700"
-                    : "hover:opacity-75 bg-black text-white hover:bg-primary"
+                    ? "opacity-50 cursor-not-allowed text-gray-400 bg-gray-100"
+                    : "hover:opacity-90 text-black bg-white hover:bg-white shadow-2xl"
                 }`}
               aria-label="Previous slide"
             >
@@ -274,7 +274,8 @@ export default function CommunitySection({
               >
                 <path
                   d="M21 12.1561H3.57249M11.6397 3L3 12L11.6397 21"
-                  stroke={isStart ? "white" : "white"}
+                  stroke="currentColor"
+                  strokeWidth="1.5"
                 />
               </svg>
             </button>
@@ -292,43 +293,47 @@ export default function CommunitySection({
                 communityData.map((community, index) => (
                   <div
                     key={community.id}
-                    className="bg-gray-100 relative flex flex-col pe-[20px] lg:pe-0 h-full"
+                    className="bg-gray-100 relative flex flex-col pe-[20px] lg:pe-0 h-full group"
                   >
-                    <div className="relative h-full">
-                      <div className="relative h-[160px] lg:h-[320px]">
-                        <Image
-                          src={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${community.HeroSection.MainImage.url}`}
-                          alt={community.Location}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="relative w-full h-full">
-                        <div className="bg-white p-4 lg:p-[28px] !pb-[48px] h-[222px] md:h-[280px] 2xl:!h-full">
-                          <div className="flex flex-col gap-5 justify-between h-full">
-                            <div className="flex flex-col gap-3">
-                              <span className="text-base font-medium text-primary leading-[22.4px] uppercase tracking-wider">
-                                {community.Location} • {community.statusType}
-                              </span>
-                              <h3 className="text-[28px] lg:text-[40px] font-medium leading-[35px] lg:leading-[50px] text-black uppercase">
-                                {community.HeroSection.Title}
-                              </h3>
+                    <Link 
+                      href={`/community/${community.slug}`}
+                      className="relative h-full block"
+                    >
+                      <div className="relative h-full">
+                        <div className="relative h-[160px] lg:h-[320px] overflow-hidden">
+                          <Image
+                            src={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${community.HeroSection.MainImage.url}`}
+                            alt={community.Location}
+                            fill
+                            className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                          />
+                        </div>
+                        <div className="relative w-full h-full">
+                          <div className="bg-white p-4  group-hover:bg-white/60 transition-all duration-300 lg:p-[28px] !pb-[48px] h-[222px] md:h-[280px] 2xl:!h-full">
+                            <div className="flex flex-col gap-5 justify-between h-full">
+                              <div className="flex flex-col gap-3">
+                                <span className="text-base font-medium text-primary leading-[22.4px] uppercase tracking-wider">
+                                  {community.Location} • {community.statusType}
+                                </span>
+                                <h3 className="text-[28px] lg:text-[40px] font-medium leading-[35px] lg:leading-[50px] text-black uppercase">
+                                  {community.HeroSection.Title}
+                                </h3>
+                              </div>
+                              <div 
+                                className="px-4 lg:px-5 py-[10px] lg:py-3 transition-all duration-300 
+                                  bg-black rounded-[100px] h-fit text-nowrap flex items-center 
+                                  justify-center gap-2 !w-fit group-hover:gap-4 group-hover:bg-opacity-75"
+                              >
+                                <span className="text-white text-sm  lg:text-base font-medium leading-[25px] text-start">
+                                  View Project
+                                </span>
+                                <ArrowIcon className="rotate-180 text-white transition-transform duration-300 group-hover:translate-x-1" />
+                              </div>
                             </div>
-                            <Button
-                              href={`/community/${community.slug}`}
-                              className="px-4 lg:px-5 py-[10px] lg:py-3 bg-black rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit"
-                              iconComponent={
-                                <ArrowIcon className="rotate-180 text-white" />
-                              }
-                            >
-                              <span className="text-white text-sm lg:text-base font-medium leading-[25px] text-start">
-                                View Project
-                              </span>
-                            </Button>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 ))
               )}
@@ -337,11 +342,11 @@ export default function CommunitySection({
             <button
               onClick={goToNext}
               disabled={isEnd}
-              className={`absolute hidden lg:block top-1/2 -right-[1rem] -translate-y-1/2 z-10 p-4 transition-all rounded-full
+              className={`absolute hidden lg:block top-1/2 -right-[1rem] -translate-y-1/2 z-10 p-5 transition-all rounded-full
                 ${
                   isEnd
-                    ? "opacity-50 cursor-not-allowed text-black/90 bg-gray-700"
-                    : "hover:opacity-75 bg-black text-white hover:bg-primary"
+                    ? "opacity-50 cursor-not-allowed text-gray-400 bg-gray-100"
+                    : "hover:opacity-90 text-black bg-white hover:bg-white shadow-2xl"
                 }`}
               aria-label="Next slide"
             >
@@ -355,7 +360,8 @@ export default function CommunitySection({
               >
                 <path
                   d="M21 12.1561H3.57249M11.6397 3L3 12L11.6397 21"
-                  stroke={isEnd ? "white" : "white"}
+                  stroke="currentColor"
+                  strokeWidth="1.5"
                 />
               </svg>
             </button>

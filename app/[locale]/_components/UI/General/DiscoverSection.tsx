@@ -9,6 +9,8 @@ import Link from "next/link";
 import { fetchBlogList } from "@/app/[locale]/api/general";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import Button from "./Button";
+import ArrowIcon from "../../Icons/ArrowIcon";
 
 interface BlogPost {
   id: number;
@@ -236,24 +238,16 @@ export default function BlogSlider() {
               Discover our latest
             </h3>
             <Link href="/media">
-              <button className="blog-button px-5 py-3 bg-black rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2">
+              <Button className="blog-button px-5 py-3 bg-black hover:bg-black/90 duration-300 hover:px-6 transition-all  rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2"
+                
+                iconComponent={
+                  <ArrowIcon className="arrow-icon rotate-180 h-4 w-4 lg:h-5 lg:w-5 text-white" />
+                }>
+              
                 <span className="text-white lg:text-base font-medium leading-[25px] text-start">
                   Media Center
-                </span>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="rotate-180"
-                >
-                  <path
-                    d="M21 12.1561H3.57249M11.6397 3L3 12L11.6397 21"
-                    stroke="white"
-                  />
-                </svg>
-              </button>
+                </span> 
+              </Button>
             </Link>
           </div>
 
@@ -261,12 +255,12 @@ export default function BlogSlider() {
             <button
               onClick={goToPrev}
               disabled={isStart}
-              className={`slider-nav absolute hidden lg:block top-1/2 left-[-2rem] -translate-y-1/2 z-10 p-4 transition-all rounded-full
+              className={`slider-nav absolute hidden lg:block top-1/2 left-[-2rem] -translate-y-1/2 z-10 p-5 transition-all rounded-full
                 ${
                   isStart
-                    ? "opacity-50 cursor-not-allowed text-black/90 bg-gray-700"
-                    : "hover:opacity-75 bg-black text-white hover:bg-primary"
-                }`}
+                  ? "opacity-50 cursor-not-allowed text-gray-400 bg-gray-100"
+                  : "hover:opacity-90 text-black bg-white hover:bg-white shadow-2xl"
+                  }`}
               aria-label="Previous slide"
             >
               <svg
@@ -277,8 +271,9 @@ export default function BlogSlider() {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  d="M21 12.1561H3.57249M11.6397 3L3 12L11.6397 21"
-                  stroke="white"
+                   d="M21 12.1561H3.57249M11.6397 3L3 12L11.6397 21"
+                   stroke="currentColor"
+                   strokeWidth="1.5"
                 />
               </svg>
             </button>
@@ -347,11 +342,11 @@ export default function BlogSlider() {
             <button
               onClick={goToNext}
               disabled={isEnd}
-              className={`slider-nav absolute hidden lg:block top-1/2 -right-4 -translate-y-1/2 z-10 p-4 transition-all rounded-full
+              className={`slider-nav absolute hidden lg:block top-1/2 -right-4 -translate-y-1/2 z-10 p-5 transition-all rounded-full
                 ${
                   isEnd
-                    ? "opacity-50 cursor-not-allowed text-black/90 bg-gray-700"
-                    : "hover:opacity-75 bg-black text-white hover:bg-primary"
+                  ? "opacity-50 cursor-not-allowed text-gray-400 bg-gray-100"
+                  : "hover:opacity-90 text-black bg-white hover:bg-white shadow-2xl"
                 }`}
               aria-label="Next slide"
             >
@@ -364,8 +359,9 @@ export default function BlogSlider() {
                 className="rotate-180"
               >
                 <path
-                  d="M21 12.1561H3.57249M11.6397 3L3 12L11.6397 21"
-                  stroke="white"
+                    d="M21 12.1561H3.57249M11.6397 3L3 12L11.6397 21"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
                 />
               </svg>
             </button>

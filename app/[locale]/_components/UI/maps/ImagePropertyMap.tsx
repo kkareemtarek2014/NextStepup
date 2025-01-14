@@ -113,8 +113,8 @@ export default function ImagePropertyMap({
       max: Math.max(...markers.map((marker) => marker.price)),
     },
   });
-  console.log("Map Image:", mapImage);
-  console.log("Map Image Mobile:", mapImageMobile);
+  // console.log("Map Image:", mapImage);
+  // console.log("Map Image Mobile:", mapImageMobile);
   const [openDropdown, setOpenDropdown] = useState<Set<"property" | "price">>(
     new Set(["property"])
   );

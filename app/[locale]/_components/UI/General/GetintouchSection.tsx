@@ -14,7 +14,6 @@ export default function GetintouchSection() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // Simple fade in and slide up animation for both elements
       gsap.from([headingRef.current, buttonRef.current], {
         opacity: 0,
         y: 30,
@@ -28,16 +27,7 @@ export default function GetintouchSection() {
         },
       });
 
-      // Simple hover effect for button
-      if (buttonRef.current) {
-        buttonRef.current.addEventListener("mouseenter", () => {
-          gsap.to(buttonRef.current, { scale: 1.05, duration: 0.3 });
-        });
-
-        buttonRef.current.addEventListener("mouseleave", () => {
-          gsap.to(buttonRef.current, { scale: 1, duration: 0.3 });
-        });
-      }
+    
     }, sectionRef);
 
     return () => ctx.revert();
@@ -58,7 +48,7 @@ export default function GetintouchSection() {
           <div ref={buttonRef}>
             <Button
               href="/contact-us"
-              className="cta-button px-5 py-3 bg-black rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit hover:shadow-lg transition-shadow"
+              className="cta-button px-5 py-3 bg-black hover:bg-black/90  hover:px-6  duration-300 rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit hover:shadow-lg transition-all"
               iconComponent={
                 <ArrowIcon className="arrow-icon rotate-180 h-4 w-4 lg:h-5 lg:w-5 text-white" />
               }

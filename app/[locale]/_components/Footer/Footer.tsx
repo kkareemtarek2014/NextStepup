@@ -190,17 +190,16 @@ export default function Footer({}: FooterProps) {
               </div>
             </div>
           </div>
-          <h4 className="text-sm font-[325] text-white">
-            Website by{" "}
-            <Link
-              href="https://mitchdesigns.com"
-              target="_blank"
-              className="relative group inline-block"
-            >
-              Mitch Designs
-              <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full" />
-            </Link>
-          </h4>
+          <Link
+            href="https://mitchdesigns.com"
+            target="_blank"
+            className="text-sm font-[325] text-white relative group flex flex-row gap-1 items-center"
+          >
+            Website Design and Development by <span className="relative">Mitch Designs <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full">
+            </span>
+            </span>
+           
+          </Link>
         </div>
       </div>
     </footer>

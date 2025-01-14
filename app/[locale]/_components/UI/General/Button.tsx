@@ -70,32 +70,42 @@ const Button = ({
 }: Props): JSX.Element => {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const linkRef = useRef<HTMLAnchorElement | null>(null);
+  const iconRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const element = buttonRef.current || linkRef.current;
     if (!element) return;
 
-    // Setup hover animation
     const onEnter = () => {
       gsap.to(element, {
-        scale: 1.015,
-        y: -1,
-        duration: 0.15,
-        ease: "power1.out",
+        duration: 0.1,
+        ease: "power2.out",
         boxShadow: "0 6px 15px rgba(0,0,0,0.07)",
-        filter: "brightness(1.05)",
       });
+
+      if (iconRef.current) {
+        gsap.to(iconRef.current, {
+          x: 5,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      }
     };
 
     const onLeave = () => {
       gsap.to(element, {
-        scale: 1,
-        y: 0,
-        duration: 0.15,
-        ease: "power1.out",
+        duration: 0.3,
+        ease: "power2.out",
         boxShadow: "none",
-        filter: "brightness(1)",
       });
+
+      if (iconRef.current) {
+        gsap.to(iconRef.current, {
+          x: 0,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      }
     };
 
     element.addEventListener("mouseenter", onEnter);
@@ -156,23 +166,28 @@ const Button = ({
     const renderIcon = () => {
       if (typeof iconComponent === "string") {
         return (
-          <img
-            src={iconComponent}
-            alt="icon"
-            width={24}
-            height={24}
-            className={`${iconClassName ? `${iconClassName}  ` : ""} 
-            `}
-          />
+          <div ref={iconRef} className="transition-transform duration-300">
+            <img
+              src={iconComponent}
+              alt="icon"
+              width={24}
+              height={24}
+              className={`${iconClassName ? `${iconClassName}` : ""}`}
+            />
+          </div>
         );
       }
-      return iconComponent;
+      return (
+        <div ref={iconRef} className="transition-transform duration-300">
+          {iconComponent}
+        </div>
+      );
     };
     return (
-      <>
+      <div className="flex items-center justify-center gap-2">
         {children}
-        {renderIcon()}
-      </>
+        {iconComponent && renderIcon()}
+      </div>
     );
   };
 

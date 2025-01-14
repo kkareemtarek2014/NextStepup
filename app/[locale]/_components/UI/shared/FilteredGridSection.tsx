@@ -443,17 +443,17 @@ export default function FilteredGridSection<T extends BasePost>({
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[20px] gap-y-[32px]">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[20px] gap-y-[32px] transition-all duration-300 relative overflow-hidden">
           {displayedItems.length > 0 ? (
             displayedItems.map((item) => (
               <div
                 key={item.id}
-                className="grid-item bg-gray-100 relative flex flex-col"
+                className="grid-item bg-gray-100 relative flex flex-col group overflow-hidden "
               >
                 <div className="relative h-full">
                   <Link href={item.link} key={item.id}>
                     <div
-                      className={`relative ${
+                      className={`relative overflow-hidden ${
                         page !== "media"
                           ? "h-[160px] lg:h-[300px]"
                           : "h-[148px] lg:h-[320px]"
@@ -463,15 +463,15 @@ export default function FilteredGridSection<T extends BasePost>({
                         src={item.image}
                         alt={item.title}
                         fill
-                        className="object-cover"
-                      />
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                        />
                     </div>
                   </Link>
                   <div className="relative w-full">
                     <div
                       className={`${
                         page !== "media"
-                          ? "bg-white border border-borderColor"
+                          ? "bg-white border border-borderColor group-hover:bg-white/50"
                           : "bg-teamColor"
                       } p-5 lg:p-[28px] lg:pb-[48px]`}
                     >
@@ -499,7 +499,7 @@ export default function FilteredGridSection<T extends BasePost>({
                         {item.location ? (
                           <Button
                             href={item.link}
-                            className="px-4 lg:px-5 py-[10px] lg:py-3 bg-black rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit hover:opacity-80"
+                            className="px-4 lg:px-5 py-[10px] lg:py-3 bg-black rounded-[100px] h-fit text-nowrap flex items-center justify-center gap-2 !w-fit  group-hover:gap-4 group-hover:bg-opacity-75"
                             iconComponent={
                               <ArrowIcon className="rotate-180 text-white" />
                             }

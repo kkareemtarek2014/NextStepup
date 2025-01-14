@@ -21,7 +21,6 @@ export default function SingleMedia({ data }: SingleMediaProps) {
   const imageRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
-  const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
   const breadcrumbsList = [
     {
@@ -43,65 +42,65 @@ export default function SingleMedia({ data }: SingleMediaProps) {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    if (sectionRef.current) {
-      gsap.set(sectionRef.current, { opacity: 0 });
-    }
+    const ctx = gsap.context(() => {
+      gsap.set(sectionRef.current, { 
+        opacity: 0,
+        duration: 0
+      });
 
-    timelineRef.current = gsap.timeline({ paused: true });
+      gsap.to(sectionRef.current, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 90%",
+          end: "top 40%",
+          toggleActions: "play none none none",
+        },
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out",
+      });
 
-    const setupAnimation = () => {
-      if (!timelineRef.current) return;
+      gsap.from(headerRef.current, {
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+        opacity: 0,
+        y: 30,
+        duration: 1,
+      });
 
-      timelineRef.current
-        .to(sectionRef.current, {
-          opacity: 1,
-          duration: 0.5,
-        })
-        .from(headerRef.current, {
+      gsap.from(imageRef.current, {
+        scrollTrigger: {
+          trigger: imageRef.current,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+        opacity: 0,
+        y: 50,
+        duration: 1,
+      });
+
+      const blogElements = gsap.utils.toArray<HTMLElement>(".blog-content > *");
+      blogElements.forEach((element, i) => {
+        gsap.from(element, {
+          scrollTrigger: {
+            trigger: element,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
           opacity: 0,
           y: 30,
-          duration: 1,
-          delay: 0.2,
-        })
-        .from(
-          imageRef.current,
-          {
-            opacity: 0,
-            y: 50,
-            duration: 1,
-          },
-          "-=0.5"
-        );
-
-      gsap.utils
-        .toArray<HTMLElement>(".blog-content > *")
-        .forEach((element, i) => {
-          gsap.from(element, {
-            scrollTrigger: {
-              trigger: element,
-              start: "top 85%",
-              toggleActions: "play none none none",
-            },
-            opacity: 0,
-            y: 30,
-            duration: 0.8,
-            delay: i * 0.1,
-          });
+          duration: 0.8,
+          delay: i * 0.1,
         });
-    };
-
-    setupAnimation();
-
-    const startAnimation = () => {
-      timelineRef.current?.play();
-    };
-
-    window.addEventListener("pageTransitionComplete", startAnimation);
+      });
+    });
 
     return () => {
-      window.removeEventListener("pageTransitionComplete", startAnimation);
-      timelineRef.current?.kill();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      ctx.revert(); 
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 

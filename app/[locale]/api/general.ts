@@ -23,7 +23,6 @@ export const sendRequest = async (
     }
 
     const data = await response.json();
-    // console.log("API Response:", prettyStringify(data));
     return data;
   } catch (error) {
     console.error(
@@ -62,8 +61,7 @@ export const CummunityList = async (
     `single-cummunities?locale=${lang}&populate[HeroSection][populate][MainImage][fields][0]=url&populate[HeroSection][populate][MainImage][fields][1]=formats&populate[HighlightSection][fields][0]=Title&fields[0]=slug&fields[1]=Location&fields[2]=statusType&fields[3]=UnitType&fields[4]=Type`
   );
 
-  // Log the formatted response
-  //   console.log("CummunityList Response:", prettyStringify(response));
+
 
   return response;
 };
@@ -92,6 +90,7 @@ export const getCommunityBySlug = async (
     throw error;
   }
 };
+
 export async function fetchAbout(lang: string) {
   try {
     const aboutData = await fetch(`${apiUrl}/about?pLevel&locale=${lang}`);
@@ -193,3 +192,30 @@ export async function fetchCommunityPage(lang: string) {
     throw error;
   }
 }
+
+export const getCommunityBySlugLoader = async (
+  lang: string,
+  slug: string
+): Promise<any> => {
+  try {
+    const response = await sendRequest(
+      `single-cummunities?locale=${lang}&filters[slug][$eq]=${slug}&pLevel`
+    );
+
+    if (!response?.data?.[0]) {
+      throw new Error(`Community with slug ${slug} not found`);
+    }
+
+    // Extract only the ImagesLoader data
+    const imagesLoader = response.data[0].ImagesLoader;
+    
+    if (!imagesLoader) {
+      throw new Error('ImagesLoader data not found');
+    }
+
+    return imagesLoader;
+  } catch (error) {
+    console.error("Error fetching community data:", error);
+    throw error;
+  }
+};
