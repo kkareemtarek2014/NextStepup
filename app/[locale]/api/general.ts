@@ -61,8 +61,6 @@ export const CummunityList = async (
     `single-cummunities?locale=${lang}&populate[HeroSection][populate][MainImage][fields][0]=url&populate[HeroSection][populate][MainImage][fields][1]=formats&populate[HighlightSection][fields][0]=Title&fields[0]=slug&fields[1]=Location&fields[2]=statusType&fields[3]=UnitType&fields[4]=Type`
   );
 
-
-
   return response;
 };
 
@@ -206,11 +204,10 @@ export const getCommunityBySlugLoader = async (
       throw new Error(`Community with slug ${slug} not found`);
     }
 
-    // Extract only the ImagesLoader data
     const imagesLoader = response.data[0].ImagesLoader;
-    
+
     if (!imagesLoader) {
-      throw new Error('ImagesLoader data not found');
+      throw new Error("ImagesLoader data not found");
     }
 
     return imagesLoader;
@@ -219,3 +216,44 @@ export const getCommunityBySlugLoader = async (
     throw error;
   }
 };
+
+interface HeaderFooterData {
+  data: {
+    Header?: {
+      Logo?: {
+        url: string;
+      };
+      MenuItems?: Array<{
+        label: string;
+        link: string;
+      }>;
+    };
+    Footer?: {
+      Logo?: {
+        url: string;
+      };
+      Links?: Array<{
+        label: string;
+        url: string;
+      }>;
+      SocialLinks?: Array<{
+        platform: string;
+        url: string;
+      }>;
+    };
+  };
+}
+
+export async function fetchHeaderAndFooter(
+  lang: string
+): Promise<HeaderFooterData> {
+  try {
+    const response = await sendRequest(
+      `header-and-footer?pLevel&locale=${lang}`
+    );
+    return response;
+  } catch (error) {
+    console.error("Error fetching header and footer data:", error);
+    throw error;
+  }
+}
