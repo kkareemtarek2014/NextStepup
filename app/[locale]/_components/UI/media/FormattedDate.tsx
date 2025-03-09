@@ -2,13 +2,7 @@
 
 import { useLocale } from "next-intl";
 
-const FormattedDate = ({
-  date,
-  content,
-}: {
-  date: Date | undefined;
-  content?: any[];
-}) => {
+const FormattedDate = ({ date, content }: { date?: Date; content?: any[] }) => {
   const locale = useLocale();
   const isRTL = locale === "ar";
 

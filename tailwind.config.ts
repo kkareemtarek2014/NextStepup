@@ -13,6 +13,7 @@ export default {
       lg: "1024px",
       xl: "1280px",
       "2xl": "1512px",
+      "3xl": "1600px",
     },
     extend: {
       fontFamily: {
@@ -27,6 +28,7 @@ export default {
         borderColor: "#EAEAEA",
         newRed: "#B50542",
         carrerColor: "#969696",
+        newcyan: "#E8F5FB",
       },
       fontWeight: {
         light: "300",

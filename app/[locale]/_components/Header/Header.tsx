@@ -2,59 +2,42 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import LangConvertor from "../UI/General/LangConvertor";
+import LangConvertor from "../UI/common/LangConvertor";
 import { usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
-import { fetchHeaderAndFooter } from "@/app/[locale]/api/general";
-import { cache } from "react";
 
 interface HeaderProps {}
 
-interface HeaderLink {
-  id: number;
-  Title: string;
-  Link: string;
-}
-
-interface HeaderData {
-  id: number;
-  Logo?: {
-    url: string;
-  };
-  Black_Logo?: {
-    url: string;
-  };
-  HeaderLInks?: HeaderLink[];
-  MobHeaderLinks?: HeaderLink[];
-  Button?: {
-    Title: string;
-    Link: string;
-  };
-}
-
-const getHeaderData = cache(async (locale: string) => {
-  try {
-    const response = await fetchHeaderAndFooter(locale);
-    return response.data.Header as HeaderData;
-  } catch (error) {
-    console.error("Error fetching header data:", error);
-    return null;
-  }
-});
+const staticHeaderData = {
+  id: 1,
+  Logo: {
+    url: "/logo_primary.svg",
+  },
+  Black_Logo: {
+    url: "/logo_black.svg",
+  },
+  HeaderLInks: [
+    { id: 1, Title: "About Us", Link: "/about-us" },
+    { id: 2, Title: "Community", Link: "/community" },
+    { id: 3, Title: "Media", Link: "/media" },
+    { id: 4, Title: "Contact", Link: "/contact-us" },
+  ],
+  MobHeaderLinks: [
+    { id: 1, Title: "About Us", Link: "/about-us" },
+    { id: 2, Title: "Community", Link: "/community" },
+    { id: 3, Title: "Media", Link: "/media" },
+    { id: 4, Title: "Contact", Link: "/contact-us" },
+  ],
+  Button: {
+    Title: "Get Started",
+    Link: "/contact-us",
+  },
+};
 
 export default function Header({}: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [headerData, setHeaderData] = useState<HeaderData | null>(null);
   const pathname = usePathname();
   const locale = useLocale();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getHeaderData(locale);
-      setHeaderData(data);
-    };
-    fetchData();
-  }, [locale]);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -77,37 +60,19 @@ export default function Header({}: HeaderProps) {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  const isTransparentPage =
-    pathname.includes(`/community`) ||
-    pathname === `/${locale}` ||
-    pathname === `/` ||
-    pathname === `/${locale}/media` ||
-    pathname === `/media` ||
-    pathname.includes(`/about-us`);
-
   const isContactPage = pathname.includes(`/contact-us`);
-
-  const logoSrc = headerData
-    ? isTransparentPage
-      ? headerData.Logo?.url ?? "/logo_primary.svg"
-      : headerData.Black_Logo?.url ?? "/logo_black.svg"
-    : isTransparentPage
-    ? "/logo_primary.svg"
-    : "/logo_black.svg";
 
   return (
     <header
-      className={`top-0 left-0 right-0 z-50 ${
-        isTransparentPage
-          ? "fixed bg-gradient-to-b from-black/100 to-transparent"
-          : "absolute"
-      } ${isContactPage ? "bg-teamColor" : ""}`}
+      className={`absolute top-0 left-0 right-0 z-50 ${
+        isContactPage ? "bg-teamColor" : ""
+      }`}
     >
       <div className="max-w-[1400px] mx-auto px-4 2xl:px-0 py-4 h-[100px] flex items-center justify-between w-full">
         <div className="flex items-center">
           <Link href={`/${locale}`} className="mr-auto">
             <Image
-              src={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${logoSrc}`}
+              src={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${staticHeaderData.Logo.url}`}
               alt="Logo"
               width={323.6}
               height={40}
@@ -120,38 +85,29 @@ export default function Header({}: HeaderProps) {
         </div>
 
         <div className="hidden md:flex items-center gap-2 lg:gap-[24px]">
-          {headerData?.HeaderLInks?.map((item) => (
+          {staticHeaderData.HeaderLInks.map((item) => (
             <Link
               key={item.id}
               href={`/${locale}${item.Link}`}
-              className={`text-base font-medium p-2 hover:px-4 transition-all duration-300 border border-transparent ${
-                isTransparentPage
-                  ? "text-white hover:border-white"
-                  : "text-black hover:border-black"
-              } rounded-[100px]`}
+              className="text-base font-medium p-2 hover:px-4 transition-all duration-300 border border-transparent text-black hover:border-black rounded-[100px]"
             >
               <p>{item.Title}</p>
             </Link>
           ))}
-          <LangConvertor isBlack={!isTransparentPage} />
-          {headerData?.Button && (
+          <LangConvertor isBlack={true} />
+          {staticHeaderData.Button && (
             <Link
-              href={`/${locale}${headerData.Button.Link}`}
-              className={`text-base font-medium 
-                ${
-                  isTransparentPage
-                    ? "text-black bg-white hover:bg-black hover:text-white"
-                    : "text-white bg-black hover:bg-black/30 hover:text-black hover:px-6 transition-all duration-300"
-                }  leading-[24px] px-5 py-3 rounded-[100px]`}
+              href={`/${locale}${staticHeaderData.Button.Link}`}
+              className="text-base font-medium text-white bg-black hover:bg-black/30 hover:text-black hover:px-6 transition-all duration-300 leading-[24px] px-5 py-3 rounded-[100px]"
             >
-              <p>{headerData.Button.Title}</p>
+              <p>{staticHeaderData.Button.Title}</p>
             </Link>
           )}
         </div>
 
         <button className="md:hidden" onClick={toggleMenu}>
           <Image
-            src={isTransparentPage ? "/menu.svg" : "/img/menuBlack.svg"}
+            src="/img/menuBlack.svg"
             alt="Menu"
             width={24}
             height={24}
@@ -170,9 +126,7 @@ export default function Header({}: HeaderProps) {
         <div className="w-full h-full bg-menuColor bg-opacity-75 backdrop-blur-[12px]">
           <div className="p-4 flex justify-between items-center">
             <Image
-              src={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${
-                headerData?.Black_Logo?.url ?? "/logo_black.svg"
-              }`}
+              src={`${process.env.NEXT_PUBLIC_IMAGES_DOMAIN}${staticHeaderData.Black_Logo.url}`}
               alt="Logo"
               width={226.52}
               height={28}
@@ -191,7 +145,7 @@ export default function Header({}: HeaderProps) {
 
           <div className="flex flex-col px-4 h-[92vh] justify-between">
             <div className="flex flex-col">
-              {headerData?.MobHeaderLinks?.map((item) => (
+              {staticHeaderData.MobHeaderLinks.map((item) => (
                 <Link
                   key={item.id}
                   href={`/${locale}${item.Link}`}
@@ -211,13 +165,13 @@ export default function Header({}: HeaderProps) {
               ))}
             </div>
 
-            {headerData?.Button && (
+            {staticHeaderData.Button && (
               <Link
-                href={`/${locale}${headerData.Button.Link}`}
+                href={`/${locale}${staticHeaderData.Button.Link}`}
                 onClick={handleLinkClick}
                 className="text-base font-medium bg-black text-white leading-[24px] px-5 py-3 rounded-[100px] text-center"
               >
-                <p>{headerData.Button.Title}</p>
+                <p>{staticHeaderData.Button.Title}</p>
               </Link>
             )}
           </div>

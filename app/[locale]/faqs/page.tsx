@@ -1,5 +1,4 @@
 import FaqsPage from "../_components/mainpages/FaqsPage";
-import { fetchFaq } from "../api/general";
 
 export const runtime = "edge";
 interface FaqsPageProps {
@@ -25,6 +24,6 @@ interface FaqsPageProps {
 // }
 export default async function Faqs({ params }: FaqsPageProps) {
   const locale = params?.locale || "en";
-  const data = await fetchFaq(locale);
-  return <FaqsPage faqData={data} />;
+  // const data = await fetchFaq(locale);
+  return <FaqsPage />;
 }

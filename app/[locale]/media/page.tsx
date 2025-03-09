@@ -1,5 +1,4 @@
 import MediaPage from "../_components/mainpages/Mediapage";
-import { fetchBlogList, fetchMediaPage } from "../api/general";
 
 export const runtime = "edge";
 
@@ -23,8 +22,8 @@ export default async function Media({
 }: {
   params: { locale: string };
 }) {
-  const data = await fetchBlogList(params.locale);
-  // console.log(data);
-  const mediaPage = await fetchMediaPage(params.locale);
-  return <MediaPage data={data} mediaPage={mediaPage} />;
+  // const data = await fetchBlogList(params.locale);
+  // // console.log(data);
+  // const mediaPage = await fetchMediaPage(params.locale);
+  return <MediaPage />;
 }

@@ -1,5 +1,4 @@
 import SingleMedia from "../../_components/singlepages/SingleMedia";
-import { fetchSingleBlog } from "../../api/general";
 export const runtime = "edge";
 
 // export async function generateMetadata({ params }: any) {
@@ -22,6 +21,6 @@ export default async function SingleMediapage({
 }: {
   params: { locale: string; slug: string };
 }) {
-  const data = await fetchSingleBlog(params.locale, params.slug);
-  return <SingleMedia data={data} />;
+  // const data = await fetchSingleBlog(params.locale, params.slug);
+  return <SingleMedia />;
 }
